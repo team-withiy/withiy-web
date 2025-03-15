@@ -1,10 +1,9 @@
 ---
-name: "[Feature]"
+name: "Feature"
 about: Issue related to functional development
 title: "[Feature]"
-labels: ''
+labels: ""
 assignees: rldnd
-
 ---
 
 **Describe**
