@@ -1,17 +1,16 @@
 import react from "@vitejs/plugin-react";
-import path from "path";
 import magicalSvg from "vite-plugin-magical-svg";
+import tsConfigPaths from "vite-tsconfig-paths";
 import { defineConfig } from "vitest/config";
 
 export default defineConfig({
-  plugins: [react(), magicalSvg({ target: "react19" })],
+  plugins: [react(), tsConfigPaths(), magicalSvg({ target: "react19" })],
   test: {
     environment: "jsdom",
-  },
-  resolve: {
-    alias: {
-      "@": path.resolve(__dirname, "src"),
-      public: path.resolve(__dirname, "public"),
+    include: ["**/*.test.+(ts|tsx|js)"],
+    setupFiles: ["./vitest.setup.ts"],
+    coverage: {
+      provider: "v8",
     },
   },
 });
