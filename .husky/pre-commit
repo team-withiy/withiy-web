@@ -1,0 +1,2 @@
+pnpm exec lint-staged --shell
+git update-index --again
