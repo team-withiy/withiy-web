@@ -5,7 +5,8 @@ const nextConfig: NextConfig = {
   sassOptions: {
     implementation: "sass-embedded",
   },
-  webpack(config) {
+  webpack(config, { isServer }) {
+    // MEMO: SVGR settings
     const fileLoaderRule = config.module.rules.find((rule: { test?: { test?: (path: string) => boolean } }) =>
       rule.test?.test?.(".svg"),
     );
@@ -23,6 +24,21 @@ const nextConfig: NextConfig = {
       },
     );
     fileLoaderRule.exclude = /\.svg$/i;
+
+    // MEMO: MSW settings
+    if (isServer) {
+      if (Array.isArray(config.resolve.alias)) {
+        config.resolve.alias.push({ name: "msw/browser", alias: false });
+      } else {
+        config.resolve.alias["msw/browser"] = false;
+      }
+    } else {
+      if (Array.isArray(config.resolve.alias)) {
+        config.resolve.alias.push({ name: "msw/node", alias: false });
+      } else {
+        config.resolve.alias["msw/node"] = false;
+      }
+    }
 
     return config;
   },
