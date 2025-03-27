@@ -1,10 +1,13 @@
 import type { NextConfig } from "next";
 
+import { withSentryConfig } from "@sentry/nextjs";
+
 const nextConfig: NextConfig = {
   output: "standalone",
   sassOptions: {
     implementation: "sass-embedded",
   },
+  allowedDevOrigins: [process.env.SENTRY_HOST as string],
   webpack(config, { isServer }) {
     // MEMO: SVGR settings
     const fileLoaderRule = config.module.rules.find((rule: { test?: { test?: (path: string) => boolean } }) =>
@@ -44,4 +47,15 @@ const nextConfig: NextConfig = {
   },
 };
 
-export default nextConfig;
+export default withSentryConfig(nextConfig, {
+  org: process.env.SENTRY_ORG,
+  project: process.env.SENTRY_PROJECT,
+  silent: !process.env.CI,
+  disableLogger: true,
+  authToken: process.env.SENTRY_AUTH_TOKEN,
+  widenClientFileUpload: true,
+  tunnelRoute: "/monitoring",
+  reactComponentAnnotation: {
+    enabled: true,
+  },
+});
