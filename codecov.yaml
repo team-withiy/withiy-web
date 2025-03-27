@@ -5,7 +5,7 @@ coverage:
         target: 0%
     patch:
       default:
-        target: -%
+        target: 0%
 
 comment:
   layout: "reach, diff, flags, files"
@@ -23,11 +23,31 @@ comment_management:
   delay_before_delete: 60
 
 ignore:
+  # 테스트 파일
   - "**/*.test.{ts,tsx}"
   - "**/*.spec.{ts,tsx}"
+
+  # 목업 데이터
   - "**/mocks/**"
   - "**/__mocks__/**"
+
+  # 설정 파일
   - "vitest.config.ts"
   - "vitest.setup.ts"
-  - "public/**"
   - "next.config.ts"
+  - "**.config.{js,ts}"
+
+  # Next.js 특정 파일
+  - ".next/**"
+  - "public/**"
+  - "next-env.d.ts"
+
+  # 타입 정의 파일
+  - "**/*.d.ts"
+
+  # 기타
+  - "**/stories/**"
+  - "**/*.stories.{ts,tsx}"
+  - "**/*.stories.mdx"
+  - "coverage/**"
+  - "node_modules/**"
