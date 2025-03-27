@@ -16,3 +16,4 @@ ignore:
   - "**/__mocks__/**"
   - "vitest.config.ts"
   - "vitest.setup.ts"
+  - "public/**"
