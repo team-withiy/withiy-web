@@ -5,7 +5,7 @@ const getFiles = (filenames) =>
 
 export default {
   "*.{ts,tsx}": (filenames) => [
-    `prettier --w ${getFiles(filenames).join(" ")} --ignore-unknown --check`,
+    `prettier --write ${getFiles(filenames).join(" ")} --ignore-unknown --check`,
     `next lint --fix --file ${getFiles(filenames).join(" --file ")}`,
     `vitest related ${getFiles(filenames).join(" ")} --run`,
   ],
