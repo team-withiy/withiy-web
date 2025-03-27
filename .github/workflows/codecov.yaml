@@ -31,7 +31,10 @@ jobs:
       - name: Install dependencies
         run: pnpm install
 
-      - name: Run tests with coverage and junit reporter
+      - name: Run tests with coverage
+        run: pnpm test:coverage
+
+      - name: Run tests  junit reporter
         run: pnpm vitest --reporter=junit --outputFile=test-report.junit.xml
 
       - name: Upload coverage reports to Codecov
