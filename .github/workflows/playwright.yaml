@@ -12,8 +12,16 @@ jobs:
   test:
     timeout-minutes: 60
     runs-on: ubuntu-latest
+    environment: test
+
     steps:
       - uses: actions/checkout@v4
+
+      - name: Export secrets to env/.env.test file
+        uses: 0ndt/envfile@v2
+        with:
+          secrets: ${{ toJSON(secrets) }}
+          file: env/.env.test
 
       - uses: actions/setup-node@v4
         with:

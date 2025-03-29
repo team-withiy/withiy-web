@@ -4,8 +4,12 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
+    "run:local": "env-cmd -f env/.env.local -x next dev -p \\$PORT",
+    "run:dev": "env-cmd -f env/.env.development -x next dev -p \\$PORT",
+    "run:prod": "env-cmd -f env/.env.production -x next start -p \\$PORT",
+    "build:local": "env-cmd -f env/.env.local next build",
+    "build:dev": "env-cmd -f env/.env.development next build",
+    "build:prod": "env-cmd -f env/.env.production next build",
     "start": "next start",
     "lint": "next lint",
     "prettier": "prettier --write . --ignore-unknown --check",
@@ -19,7 +23,7 @@
     "e2e:ui": "playwright test --ui",
     "e2e:debug": "playwright test --debug",
     "e2e:report": "playwright show-report",
-    "e2e:codegen": "dotenv -e .env.local -- cross-var concurrently \"pnpm dev\" \"wait-on %NEXT_PUBLIC_BASE_URL% && playwright codegen\""
+    "e2e:codegen": "env-cmd -f env/.env.test concurrently \"next dev -p \\$PLAYWRIGHT_PORT\" \"wait-on \\$PLAYWRIGHT_BASE_URL && playwright codegen\""
   },
   "dependencies": {
     "@sentry/nextjs": "^9.9.0",
@@ -48,7 +52,7 @@
     "concurrently": "^9.1.2",
     "cross-var": "^1.1.0",
     "dotenv": "^16.4.7",
-    "dotenv-cli": "^8.0.0",
+    "env-cmd": "^10.1.0",
     "eslint": "^9",
     "eslint-config-next": "15.2.2",
     "eslint-plugin-import": "^2.31.0",
