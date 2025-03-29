@@ -1,7 +1,7 @@
 import { defineConfig, devices } from "@playwright/test";
 import dotenv from "dotenv";
 
-dotenv.config({ path: ".env.local" });
+dotenv.config({ path: "env/.env.test" });
 
 export default defineConfig({
   testDir: "./e2e",
@@ -12,7 +12,7 @@ export default defineConfig({
   reporter: "html",
   use: {
     trace: "on-first-retry",
-    baseURL: process.env.NEXT_PUBLIC_BASE_URL,
+    baseURL: process.env.PLAYWRIGHT_BASE_URL,
   },
   projects: [
     {
@@ -31,8 +31,8 @@ export default defineConfig({
     },
   ],
   webServer: {
-    command: "pnpm dev",
-    url: process.env.NEXT_PUBLIC_BASE_URL,
+    command: `next dev -p ${process.env.PLAYWRIGHT_PORT}`,
+    url: process.env.PLAYWRIGHT_BASE_URL,
     reuseExistingServer: !process.env.CI,
   },
 });

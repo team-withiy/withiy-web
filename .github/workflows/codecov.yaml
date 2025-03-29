@@ -13,10 +13,17 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
+    environment: test
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+
+      - name: Export secrets to env/.env.test file
+        uses: 0ndt/envfile@v2
+        with:
+          secrets: ${{ toJSON(secrets) }}
+          file: env/.env.test
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
