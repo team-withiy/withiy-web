@@ -7,6 +7,9 @@ const nextConfig: NextConfig = {
   sassOptions: {
     implementation: "sass-embedded",
   },
+  compiler: {
+    reactRemoveProperties: process.env.NODE_ENV === "production" && { properties: ["^data-(test|testid|qa|vitest)$"] },
+  },
   allowedDevOrigins: [process.env.SENTRY_HOST as string],
   webpack(config, { isServer }) {
     // MEMO: SVGR settings

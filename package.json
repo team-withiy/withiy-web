@@ -7,14 +7,19 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
+    "lint": "next lint",
+    "prettier": "prettier --write . --ignore-unknown --check",
+    "stylelint": "stylelint 'src/**/*.scss' --fix",
+    "prepare": "husky",
     "test": "vitest --run",
     "test:watch": "vitest",
     "test:ui": "vitest --ui",
     "test:coverage": "vitest run --coverage",
-    "lint": "next lint",
-    "prettier": "prettier --write . --ignore-unknown --check",
-    "stylelint": "stylelint 'src/**/*.scss' --fix",
-    "prepare": "husky"
+    "e2e": "playwright test",
+    "e2e:ui": "playwright test --ui",
+    "e2e:debug": "playwright test --debug",
+    "e2e:report": "playwright show-report",
+    "e2e:codegen": "dotenv -e .env.local -- cross-var concurrently \"pnpm dev\" \"wait-on %NEXT_PUBLIC_BASE_URL% && playwright codegen\""
   },
   "dependencies": {
     "@sentry/nextjs": "^9.9.0",
@@ -27,6 +32,7 @@
     "@eslint/eslintrc": "^3",
     "@eslint/js": "^9.23.0",
     "@next/eslint-plugin-next": "^15.2.4",
+    "@playwright/test": "^1.51.1",
     "@svgr/webpack": "^8.1.0",
     "@tanstack/eslint-plugin-query": "^5.68.0",
     "@testing-library/dom": "^10.4.0",
@@ -39,6 +45,10 @@
     "@vitejs/plugin-react": "^4.3.4",
     "@vitest/coverage-v8": "^3.0.9",
     "@vitest/ui": "^3.0.9",
+    "concurrently": "^9.1.2",
+    "cross-var": "^1.1.0",
+    "dotenv": "^16.4.7",
+    "dotenv-cli": "^8.0.0",
     "eslint": "^9",
     "eslint-config-next": "15.2.2",
     "eslint-plugin-import": "^2.31.0",
@@ -61,7 +71,8 @@
     "vite-plugin-magical-svg": "^1.6.0",
     "vite-tsconfig-paths": "^5.1.4",
     "vitest": "^3.0.9",
-    "vitest-fetch-mock": "^0.4.5"
+    "vitest-fetch-mock": "^0.4.5",
+    "wait-on": "^8.0.3"
   },
   "msw": {
     "workerDirectory": [
