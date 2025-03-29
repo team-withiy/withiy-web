@@ -3,13 +3,10 @@ import { expect, test } from "vitest";
 
 import HomePage from "@/views/home";
 
-async function resolvedComponent(Component, props) {
-  const ComponentResolved = await Component(props);
-  return () => ComponentResolved;
-}
+import { resolvePromiseComponent } from "@/shared/lib/test";
 
 test("Page", async () => {
-  const HomeResolved = await resolvedComponent(HomePage, {});
+  const HomeResolved = await resolvePromiseComponent(HomePage, {});
   render(<HomeResolved />);
 
   // 비동기 작업이 완료될 때까지 대기

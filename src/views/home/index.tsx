@@ -1,4 +1,3 @@
-import Test from "./Test";
 import { IconFile } from "public/icons";
 
 export default async function Home() {
@@ -8,9 +7,8 @@ export default async function Home() {
   return (
     <div>
       <h1>Home</h1>
-      {JSON.stringify(json)}
+      <p data-testid="mswData">{JSON.stringify(json)}</p>
       <IconFile data-testid="svg" />
-      <Test />
     </div>
   );
 }

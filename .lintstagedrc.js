@@ -8,6 +8,7 @@ export default {
     `prettier --write ${getFiles(filenames).join(" ")} --ignore-unknown --check`,
     `next lint --fix --file ${getFiles(filenames).join(" --file ")}`,
     `vitest related ${getFiles(filenames).join(" ")} --run`,
+    "playwright test",
   ],
   "src/**/*.scss": (filenames) => `stylelint --fix ${getFiles(filenames).join(" ")}`,
 };
