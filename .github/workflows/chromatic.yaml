@@ -1,0 +1,53 @@
+name: "Chromatic"
+
+on: push
+
+jobs:
+  chromatic:
+    name: Run Chromatic
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Export secrets to env/.env.test file
+        uses: 0ndt/envfile@v2
+        with:
+          secrets: ${{ toJSON(secrets) }}
+          file: env/.env.test
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 8
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Run Chromatic
+        uses: chromaui/action@latest
+        with:
+          projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
+
+      - name: Notify Discord
+        if: success()
+        run: |
+          BRANCH_NAME=$(echo "${{ github.ref_name }}")
+          COMMIT_MESSAGE=$(git log -1 --pretty=format:"%s")
+          COMMIT_AUTHOR=$(git log -1 --pretty=format:"%an")
+          CHROMATIC_URL="https://www.chromatic.com/builds/${{ github.run_id }}"
+          curl -X POST -H "Content-Type: application/json" \
+          -d '{
+                "content": "✅ Chromatic 배포가 완료되었습니다!",
+                "embeds": [
+                  {
+                    "title": "Chromatic 배포 알림",
+                    "description": "브랜치: **'$BRANCH_NAME'**\n변경사항: **'$COMMIT_MESSAGE'**\n작성자: **'$COMMIT_AUTHOR'**\n[Chromatic 결과 확인하기]('$CHROMATIC_URL')",
+                    "color": 3066993
+                  }
+                ]
+              }' \
+          ${{ secrets.DISCORD_DESIGN_WEBHOOK_URL }}
