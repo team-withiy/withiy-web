@@ -36,14 +36,14 @@ jobs:
           COMMIT_AUTHOR=$(git log -1 --pretty=format:"%an")
           CHROMATIC_URL="https://www.chromatic.com/builds/${{ github.run_id }}"
           curl -X POST -H "Content-Type: application/json" \
-          -d '{
-                "content": "✅ Chromatic 배포가 완료되었습니다!",
-                "embeds": [
+          -d "{
+                \"content\": \"✅ Chromatic 배포가 완료되었습니다!\",
+                \"embeds\": [
                   {
-                    "title": "Chromatic 배포 알림",
-                    "description": "브랜치: **'$BRANCH_NAME'**\n변경사항: **'$COMMIT_MESSAGE'**\n작성자: **'$COMMIT_AUTHOR'**\n[Chromatic 결과 확인하기]('$CHROMATIC_URL')",
-                    "color": 3066993
+                    \"title\": \"Chromatic 배포 알림\",
+                    \"description\": \"브랜치: **${BRANCH_NAME}**\\n변경사항: **${COMMIT_MESSAGE}**\\n작성자: **${COMMIT_AUTHOR}**\\n[Chromatic 결과 확인하기](${CHROMATIC_URL})\",
+                    \"color\": 3066993
                   }
                 ]
-              }' \
+              }" \
           ${{ secrets.DISCORD_DESIGN_WEBHOOK_URL }}
