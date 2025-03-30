@@ -28,6 +28,10 @@ jobs:
         uses: chromaui/action@latest
         with:
           projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
+          exitZeroOnChanges: true
+
+      - name: Publish Summary
+        run: echo -e "| Results |  |\n| --- | --- |\n| Build Results | ${{steps.chromatic.outputs.buildUrl}} |\n| Storybook Preview | ${{steps.chromatic.outputs.storybookUrl}} |\n| Component Count | ${{steps.chromatic.outputs.componentCount}} |" >> $GITHUB_STEP_SUMMARY
 
       - name: Notify Discord
         if: success()
@@ -35,7 +39,7 @@ jobs:
           BRANCH_NAME=$(echo "${{ github.ref_name }}")
           COMMIT_MESSAGE=$(git log -1 --pretty=format:"%s")
           COMMIT_AUTHOR=$(git log -1 --pretty=format:"%an")
-          CHROMATIC_URL=$(echo "${{ steps.chromatic.outputs.web_url }}")
+          CHROMATIC_URL=$(echo "${{ steps.chromatic.outputs.storybookUrl }}")
           curl -X POST -H "Content-Type: application/json" \
           -d "{
                 \"content\": \"✅ Chromatic 배포가 완료되었습니다!\",
