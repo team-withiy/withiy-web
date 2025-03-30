@@ -40,17 +40,18 @@ jobs:
       - name: Notify Discord
         if: success()
         run: |
-          BRANCH_NAME=$(echo "${{ github.ref_name }}")
-          COMMIT_MESSAGE=$(git log -1 --pretty=format:"%s")
-          COMMIT_AUTHOR=$(git log -1 --pretty=format:"%an")
-          CHROMATIC_URL=$(echo "${{ steps.chromatic.outputs.storybookUrl }}")
+          PR_TITLE="${{ github.event.pull_request.title }}"
+          PR_BODY="${{ github.event.pull_request.body }}"
+          PR_AUTHOR="${{ github.event.pull_request.user.login }}"
+          BRANCH_NAME="${{ github.head_ref }}"
+          CHROMATIC_URL="${{ steps.chromatic.outputs.storybookUrl }}"
           curl -X POST -H "Content-Type: application/json" \
           -d "{
                 \"content\": \"✅ Chromatic 배포가 완료되었습니다!\",
                 \"embeds\": [
                   {
                     \"title\": \"Chromatic 배포 알림\",
-                    \"description\": \"브랜치: **${BRANCH_NAME}**\\n변경사항: **${COMMIT_MESSAGE}**\\n작성자: **${COMMIT_AUTHOR}**\\n[Chromatic 결과 확인하기](${CHROMATIC_URL})\",
+                    \"description\": \"브랜치: **${BRANCH_NAME}**\\nPR 제목: **${PR_TITLE}**\\nPR 내용: **${PR_BODY}**\\n작성자: **${PR_AUTHOR}**\\n[Chromatic 결과 확인하기](${CHROMATIC_URL})\",
                     \"color\": 3066993
                   }
                 ]
