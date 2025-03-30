@@ -46,14 +46,18 @@ jobs:
           BRANCH_NAME="${{ github.head_ref }}"
           CHROMATIC_URL="${{ steps.chromatic.outputs.storybookUrl }}"
           curl -X POST -H "Content-Type: application/json" \
-          -d "{
-                \"content\": \"✅ Chromatic 배포가 완료되었습니다!\",
-                \"embeds\": [
-                  {
-                    \"title\": \"Chromatic 배포 알림\",
-                    \"description\": \"브랜치: **${BRANCH_NAME}**\\nPR 제목: **${PR_TITLE}**\\nPR 내용: **${PR_BODY}**\\n작성자: **${PR_AUTHOR}**\\n[Chromatic 결과 확인하기](${CHROMATIC_URL})\",
-                    \"color\": 3066993
-                  }
-                ]
-              }" \
+          -d "$(jq -n --arg content "✅ Chromatic 배포가 완료되었습니다!" \
+                --arg title "Chromatic 배포 알림" \
+                --arg description "브랜치: **${BRANCH_NAME}**\\nPR 제목: **${PR_TITLE}**\\nPR 내용: **${PR_BODY}**\\n작성자: **${PR_AUTHOR}**\\n[Chromatic 결과 확인하기](${CHROMATIC_URL})" \
+                --argjson color 3066993 \
+                '{
+                  content: $content,
+                  embeds: [
+                    {
+                      title: $title,
+                      description: $description,
+                      color: $color
+                    }
+                  ]
+                }')" \
           ${{ secrets.DISCORD_DESIGN_WEBHOOK_URL }}
