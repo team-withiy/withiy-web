@@ -36,6 +36,7 @@ export default defineConfig({
         "next-env.d.ts",
         "instrumentation.ts",
         "instrumentation-client.ts",
+        "middleware.ts",
 
         // 타입 정의 파일
         "**/*.d.ts",

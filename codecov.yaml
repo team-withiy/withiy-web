@@ -1,11 +1,14 @@
+# TODO: 추후 테스트 코드 작성을 통해 target과 threshold 변경
 coverage:
   status:
     project:
       default:
         target: 0%
+        threshold: 0%
     patch:
       default:
         target: 0%
+        threshold: 0%
 
 comment:
   layout: "reach, diff, flags, files"
