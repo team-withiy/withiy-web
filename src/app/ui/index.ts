@@ -1,0 +1,1 @@
+export { PretendardJP } from "./fontFace";
