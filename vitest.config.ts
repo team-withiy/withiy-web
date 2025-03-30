@@ -5,6 +5,9 @@ import { defineConfig } from "vitest/config";
 
 export default defineConfig({
   plugins: [react(), tsConfigPaths(), magicalSvg({ target: "react19" })],
+  optimizeDeps: {
+    include: ["@mdx-js/react"],
+  },
   test: {
     environment: "jsdom",
     include: ["**/*.test.+(ts|tsx|js)"],
