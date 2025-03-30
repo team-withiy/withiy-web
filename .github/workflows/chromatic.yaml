@@ -24,6 +24,7 @@ jobs:
         run: pnpm install
 
       - name: Run Chromatic
+        id: chromatic # ID를 추가하여 Chromatic CLI의 출력을 참조 가능
         uses: chromaui/action@latest
         with:
           projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
@@ -34,7 +35,7 @@ jobs:
           BRANCH_NAME=$(echo "${{ github.ref_name }}")
           COMMIT_MESSAGE=$(git log -1 --pretty=format:"%s")
           COMMIT_AUTHOR=$(git log -1 --pretty=format:"%an")
-          CHROMATIC_URL="https://www.chromatic.com/builds/${{ github.run_id }}"
+          CHROMATIC_URL=$(echo "${{ steps.chromatic.outputs.web_url }}")
           curl -X POST -H "Content-Type: application/json" \
           -d "{
                 \"content\": \"✅ Chromatic 배포가 완료되었습니다!\",
