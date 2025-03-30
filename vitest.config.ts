@@ -23,6 +23,7 @@ export default defineConfig({
         // 설정 파일
         "vitest.config.ts",
         "vitest.setup.ts",
+        "vitest.workspace.ts",
         "next.config.ts",
         "**.config.{js,ts}",
 
@@ -40,6 +41,7 @@ export default defineConfig({
         "**/stories/**",
         "**/*.stories.{ts,tsx}",
         "**/*.stories.mdx",
+        ".storybook/**",
         "coverage/**",
         "node_modules/**",
         ".lintstagedrc.js",

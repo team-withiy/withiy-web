@@ -1,0 +1,113 @@
+*,
+*::after,
+*::before {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+  appearance: none;
+  outline: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html {
+  font-size: 16px;
+}
+
+body,
+textarea,
+button {
+  padding: 0;
+  margin: 0;
+  -webkit-font-smoothing: antialiased;
+}
+
+button {
+  cursor: pointer;
+  user-select: none;
+  outline: none;
+  background-color: transparent;
+  border: 0;
+
+  &:disabled {
+    cursor: not-allowed;
+  }
+}
+
+img {
+  user-select: none;
+}
+
+*:focus {
+  outline: none;
+}
+
+*:not(div, input, textarea):focus-visible {
+  outline: 1px solid var(--c-primary-normal);
+}
+
+input {
+  font-family: inherit;
+  font-size: inherit;
+  color: inherit;
+  -webkit-appearance: none;
+  appearance: none;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+input::-ms-clear,
+input::-ms-reveal {
+  display: none;
+  width: 0;
+  height: 0;
+}
+
+input::-webkit-search-decoration,
+input::-webkit-search-cancel-button,
+input::-webkit-search-results-button,
+input::-webkit-search-results-decoration {
+  display: none;
+}
+
+a {
+  text-decoration: none;
+  cursor: pointer;
+}
+
+figure {
+  padding: 0;
+  margin: 0;
+}
+
+ul,
+ol,
+menu {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+ol {
+  margin-top: 0;
+}
+
+textarea {
+  resize: none;
+  border: 0;
+}
+
+// NOTE: Hide scrollbar
+* {
+  -ms-overflow-style: none; // IE and Edge
+  scrollbar-width: none; // Firefox
+
+  &::-webkit-scrollbar {
+    display: none; // Chrome
+  }
+}
+
+details summary::-webkit-details-marker,
+details summary::marker {
+  display: none;
+  content: "";
+}
