@@ -24,7 +24,7 @@ jobs:
         run: pnpm install
 
       - name: Run Chromatic
-        id: chromatic # ID를 추가하여 Chromatic CLI의 출력을 참조 가능
+        id: chromatic
         uses: chromaui/action@latest
         with:
           projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
