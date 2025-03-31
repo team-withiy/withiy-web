@@ -1,27 +1,46 @@
-import magicalSvg from "vite-plugin-magical-svg";
-import tsConfigPaths from "vite-tsconfig-paths";
+import path from "path";
 
-import type { StorybookConfig } from "@storybook/experimental-nextjs-vite";
+import type { StorybookConfig } from "@storybook/nextjs";
 
 const config: StorybookConfig = {
   stories: ["../src/**/*.mdx", "../src/**/*.stories.@(js|jsx|mjs|ts|tsx)"],
   addons: [
-    "@storybook/addon-essentials",
     "@storybook/addon-onboarding",
+    "@storybook/addon-essentials",
     "@chromatic-com/storybook",
-    "@storybook/experimental-addon-test",
+    "@storybook/addon-interactions",
   ],
+  framework: {
+    name: "@storybook/nextjs",
+    options: {},
+  },
   features: {
     experimentalRSC: true,
   },
-  framework: {
-    name: "@storybook/experimental-nextjs-vite",
-    options: {},
+  core: {
+    builder: "@storybook/builder-webpack5",
   },
+  webpackFinal: async (config) => {
+    // MEMO: tsconfig alias
+    config.resolve!.alias = {
+      ...config.resolve?.alias,
+      "@": [path.resolve(__dirname, "../src")],
+    };
+    config.resolve!.roots = [path.resolve(__dirname, "../public"), "node_modules"];
 
-  viteFinal: async (config) => {
-    config.plugins?.push(tsConfigPaths());
-    config.plugins?.push(magicalSvg({ target: "react19" }));
+    // MEMO: @svgr/webpack
+    const imageRule = config.module?.rules?.find((rule) => {
+      const test = (rule as { test: RegExp }).test;
+      if (!test) return false;
+      return test.test(".svg");
+    }) as { [key: string]: unknown };
+
+    imageRule.exclude = /\.svg$/;
+
+    config.module?.rules?.push({
+      test: /\.svg$/,
+      use: ["@svgr/webpack"],
+    });
 
     return config;
   },
