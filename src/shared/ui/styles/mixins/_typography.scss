@@ -1,0 +1,174 @@
+@use "sass:map";
+
+$FONT_WEIGHT_MAP: (
+  black: 900,
+  bold: 700,
+  semibold: 600,
+  medium: 500,
+  regular: 400,
+  light: 300,
+  thin: 100,
+);
+
+@function _font-weight($weight) {
+  @if map.has-key($FONT_WEIGHT_MAP, $weight) {
+    @return map.get($FONT_WEIGHT_MAP, $weight);
+  } @else {
+    @warn "Font weight '#{$weight}' not found in FONT_WEIGHT_MAP.";
+    @return null;
+  }
+}
+
+@mixin fontDisplay1($weight: regular) {
+  font-family: var(--f-pretendard-jp);
+  font-size: 72px;
+  font-style: normal;
+  font-weight: _font-weight($weight);
+  line-height: 90px;
+  letter-spacing: -1.8px;
+}
+
+@mixin fontDisplay2($weight: regular) {
+  font-family: var(--f-pretendard-jp);
+  font-size: 64px;
+  font-style: normal;
+  font-weight: _font-weight($weight);
+  line-height: 80px;
+  letter-spacing: -1.6px;
+}
+
+@mixin fontDisplay3($weight: regular) {
+  font-family: var(--f-pretendard-jp);
+  font-size: 56px;
+  font-style: normal;
+  font-weight: _font-weight($weight);
+  line-height: 72px;
+  letter-spacing: -1.4px;
+}
+
+@mixin fontHeadline1($weight: regular) {
+  font-family: var(--f-pretendard-jp);
+  font-size: 48px;
+  font-style: normal;
+  font-weight: _font-weight($weight);
+  line-height: 60px;
+  letter-spacing: -1.2px;
+}
+
+@mixin fontHeadline2($weight: regular) {
+  font-family: var(--f-pretendard-jp);
+  font-size: 40px;
+  font-style: normal;
+  font-weight: _font-weight($weight);
+  line-height: 52px;
+  letter-spacing: -1px;
+}
+
+@mixin fontTitle1($weight: regular) {
+  font-family: var(--f-pretendard-jp);
+  font-size: 32px;
+  font-style: normal;
+  font-weight: 600;
+  font-weight: _font-weight($weight);
+  line-height: 42px;
+  letter-spacing: -0.8px;
+}
+
+@mixin fontTitle2($weight: regular) {
+  font-family: var(--f-pretendard-jp);
+  font-size: 28px;
+  font-style: normal;
+  font-weight: _font-weight($weight);
+  line-height: 38px;
+  letter-spacing: -0.7px;
+}
+
+@mixin fontTitle3($weight: regular) {
+  font-family: var(--f-pretendard-jp);
+  font-size: 24px;
+  font-style: normal;
+  font-weight: _font-weight($weight);
+  line-height: 34px;
+  letter-spacing: -0.6px;
+}
+
+@mixin fontTitle4($weight: regular) {
+  font-family: var(--f-pretendard-jp);
+  font-size: 20px;
+  font-style: normal;
+  font-weight: _font-weight($weight);
+  line-height: 28px;
+  letter-spacing: -0.5px;
+}
+
+@mixin fontTitle5($weight: regular) {
+  font-family: var(--f-pretendard-jp);
+  font-size: 18px;
+  font-style: normal;
+  font-weight: _font-weight($weight);
+  line-height: 26px;
+  letter-spacing: -0.45px;
+}
+
+@mixin fontBody1($weight: regular) {
+  font-family: var(--f-pretendard-jp);
+  font-size: 16px;
+  font-style: normal;
+  font-weight: _font-weight($weight);
+  line-height: 24px;
+  letter-spacing: -0.4px;
+}
+
+@mixin fontBody2($weight: regular) {
+  font-family: var(--f-pretendard-jp);
+  font-size: 14px;
+  font-style: normal;
+  font-weight: _font-weight($weight);
+  line-height: 20px;
+  letter-spacing: -0.35px;
+}
+
+@mixin fontCaption1($weight: regular) {
+  font-family: var(--f-pretendard-jp);
+  font-size: 12px;
+  font-style: normal;
+  font-weight: _font-weight($weight);
+  line-height: 16px;
+  letter-spacing: -0.3px;
+}
+
+@mixin fontCaption2($weight: regular) {
+  font-family: var(--f-pretendard-jp);
+  font-size: 10px;
+  font-style: normal;
+  font-weight: _font-weight($weight);
+  line-height: 16px;
+  letter-spacing: -0.25px;
+}
+
+@mixin fontButton1($weight: regular) {
+  font-family: var(--f-pretendard-jp);
+  font-size: 16px;
+  font-style: normal;
+  font-weight: _font-weight($weight);
+  line-height: 20px;
+  letter-spacing: -0.4px;
+}
+
+@mixin fontButton2($weight: regular) {
+  font-family: var(--f-pretendard-jp);
+  font-size: 14px;
+  font-weight: 600;
+  font-weight: _font-weight($weight);
+  line-height: 20px;
+  letter-spacing: -0.35px;
+}
+
+@mixin fontButton3($weight: regular) {
+  font-family: var(--f-pretendard-jp);
+  font-size: 12px;
+  font-style: normal;
+  font-weight: _font-weight($weight);
+  line-height: 20px;
+  letter-spacing: -0.3px;
+}
