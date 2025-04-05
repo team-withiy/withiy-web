@@ -1,6 +1,7 @@
 import { Meta, StoryObj } from "@storybook/react";
+import { fn } from "@storybook/test";
 
-import Button from ".";
+import Button from "./Button";
 
 const meta: Meta<typeof Button> = {
   title: "Components/Button/Button",
@@ -76,6 +77,7 @@ const meta: Meta<typeof Button> = {
     full: false,
     children: "BUTTON",
     disabled: false,
+    onClick: fn(),
   },
 };
 

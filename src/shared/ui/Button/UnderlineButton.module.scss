@@ -1,0 +1,48 @@
+@use "@/shared/ui/styles/constants" as c;
+@use "@/shared/ui/styles/mixins" as m;
+
+.wrapper {
+  color: var(--c-text-sub);
+  text-decoration: underline;
+  text-decoration-color: var(--c-text-sub);
+  transition: all 0.2s ease-in-out;
+
+  &.large {
+    @include m.fontBody1(regular);
+  }
+
+  &.medium {
+    @include m.fontBody2(regular);
+  }
+
+  &.small {
+    @include m.fontCaption1(regular);
+  }
+
+  &:hover {
+    color: var(--c-text-main);
+    text-decoration-color: var(--c-text-main);
+
+    svg path {
+      stroke: var(--c-text-main);
+    }
+  }
+
+  &:active {
+    color: var(--c-brand-primary-darken-2);
+    text-decoration-color: var(--c-brand-primary-darken-2);
+
+    svg path {
+      stroke: var(--c-brand-primary-darken-2);
+    }
+  }
+
+  &:disabled {
+    color: var(--c-text-disabled);
+    text-decoration-color: var(--c-text-disabled);
+
+    svg path {
+      stroke: var(--c-text-disabled);
+    }
+  }
+}
