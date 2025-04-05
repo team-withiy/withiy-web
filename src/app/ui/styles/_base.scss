@@ -41,10 +41,6 @@ img {
   outline: none;
 }
 
-*:not(div, input, textarea):focus-visible {
-  outline: 1px solid var(--c-primary-normal);
-}
-
 input {
   font-family: inherit;
   font-size: inherit;
