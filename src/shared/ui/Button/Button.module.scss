@@ -1,0 +1,106 @@
+@use "@/shared/ui/styles/constants" as c;
+@use "@/shared/ui/styles/mixins" as m;
+
+.wrapper {
+  @include m.flex;
+  outline: none;
+  border: 0;
+  border-radius: 100px;
+  transition: all 0.2s ease-in-out;
+
+  &.large {
+    @include m.fontButton2(semibold);
+    gap: 4px;
+    padding: 16px 40px;
+  }
+
+  &.medium {
+    @include m.fontButton2(semibold);
+    gap: 2px;
+    padding: 12px 40px;
+  }
+
+  &.small {
+    @include m.fontButton3(semibold);
+    gap: 2px;
+    padding: 8px 28px;
+  }
+
+  &.default {
+    color: var(--c-grayscale-white);
+    background-color: var(--c-brand-primary);
+
+    &:hover {
+      background-color: var(--c-brand-primary-darken);
+    }
+
+    &:active {
+      background-color: var(--c-brand-primary-lighten);
+    }
+
+    &:disabled {
+      color: var(--c-text-disabled);
+      background-color: var(--c-grayscale-gray-200);
+    }
+  }
+
+  &.filledGray {
+    color: var(--c-text-main);
+    background-color: var(--c-grayscale-gray-100);
+
+    &:hover {
+      background-color: var(--c-grayscale-gray-200);
+    }
+
+    &:active {
+      background-color: var(--c-grayscale-gray-500);
+    }
+
+    &:disabled {
+      color: var(--c-text-disabled);
+      background-color: var(--c-grayscale-gray-50);
+    }
+  }
+
+  &.outline {
+    color: var(--c-brand-primary);
+    background-color: var(--c-grayscale-white);
+    border: 1px solid var(--c-brand-primary);
+
+    &:hover {
+      color: var(--c-brand-primary-darken);
+      border-color: var(--c-brand-primary-darken);
+    }
+
+    &:active {
+      color: var(--c-brand-primary-darken-2);
+      background-color: var(--c-brand-primary-background);
+      border-color: var(--c-brand-primary-darken-2);
+    }
+
+    &:disabled {
+      color: var(--c-text-disabled);
+      background-color: var(--c-grayscale-gray-50);
+      border-color: var(--c-grayscale-gray-300);
+    }
+  }
+
+  &.text {
+    color: var(--c-text-main);
+    background-color: var(--c-grayscale-white);
+
+    &:hover {
+      color: var(--c-brand-primary-darken);
+      background-color: var(--c-grayscale-gray-50);
+    }
+
+    &:active {
+      color: var(--c-brand-primary-darken-2);
+      background-color: var(--c-grayscale-gray-200);
+    }
+
+    &:disabled {
+      color: var(--c-text-disabled);
+    }
+  }
+}
