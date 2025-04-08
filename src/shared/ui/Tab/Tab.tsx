@@ -12,7 +12,7 @@ const Tab: React.FC<Props> = ({ className, children, ...props }) => {
   return (
     <label className={cx(styles.wrapper, className)} aria-label="tab" data-testid="tab">
       {children}
-      <input type="checkbox" data-testid="input" {...props} />
+      <input type="checkbox" data-testid="input" hidden {...props} />
     </label>
   );
 };
