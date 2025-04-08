@@ -1,6 +1,6 @@
 import React from "react";
 
-import { PretendardJP } from "../src/app/ui";
+import { PretendardJP } from "../src/app/ui/fontFace";
 
 import type { Preview } from "@storybook/react";
 import "../src/app/ui/styles/global.scss";
