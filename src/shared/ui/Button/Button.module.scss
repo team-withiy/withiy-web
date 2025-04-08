@@ -17,9 +17,9 @@
   }
 
   &.large {
-    @include m.fontButton2(semibold);
+    @include m.fontButton1(semibold);
     gap: 4px;
-    padding: 16px 40px;
+    padding: 14px 40px;
   }
 
   &.medium {
@@ -43,7 +43,7 @@
     }
 
     &:active {
-      background-color: var(--c-brand-primary-lighten);
+      background-color: var(--c-brand-primary-darken-2);
     }
 
     &:disabled {
