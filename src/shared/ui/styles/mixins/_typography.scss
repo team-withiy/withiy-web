@@ -172,3 +172,20 @@ $FONT_WEIGHT_MAP: (
   line-height: 20px;
   letter-spacing: -0.3px;
 }
+
+@mixin makeEllipsis($line-cnt: 1) {
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+  @if $line-cnt == 1 {
+    white-space: nowrap;
+  }
+
+  @if $line-cnt > 1 {
+    display: -webkit-box;
+    -webkit-line-clamp: $line-cnt;
+    -webkit-box-orient: vertical;
+    word-wrap: break-word;
+    white-space: break-spaces;
+  }
+}
