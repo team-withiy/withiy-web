@@ -7,7 +7,7 @@
 
   .input {
     width: 100%;
-    color: var (--c-text-main);
+    color: var(--c-text-main);
     background-color: var(--c-grayscale-white);
     border: 1px solid var(--c-grayscale-gray-300);
     border-radius: 12px;
@@ -43,6 +43,10 @@
     &.error {
       border-color: var(--c-system-danger);
     }
+
+    &.success {
+      border-color: var(--c-system-success);
+    }
   }
 
   .errorMessage {
@@ -50,5 +54,12 @@
     @include m.makeEllipsis;
     width: 100%;
     color: var(--c-system-danger);
+  }
+
+  .successMessage {
+    @include m.fontButton2(regular);
+    @include m.makeEllipsis;
+    width: 100%;
+    color: var(--c-system-success);
   }
 }

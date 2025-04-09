@@ -17,13 +17,20 @@ type Schema = z.infer<typeof schema>;
 const Template = ({ ...props }: ComponentProps<typeof Input>) => {
   const {
     register,
-    formState: { errors },
+    formState: { errors, touchedFields },
   } = useForm<Schema>({
     mode: "onTouched",
     resolver: zodResolver(schema),
   });
 
-  return <Input errorMessage={errors.value?.message} {...register("value")} {...props} />;
+  return (
+    <Input
+      errorMessage={errors.value?.message}
+      successMessage={!!touchedFields.value && !errors.value && "3글자 이상 입력하셨습니다!"}
+      {...register("value")}
+      {...props}
+    />
+  );
 };
 
 const meta: Meta<typeof Input> = {
