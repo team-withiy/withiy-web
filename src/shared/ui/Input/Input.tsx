@@ -11,6 +11,7 @@ type Size = 52;
 interface Props extends Omit<ComponentProps<"input">, "size"> {
   size: Size;
   errorMessage?: string;
+  successMessage?: string | boolean;
   inputClassName?: string;
 }
 
@@ -18,7 +19,16 @@ const SIZE_MAPPER: Record<Size, string> = {
   52: styles.large,
 };
 
-const Input: React.FC<Props> = ({ type, inputMode, size, className, errorMessage, inputClassName, ...props }) => {
+const Input: React.FC<Props> = ({
+  type,
+  inputMode,
+  size,
+  className,
+  errorMessage,
+  successMessage,
+  inputClassName,
+  ...props
+}) => {
   console.assert(!!type, "Input type is required");
   console.assert(!!size, "InputMode is required");
 
@@ -27,11 +37,15 @@ const Input: React.FC<Props> = ({ type, inputMode, size, className, errorMessage
       <input
         type={type}
         inputMode={inputMode}
-        className={cx(styles.input, inputClassName, SIZE_MAPPER[size], { [styles.error]: !!errorMessage })}
+        className={cx(styles.input, inputClassName, SIZE_MAPPER[size], {
+          [styles.error]: !!errorMessage,
+          [styles.success]: !!successMessage,
+        })}
         data-testid="input"
         {...props}
       />
-      {errorMessage && <span className={styles.errorMessage}>{errorMessage}</span>}
+      {!successMessage && errorMessage && <span className={styles.errorMessage}>{errorMessage}</span>}
+      {successMessage && !errorMessage && <span className={styles.successMessage}>{successMessage}</span>}
     </label>
   );
 };
