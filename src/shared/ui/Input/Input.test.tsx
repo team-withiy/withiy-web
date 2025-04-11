@@ -50,7 +50,7 @@ test("inputClassName 속성이 input에 올바르게 적용된다.", () => {
   expect(screen.getByTestId("input")).toHaveClass("input-test-class");
 });
 
-test("errorMessage가 있으면 input에 error 클래스가 추가된다.", () => {
+test("errorMessage가 있으면 input-wrapper에 error 클래스가 추가된다.", () => {
   render(<Input type="text" size={52} errorMessage="에러 메시지" />);
-  expect(screen.getByTestId("input")).toHaveClass(styles.error);
+  expect(screen.getByTestId("input-wrapper")).toHaveClass(styles.error);
 });

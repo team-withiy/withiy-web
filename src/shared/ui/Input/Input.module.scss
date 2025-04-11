@@ -5,6 +5,18 @@
   @include m.flex(flex-start, flex-start, column);
   gap: 8px;
 
+  .label {
+    color: var(--c-text-main);
+
+    &.large {
+      @include m.fontBody1(semibold);
+    }
+
+    &.medium {
+      @include m.fontBody2(semibold);
+    }
+  }
+
   .input {
     width: 100%;
     color: var(--c-text-main);
@@ -36,16 +48,9 @@
 
     &:disabled {
       color: var(--c-text-disabled);
+      cursor: not-allowed;
       background-color: var(--c-grayscale-gray-50);
       border-color: var(--c-grayscale-gray-300);
-    }
-
-    &.error {
-      border-color: var(--c-system-danger);
-    }
-
-    &.success {
-      border-color: var(--c-system-success);
     }
   }
 
@@ -61,5 +66,25 @@
     @include m.makeEllipsis;
     width: 100%;
     color: var(--c-system-success);
+  }
+
+  &.success {
+    .label {
+      color: var(--c-system-success);
+    }
+
+    .input {
+      border-color: var(--c-system-success);
+    }
+  }
+
+  &.error {
+    .label {
+      color: var(--c-system-danger);
+    }
+
+    .input {
+      border-color: var(--c-system-danger);
+    }
   }
 }
