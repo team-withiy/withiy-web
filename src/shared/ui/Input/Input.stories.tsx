@@ -84,14 +84,35 @@ const meta: Meta<typeof Input> = {
         type: "select",
       },
     },
+    labelText: {
+      description: "라벨 텍스트 크기",
+      table: {
+        defaultValue: { summary: "14" },
+      },
+      type: {
+        name: "enum",
+        value: [16, 14],
+      },
+      control: {
+        type: "select",
+      },
+    },
+    label: {
+      description: "Input 상단 라벨",
+      control: {
+        type: "text",
+      },
+    },
   },
   render: Template,
   args: {
     placeholder: "Placeholder",
     inputMode: "text",
     type: "text",
+    label: "Label",
     disabled: false,
     size: 52,
+    labelText: 14,
     onChange: fn(),
   },
 };

@@ -2,60 +2,78 @@
 @use "@/shared/ui/styles/mixins" as m;
 
 .wrapper {
-  @include m.flex(flex-start, flex-end, column);
+  @include m.flex(flex-start, flex-start, column);
   gap: 8px;
-  padding: 16px;
-  cursor: text;
-  background-color: var(--c-grayscale-white);
-  border: 1px solid var(--c-grayscale-gray-300);
-  border-radius: 8px;
 
-  &:is(:focus-within, :hover) {
-    border-color: var(--c-brand-primary);
+  .label {
+    color: var(--c-text-main);
+
+    &.large {
+      @include m.fontBody1(semibold);
+    }
+
+    &.medium {
+      @include m.fontBody2(semibold);
+    }
   }
 
-  &:has(.textarea:active) {
-    background-color: var(--c-brand-primary-background);
-    border-color: var(--c-brand-primary-lighten);
-  }
+  .textareaWrapper {
+    @include m.flex(flex-start, flex-end, column);
+    gap: 8px;
+    width: 100%;
+    padding: 16px;
+    cursor: text;
+    background-color: var(--c-grayscale-white);
+    border: 1px solid var(--c-grayscale-gray-300);
+    border-radius: 8px;
 
-  &:has(.textarea:disabled) {
-    cursor: not-allowed;
-    background-color: var(--c-grayscale-gray-50);
-    border-color: var(--c-grayscale-gray-300);
+    &:is(:focus-within, :hover) {
+      border-color: var(--c-brand-primary);
+    }
 
-    .maxLength {
-      color: var(--c-text-disabled);
+    &:has(.textarea:active) {
+      background-color: var(--c-brand-primary-background);
+      border-color: var(--c-brand-primary-lighten);
+    }
 
-      .currentLength {
+    &:has(.textarea:disabled) {
+      cursor: not-allowed;
+      background-color: var(--c-grayscale-gray-50);
+      border-color: var(--c-grayscale-gray-300);
+
+      .maxLength {
+        color: var(--c-text-disabled);
+
+        .currentLength {
+          color: var(--c-text-disabled);
+        }
+      }
+    }
+
+    .textarea {
+      @include m.fontBody2(regular);
+      width: 100%;
+      color: var(--c-text-main);
+      cursor: inherit;
+      resize: none;
+      background-color: transparent;
+
+      &::placeholder {
+        color: var(--c-grayscale-gray-500);
+      }
+
+      &:disabled {
         color: var(--c-text-disabled);
       }
     }
-  }
 
-  .textarea {
-    @include m.fontBody2(regular);
-    width: 100%;
-    color: var(--c-text-main);
-    cursor: inherit;
-    resize: none;
-    background-color: transparent;
-
-    &::placeholder {
+    .maxLength {
+      @include m.fontCaption1(regular);
       color: var(--c-grayscale-gray-500);
-    }
 
-    &:disabled {
-      color: var(--c-text-disabled);
-    }
-  }
-
-  .maxLength {
-    @include m.fontCaption1(regular);
-    color: var(--c-grayscale-gray-500);
-
-    .currentLength {
-      color: var(--c-text-main);
+      .currentLength {
+        color: var(--c-text-main);
+      }
     }
   }
 }

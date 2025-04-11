@@ -20,9 +20,22 @@ const meta: Meta<typeof Tab> = {
         type: "text",
       },
     },
+    disabled: {
+      description: "Tab 비활성화 여부",
+      table: {
+        type: {
+          summary: "boolean",
+        },
+        defaultValue: { summary: "false" },
+      },
+      control: {
+        type: "boolean",
+      },
+    },
   },
   args: {
     children: "TAB",
+    disabled: false,
     onChange: fn(),
   },
 };
