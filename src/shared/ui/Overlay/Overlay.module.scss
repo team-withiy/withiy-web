@@ -1,0 +1,7 @@
+@use "@/shared/ui/styles/constants" as c;
+@use "@/shared/ui/styles/mixins" as m;
+
+.wrapper {
+  @include m.absoluteZero;
+  background-color: rgba(17, 17, 17, 60%);
+}
