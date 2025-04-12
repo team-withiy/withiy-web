@@ -6,22 +6,22 @@ import cx from "clsx";
 
 import styles from "./Textarea.module.scss";
 
-type LabelText = 16 | 14;
+type LabelSize = 16 | 14;
 
 interface Props extends ComponentProps<"textarea"> {
   label?: string;
   textareaClassName?: string;
-  labelText?: LabelText;
+  labelSize?: LabelSize;
 }
 
-const LABEL_SIZE_MAPPER: Record<LabelText, string> = {
+const LABEL_SIZE_MAPPER: Record<LabelSize, string> = {
   16: styles.large,
   14: styles.medium,
 };
 
 const Textarea: React.FC<Props> = ({
   label,
-  labelText = 14,
+  labelSize = 14,
   maxLength,
   className,
   value,
@@ -37,7 +37,7 @@ const Textarea: React.FC<Props> = ({
 
   return (
     <label className={cx(styles.wrapper, className)} data-testid="textarea-wrapper">
-      {label && <span className={cx(styles.label, LABEL_SIZE_MAPPER[labelText])}>{label}</span>}
+      {label && <span className={cx(styles.label, LABEL_SIZE_MAPPER[labelSize])}>{label}</span>}
       <div className={styles.textareaWrapper}>
         <textarea
           data-testid="textarea"

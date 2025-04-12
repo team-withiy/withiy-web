@@ -6,7 +6,7 @@ export default async function Home() {
   const json = await data.json();
 
   return (
-    <div>
+    <div style={{ backgroundColor: "black" }}>
       <h1>Home</h1>
       <p data-testid="mswData">{JSON.stringify(json)}</p>
       <Test />

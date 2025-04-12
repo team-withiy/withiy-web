@@ -1,34 +1,68 @@
 "use client";
 
+import { useState } from "react";
+
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
+import { range } from "lodash-es";
+import { Controller, useForm } from "react-hook-form";
 import { z } from "zod";
 
-import Input from "@/shared/ui/Input/Input";
+import Select from "@/shared/ui/Select/Select";
+import SelectItem from "@/shared/ui/Select/SelectItem";
 
 const schema = z.object({
-  value: z.string().min(3, { message: "3글자 이상 입력하세요." }),
+  value: z.number().min(0, { message: "아이템을 선택하세요." }),
 });
 
 type Schema = z.infer<typeof schema>;
 
 const Test: React.FC = () => {
   const {
-    register,
-    formState: { errors, touchedFields },
+    control,
+
+    formState: { errors },
   } = useForm<Schema>({
     mode: "onTouched",
     resolver: zodResolver(schema),
+    defaultValues: {
+      value: -1,
+    },
   });
 
+  const [isShow, setIsShow] = useState(false);
+
   return (
-    <Input
-      type="text"
-      errorMessage={errors.value?.message}
-      successMessage={!!touchedFields.value && !errors.value && "성공"}
-      size={52}
-      {...register("value")}
-    />
+    <>
+      <Controller
+        control={control}
+        name="value"
+        render={({ field: { value, onBlur, onChange } }) => {
+          const onClickItem = (i: number) => {
+            onChange(i);
+            setIsShow(false);
+          };
+
+          return (
+            <Select
+              isShow={isShow}
+              onOpen={() => setIsShow(true)}
+              onClose={() => setIsShow(false)}
+              onBlur={onBlur}
+              size={52}
+              errorMessage={errors.value?.message}
+              isPlaceholder={value === -1}
+              items={range(10).map((i) => (
+                <SelectItem key={i} onClick={() => onClickItem(i)} isSelected={value === i}>
+                  ITEM {i}
+                </SelectItem>
+              ))}
+            >
+              {value === -1 ? "선택하세요" : `ITEM ${value}`}
+            </Select>
+          );
+        }}
+      />
+    </>
   );
 };
 
