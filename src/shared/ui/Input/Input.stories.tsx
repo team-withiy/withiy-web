@@ -84,7 +84,7 @@ const meta: Meta<typeof Input> = {
         type: "select",
       },
     },
-    labelText: {
+    labelSize: {
       description: "라벨 텍스트 크기",
       table: {
         defaultValue: { summary: "14" },
@@ -112,7 +112,7 @@ const meta: Meta<typeof Input> = {
     label: "Label",
     disabled: false,
     size: 52,
-    labelText: 14,
+    labelSize: 14,
     onChange: fn(),
   },
 };

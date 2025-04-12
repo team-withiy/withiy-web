@@ -1,2 +1,110 @@
 @use "@/shared/ui/styles/constants" as c;
 @use "@/shared/ui/styles/mixins" as m;
+
+$MENU_MAX_HEIGHT: 364px;
+
+.wrapper {
+  @include m.flex(flex-start, flex-start, column);
+  position: relative;
+  gap: 8px;
+
+  .label {
+    color: var(--c-text-main);
+
+    &.large {
+      @include m.fontBody1(semibold);
+    }
+
+    &.medium {
+      @include m.fontBody2(semibold);
+    }
+  }
+
+  .button {
+    @include m.flex(space-between);
+    gap: 12px;
+    width: 100%;
+    padding: 16px 20px;
+    background-color: var(--c-grayscale-white);
+    border: 1px solid var(--c-grayscale-gray-300);
+    border-radius: 12px;
+
+    .buttonText {
+      @include m.makeEllipsis;
+      @include m.fontButton1(regular);
+      flex: 1;
+      color: var(--c-text-main);
+      text-align: left;
+
+      &.placeholder {
+        color: var(--c-grayscale-gray-500);
+      }
+    }
+
+    &.isShow {
+      border-color: var(--c-brand-primary);
+
+      .chevron {
+        transform: rotate(180deg);
+      }
+    }
+
+    &:focus-visible {
+      outline: 2px solid var(--c-brand-primary);
+    }
+
+    &:hover {
+      border-color: var(--c-brand-primary-darken);
+    }
+
+    &:active {
+      background-color: var(--c-brand-primary-background);
+      border-color: var(--c-brand-primary-lighten);
+    }
+
+    &:disabled {
+      background-color: var(--c-grayscale-gray-50);
+      border-color: var(--c-grayscale-gray-300);
+
+      .buttonText {
+        color: var(--c-text-disabled);
+      }
+
+      .chevron path {
+        stroke: var(--c-text-disabled);
+      }
+    }
+  }
+
+  .menu {
+    @include m.absolute(calc(100% + 8px) auto auto 50%);
+    @include m.flex(flex-start, center, column);
+    z-index: c.$Z_SELECT;
+    width: 100%;
+    max-height: 0;
+    overflow: hidden;
+    background-color: var(--c-grayscale-white);
+    border-radius: 8px;
+    box-shadow: c.$B_SHADOW_MD;
+    transform: translateX(-50%);
+    transition: all 0.2s ease-out;
+
+    &.isShow {
+      max-height: $MENU_MAX_HEIGHT;
+      overflow: auto;
+    }
+  }
+
+  .errorMessage {
+    @include m.fontButton2(regular);
+    @include m.makeEllipsis;
+    width: 100%;
+    color: var(--c-system-danger);
+  }
+
+  &.error {
+    .label {
+      color: var(--c-system-danger);
+    }
+  }
+}

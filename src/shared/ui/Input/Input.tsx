@@ -8,11 +8,11 @@ import styles from "./Input.module.scss";
 
 type Size = 52;
 
-type LabelText = 16 | 14;
+type LabelSize = 16 | 14;
 
 interface Props extends Omit<ComponentProps<"input">, "size"> {
   label?: string;
-  labelText?: LabelText;
+  labelSize?: LabelSize;
   size: Size;
   errorMessage?: string;
   successMessage?: string | boolean;
@@ -23,7 +23,7 @@ const SIZE_MAPPER: Record<Size, string> = {
   52: styles.large,
 };
 
-const LABEL_SIZE_MAPPER: Record<LabelText, string> = {
+const LABEL_SIZE_MAPPER: Record<LabelSize, string> = {
   16: styles.large,
   14: styles.medium,
 };
@@ -34,7 +34,7 @@ const Input: React.FC<Props> = ({
   inputMode,
   size,
   className,
-  labelText = 14,
+  labelSize = 14,
   errorMessage,
   successMessage,
   inputClassName,
@@ -51,7 +51,7 @@ const Input: React.FC<Props> = ({
       })}
       data-testid="input-wrapper"
     >
-      {label && <span className={cx(styles.label, LABEL_SIZE_MAPPER[labelText])}>{label}</span>}
+      {label && <span className={cx(styles.label, LABEL_SIZE_MAPPER[labelSize])}>{label}</span>}
       <input
         type={type}
         inputMode={inputMode}

@@ -4,7 +4,7 @@ import type { ComponentProps } from "react";
 
 import cx from "clsx";
 
-import { IconCheckLarge, IconCheckMedium } from "public/icons/check";
+import { IconCheckBoxLarge, IconCheckBoxMedium } from "public/icons/check";
 
 import styles from "./Checkbox.module.scss";
 
@@ -24,8 +24,8 @@ const Checkbox: React.FC<Props> = ({ size, children, ...props }) => {
     <label className={cx(styles.wrapper, SIZE_MAPPER[size])} data-testid="checkbox-wrapper">
       <input type="checkbox" className={styles.checkbox} data-testid="checkbox-input" {...props} hidden />
       <div className={styles.box}>
-        {size === 24 && <IconCheckLarge className={styles.check} />}
-        {size === 20 && <IconCheckMedium className={styles.check} />}
+        {size === 24 && <IconCheckBoxLarge className={styles.check} />}
+        {size === 20 && <IconCheckBoxMedium className={styles.check} />}
       </div>
       {children}
     </label>

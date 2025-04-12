@@ -1,2 +1,30 @@
 @use "@/shared/ui/styles/constants" as c;
 @use "@/shared/ui/styles/mixins" as m;
+
+.wrapper {
+  width: 100%;
+
+  .button {
+    @include m.flex(flex-start);
+    gap: 8px;
+    width: 100%;
+    padding: 16px 20px;
+    background-color: var(--c-grayscale-white);
+
+    &:hover {
+      background-color: var(--c-grayscale-gray-50);
+    }
+
+    .text {
+      @include m.makeEllipsis;
+      @include m.fontButton1(regular);
+      flex: 1;
+      color: var(--c-text-main);
+      text-align: left;
+
+      &.selected {
+        @include m.fontButton1(semibold);
+      }
+    }
+  }
+}

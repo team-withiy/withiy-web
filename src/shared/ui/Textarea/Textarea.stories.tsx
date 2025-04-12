@@ -68,7 +68,7 @@ const meta: Meta<typeof Textarea> = {
         type: "number",
       },
     },
-    labelText: {
+    labelSize: {
       description: "라벨 텍스트 크기",
       table: {
         defaultValue: { summary: "14" },
@@ -92,7 +92,7 @@ const meta: Meta<typeof Textarea> = {
   args: {
     placeholder: "Placeholder",
     label: "Label",
-    labelText: 14,
+    labelSize: 14,
     disabled: false,
     rows: 5,
     onChange: fn(),
