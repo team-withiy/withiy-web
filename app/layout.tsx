@@ -18,7 +18,11 @@ export default function RootLayout({
   return (
     <html lang="ko">
       <body className={PretendardJP.variable}>
-        <MSWProvider>{children}</MSWProvider>
+        <MSWProvider>
+          {children}
+          <div id="modal" />
+          <div id="toast" />
+        </MSWProvider>
       </body>
     </html>
   );
