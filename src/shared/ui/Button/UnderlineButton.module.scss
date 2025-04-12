@@ -7,6 +7,15 @@
   text-decoration-color: var(--c-text-sub);
   transition: all 0.2s ease-in-out;
 
+  &:focus-visible {
+    color: var(--c-brand-primary);
+    text-decoration-color: var(--c-brand-primary);
+
+    svg path {
+      stroke: var(--c-brand-primary);
+    }
+  }
+
   &.large {
     @include m.fontBody1(regular);
   }

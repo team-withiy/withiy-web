@@ -37,7 +37,7 @@ const Textarea: React.FC<Props> = ({
 
   return (
     <label className={cx(styles.wrapper, className)} data-testid="textarea-wrapper">
-      {label && <span className={(styles.label, LABEL_SIZE_MAPPER[labelText])}>{label}</span>}
+      {label && <span className={cx(styles.label, LABEL_SIZE_MAPPER[labelText])}>{label}</span>}
       <div className={styles.textareaWrapper}>
         <textarea
           data-testid="textarea"

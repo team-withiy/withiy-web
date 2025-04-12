@@ -1,0 +1,61 @@
+@use "@/shared/ui/styles/constants" as c;
+@use "@/shared/ui/styles/mixins" as m;
+
+.wrapper {
+  @include m.flex(flex-start, center);
+  gap: 8px;
+  color: var(--c-text-main);
+  cursor: pointer;
+
+  .box {
+    @include m.flex;
+    border: 1px solid var(--c-grayscale-gray-300);
+    border-radius: c.$R_ROUNDED_FULL;
+
+    .check path {
+      stroke: var(--c-grayscale-gray-300);
+    }
+  }
+
+  &.large {
+    @include m.fontBody1(regular);
+
+    .box {
+      width: 26px;
+      height: 26px;
+    }
+  }
+
+  &.medium {
+    @include m.fontBody2(regular);
+
+    .box {
+      width: 22px;
+      height: 22px;
+    }
+  }
+
+  &:has(.checkbox:checked) {
+    .box {
+      background-color: var(--c-brand-primary);
+      border-color: var(--c-brand-primary);
+
+      .check path {
+        stroke: var(--c-grayscale-white);
+      }
+    }
+  }
+
+  &:has(.checkbox:disabled) {
+    cursor: not-allowed;
+
+    .box {
+      background-color: var(--c-grayscale-gray-200);
+      border-color: var(--c-grayscale-gray-200);
+
+      .check path {
+        stroke: var(--c-grayscale-white);
+      }
+    }
+  }
+}
