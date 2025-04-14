@@ -9,19 +9,19 @@ on:
       - main
       - develop
 jobs:
-  test:
+  e2e:
     timeout-minutes: 60
     runs-on: ubuntu-latest
-    environment: test
+    environment: e2e
 
     steps:
       - uses: actions/checkout@v4
 
-      - name: Export secrets to env/.env.test file
+      - name: Export secrets to env/.env.e2e file
         uses: 0ndt/envfile@v2
         with:
           secrets: ${{ toJSON(secrets) }}
-          file: env/.env.test
+          file: env/.env.e2e
 
       - uses: actions/setup-node@v4
         with:

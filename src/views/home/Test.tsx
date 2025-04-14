@@ -19,7 +19,6 @@ type Schema = z.infer<typeof schema>;
 const Test: React.FC = () => {
   const {
     control,
-
     formState: { errors },
   } = useForm<Schema>({
     mode: "onTouched",
