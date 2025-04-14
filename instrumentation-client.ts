@@ -9,3 +9,5 @@ Sentry.init({
   ignoreErrors: ["ResizeObserver loop limit exceeded", "Network request failed"],
   integrations: [Sentry.replayIntegration({ maskAllText: false, blockAllMedia: false })],
 });
+
+export const onRouterTransitionStart = Sentry.captureRouterTransitionStart;
