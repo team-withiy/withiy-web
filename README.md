@@ -1,4 +1,4 @@
-<h1 align="center">withiy</h1>
+<h1 align="center">withiy web</h1>
 
 <br />
 <p align="center">
@@ -7,7 +7,14 @@
     </a>
 </p>
 
-## Document
+## Documents
 
-- [Branch 명명 규칙](./docs/branch.md)
-- [Styling 문서](./docs/styling.md)
+### Git
+
+- [branch 명명 규칙](./docs/branch.md)
+
+### Architecture
+
+- [env 관리](./docs/env.md)
+- [styling 문서](./docs/styling.md)
+- [폴더 구조](./docs/fsd.md)
