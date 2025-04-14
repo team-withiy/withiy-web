@@ -15,11 +15,13 @@ RUN npm install -g pnpm && pnpm i --frozen-lockfile
 
 FROM base AS builder
 
+ARG STAGE=prod
+
 WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 
-RUN npm install -g pnpm && pnpm run build:prod
+RUN npm install -g pnpm && pnpm run build:${STAGE}
 
 FROM base AS runner
 WORKDIR /app
