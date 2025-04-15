@@ -15,10 +15,6 @@ export default defineConfig({
     coverage: {
       provider: "v8",
       exclude: [
-        // 테스트 파일
-        "**/*.test.{ts,tsx}",
-        "**/*.spec.{ts,tsx}",
-
         // 목업 데이터
         "**/mocks/**",
         "**/__mocks__/**",
