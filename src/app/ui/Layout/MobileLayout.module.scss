@@ -1,0 +1,10 @@
+@use "@/shared/ui/styles/constants" as c;
+@use "@/shared/ui/styles/mixins" as m;
+
+.wrapper {
+  position: relative;
+  width: 100%;
+  max-width: c.$S_MAX_WIDTH;
+  margin: auto;
+  background-color: var(--c-grayscale-white);
+}
