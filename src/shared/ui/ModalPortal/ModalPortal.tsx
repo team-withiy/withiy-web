@@ -6,7 +6,7 @@ import { createPortal } from "react-dom";
 import cx from "clsx";
 import { CSSTransition } from "react-transition-group";
 
-import Overlay from "../Overlay/Overlay";
+import Overlay from "../Overlay";
 
 import styles from "./ModalPortal.module.scss";
 

@@ -4,7 +4,7 @@ import { Meta, StoryObj } from "@storybook/react";
 import { fn } from "@storybook/test";
 import { useForm } from "react-hook-form";
 
-import Textarea from "./Textarea";
+import Textarea from ".";
 
 const Template = ({ ...props }: ComponentProps<typeof Textarea>) => {
   const { register, watch } = useForm<{ value: string }>({

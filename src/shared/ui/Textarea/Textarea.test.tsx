@@ -2,7 +2,7 @@ import { cleanup, fireEvent, render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { afterEach, expect, test, vi } from "vitest";
 
-import Textarea from "./Textarea";
+import Textarea from ".";
 
 afterEach(() => {
   cleanup();

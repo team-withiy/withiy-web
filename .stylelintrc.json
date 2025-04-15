@@ -14,7 +14,7 @@
       }
     ],
     "keyframes-name-pattern": "^[a-z][a-zA-Z0-9_]+$",
-    "max-nesting-depth": 6,
+    "max-nesting-depth": 8,
     "no-descending-specificity": null,
     "no-invalid-position-at-import-rule": null,
     "property-no-vendor-prefix": [

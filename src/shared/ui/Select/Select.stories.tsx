@@ -6,8 +6,9 @@ import { range } from "lodash-es";
 import { Controller, useForm } from "react-hook-form";
 import { z } from "zod";
 
-import Select from "./Select";
 import SelectItem from "./SelectItem";
+
+import Select from ".";
 
 const schema = z.object({
   value: z.number().min(0, { message: "아이템을 선택하세요." }),

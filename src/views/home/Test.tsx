@@ -7,7 +7,7 @@ import { range } from "lodash-es";
 import { Controller, useForm } from "react-hook-form";
 import { z } from "zod";
 
-import Select from "@/shared/ui/Select/Select";
+import Select from "@/shared/ui/Select";
 import SelectItem from "@/shared/ui/Select/SelectItem";
 
 const schema = z.object({

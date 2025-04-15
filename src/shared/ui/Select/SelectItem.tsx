@@ -4,7 +4,7 @@ import type { MouseEventHandler, ReactNode } from "react";
 
 import cx from "clsx";
 
-import { IconCheckMedium } from "public/icons/check";
+import { IconCheck20 } from "public/icons";
 
 import styles from "./SelectItem.module.scss";
 
@@ -19,7 +19,7 @@ const SelectItem: React.FC<Props> = ({ children, onClick, isSelected, className 
   return (
     <li className={cx(styles.wrapper, className)}>
       <button type="button" className={styles.button} onClick={onClick}>
-        {isSelected && <IconCheckMedium />}
+        {isSelected && <IconCheck20 />}
         <span className={cx(styles.text, { [styles.selected]: isSelected })}>{children}</span>
       </button>
     </li>
