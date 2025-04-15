@@ -7,7 +7,7 @@ export default {
   "*.{ts,tsx}": (filenames) => [
     `prettier --write ${getFiles(filenames).join(" ")} --ignore-unknown --check`,
     `next lint --fix --file ${getFiles(filenames).join(" --file ")}`,
-    `vitest related ${getFiles(filenames).join(" ")} --run`,
+    "vitest --run",
     "playwright test",
   ],
   "src/**/*.scss": (filenames) => `stylelint --fix ${getFiles(filenames).join(" ")}`,

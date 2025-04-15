@@ -1,19 +1,22 @@
 "use client";
 
-import { type PropsWithChildren, useEffect, useRef } from "react";
+import { type PropsWithChildren, useEffect, useState } from "react";
 
 const MSWProvider: React.FC<PropsWithChildren> = ({ children }) => {
-  const loaded = useRef(false);
+  const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
     const init = async () => {
       const initMSW = await import("@/app/mocks").then((res) => res.initMSW);
       await initMSW();
-      loaded.current = true;
+      setLoaded(true);
     };
 
-    if (!loaded.current) init();
-  }, []);
+    if (!loaded) init();
+  }, [loaded]);
+
+  if (process.env.NEXT_PUBLIC_MSW !== "enabled") return <>{children}</>;
+  if (!loaded) return null;
 
   return <>{children}</>;
 };
