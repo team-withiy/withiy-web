@@ -6,7 +6,7 @@ import { fn } from "@storybook/test";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
-import Input from "./Input";
+import Input from ".";
 
 const schema = z.object({
   value: z.string().min(3, { message: "3글자 이상 입력하세요." }),

@@ -1,0 +1,29 @@
+@use "@/shared/ui/styles/constants" as c;
+@use "@/shared/ui/styles/mixins" as m;
+
+.wrapper {
+  @include m.fixed(0 auto auto 50%);
+  @include m.flex(space-between);
+  z-index: c.$Z_GNB;
+  width: 100%;
+  max-width: c.$S_MAX_WIDTH;
+  height: c.$S_GNB_HEIGHT;
+  padding: 12px 20px;
+  background-color: var(--c-grayscale-white);
+  transform: translateX(-50%);
+
+  .right ul {
+    @include m.flex;
+    gap: 12px;
+
+    button {
+      @include m.inlineFlex;
+      width: 24px;
+      height: 24px;
+
+      svg path {
+        stroke: var(--c-brand-primary);
+      }
+    }
+  }
+}

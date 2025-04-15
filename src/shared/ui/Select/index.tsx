@@ -5,7 +5,7 @@ import { type ReactNode, useCallback, useRef } from "react";
 import cx from "clsx";
 import { useClickAway } from "react-use";
 
-import { IconChevronDown } from "public/icons/chevron";
+import { IconChevronDown20 } from "public/icons";
 
 import styles from "./Select.module.scss";
 
@@ -92,7 +92,7 @@ const Select: React.FC<Props> = ({
         <span className={cx(styles.buttonText, { [styles.placeholder]: isPlaceholder })} data-testid="button-text">
           {children}
         </span>
-        <IconChevronDown className={styles.chevron} />
+        <IconChevronDown20 className={styles.chevron} />
       </button>
       {items.length > 0 && (
         <menu className={cx(styles.menu, menuClassName, { [styles.isShow]: isShow })} data-testid="menu">

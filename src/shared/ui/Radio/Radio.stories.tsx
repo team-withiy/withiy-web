@@ -3,7 +3,7 @@ import { ChangeEventHandler, ComponentProps, useState } from "react";
 import { Meta, StoryObj } from "@storybook/react";
 import { fn } from "@storybook/test";
 
-import Radio from "./Radio";
+import Radio from ".";
 
 const Template = ({ ...props }: ComponentProps<typeof Radio>) => {
   const [value, setValue] = useState(-1);
