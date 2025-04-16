@@ -49,3 +49,5 @@ node_modules/
 /playwright/.cache/
 
 *storybook.log
+
+__snapshots__/

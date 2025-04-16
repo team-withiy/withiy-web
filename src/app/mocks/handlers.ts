@@ -1,12 +1,3 @@
-import { http, HttpResponse } from "msw";
+import { categoryHandlers } from "__mocks__/category.handler";
 
-export const handlers = [
-  http.get("https://api.example.com/api/user", () => {
-    return HttpResponse.json({
-      data: {
-        name: "rldnd",
-        age: 28,
-      },
-    });
-  }),
-];
+export const handlers = [...categoryHandlers];
