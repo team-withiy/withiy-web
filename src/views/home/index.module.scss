@@ -3,4 +3,10 @@
 
 .wrapper {
   padding-top: c.$S_GNB_HEIGHT;
+  padding-bottom: c.$S_BOTTOM_NAVIGATION_HEIGHT;
+
+  .categoryWrapper {
+    @include m.flex;
+    width: 100%;
+  }
 }
