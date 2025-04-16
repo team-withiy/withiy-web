@@ -1,0 +1,36 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`getCategoriesApi 1`] = `
+{
+  "data": [
+    {
+      "icon": "https://loremflickr.com/32/32?lock=2723169722893434",
+      "id": 3756200289967619,
+      "name": "Movies",
+    },
+    {
+      "icon": "https://loremflickr.com/32/32?lock=3112534323089895",
+      "id": 1321859550396751,
+      "name": "Beauty",
+    },
+    {
+      "icon": "https://loremflickr.com/32/32?lock=6171908573307687",
+      "id": 3573763698195956,
+      "name": "Home",
+    },
+    {
+      "icon": "https://loremflickr.com/32/32?lock=6039034458006953",
+      "id": 1841542151411843,
+      "name": "Sports",
+    },
+    {
+      "icon": "https://loremflickr.com/32/32?lock=1784339584848401",
+      "id": 3758747504881023,
+      "name": "Industrial",
+    },
+  ],
+  "message": "success",
+  "status": 200,
+  "timestamp": "2022-10-20T06:31:19.917Z",
+}
+`;
