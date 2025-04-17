@@ -6,7 +6,7 @@ import type { ApiResponseDTO } from "@/shared/api/common.interface";
 import type { CategoryDTO } from "./category.interface";
 
 export const getCategoriesApi = async () =>
-  await getServer<ApiResponseDTO<CategoryDTO[]>>("/api/categories", {
+  getServer("/api/categories", {
     tags: ["category", "/api/categories"],
     cache: "force-cache",
-  });
+  }).then((res) => res.json<ApiResponseDTO<CategoryDTO[]>>());

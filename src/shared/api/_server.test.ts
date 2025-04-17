@@ -27,7 +27,7 @@ describe("서버 API 함수 테스트", () => {
 
   describe("_get 함수", () => {
     test("기본 GET 요청을 정상적으로 수행해야 함", async () => {
-      const result = await _get(mockBaseUrl, mockUrl);
+      const result = await (await _get(mockBaseUrl, mockUrl)).json();
 
       expect(global.fetch).toHaveBeenCalledWith(`${mockBaseUrl}${mockUrl}`, {
         method: "GET",
@@ -40,6 +40,7 @@ describe("서버 API 함수 테스트", () => {
           "Content-Type": "application/json",
         },
       });
+
       expect(result).toEqual(mockResponse);
     });
 
@@ -52,7 +53,7 @@ describe("서버 API 함수 테스트", () => {
     });
 
     test("cache를 no-store로 설정하면 revalidate가 undefined여야 함", async () => {
-      await _get(mockBaseUrl, mockUrl, { cache: "no-store" });
+      (await _get(mockBaseUrl, mockUrl, { cache: "no-store" })).json();
 
       expect(global.fetch).toHaveBeenCalledWith(
         `${mockBaseUrl}${mockUrl}`,
@@ -125,7 +126,7 @@ describe("서버 API 함수 테스트", () => {
       const method = "POST";
       const body = { name: "John" };
 
-      const result = await _mutate(mockBaseUrl, method, mockUrl, { body });
+      const result = await (await _mutate(mockBaseUrl, method, mockUrl, { body })).json();
 
       expect(global.fetch).toHaveBeenCalledWith(`${mockBaseUrl}${mockUrl}`, {
         method,
