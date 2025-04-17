@@ -1,22 +1,23 @@
+import { Suspense } from "react";
+
 import BottomNavigation from "@/widgets/layout/ui/BottomNavigation";
 import GNB from "@/widgets/layout/ui/GNB";
 
-import { getCategoriesApi } from "@/entities/category/api/category.server";
-import CategoryItem from "@/entities/category/ui/CategoryItem";
+import ScheduleCard from "@/entities/schedule/ui/ScheduleCard";
+
+import CategoryList, { LoadingCategoryList } from "./CategoryList";
 
 import styles from "./index.module.scss";
 
 export default async function Home() {
-  const categories = await getCategoriesApi();
-
   return (
     <main className={styles.wrapper}>
       <GNB />
-      <h1>Home</h1>
-      <div className={styles.categoryWrapper}>
-        {categories.data.map((category) => (
-          <CategoryItem key={category.id} category={category} />
-        ))}
+      <div className={styles.top}>
+        <ScheduleCard />
+        <Suspense fallback={<LoadingCategoryList />}>
+          <CategoryList />
+        </Suspense>
       </div>
       <BottomNavigation />
     </main>

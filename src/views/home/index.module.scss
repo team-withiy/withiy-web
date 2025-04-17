@@ -2,11 +2,16 @@
 @use "@/shared/ui/styles/mixins" as m;
 
 .wrapper {
-  padding-top: c.$S_GNB_HEIGHT;
-  padding-bottom: c.$S_BOTTOM_NAVIGATION_HEIGHT;
+  width: 100%;
+  padding-top: calc(c.$S_PAGE_VERTICAL_PADDING + c.$S_GNB_HEIGHT);
+  padding-bottom: calc(c.$S_PAGE_VERTICAL_PADDING + c.$S_BOTTOM_NAVIGATION_HEIGHT);
 
-  .categoryWrapper {
-    @include m.flex;
+  .top {
+    @include m.flex(flex-start, center, column);
+    gap: 16px;
     width: 100%;
+    padding: 0 c.$S_PAGE_HORIZONTAL_PADDING c.$S_PAGE_VERTICAL_PADDING;
+    margin-bottom: 32px;
+    border-bottom: 6px solid var(--c-divider-sub);
   }
 }
