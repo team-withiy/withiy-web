@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 import cx from "clsx";
+import Skeleton from "react-loading-skeleton";
 
 import { CategoryDTO } from "@/entities/category/api/category.interface";
 
@@ -35,3 +36,22 @@ const CategoryItem: React.FC<Props> = ({ category, className }) => {
 };
 
 export default CategoryItem;
+
+interface LoadingProps {
+  className?: string;
+}
+
+export const LoadingCategoryItem: React.FC<LoadingProps> = ({ className }) => {
+  return (
+    <div className={cx(styles.wrapper, className)} data-testid="loading-category-item">
+      <figure className={styles.category} data-testid="loading-category-figure">
+        <div className={styles.imageWrapper}>
+          <Skeleton height={32} width={32} />
+        </div>
+        <figcaption data-testid="loading-category-name" className={styles.name}>
+          <Skeleton width={50} />
+        </figcaption>
+      </figure>
+    </div>
+  );
+};
