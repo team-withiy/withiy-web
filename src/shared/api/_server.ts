@@ -14,7 +14,7 @@ const getNextRevalidate = (options?: GetOptions) => {
     : DEFAULT_REVALIDATE;
 };
 
-export const _get = async <T>(baseUrl: string, url: string, options?: GetOptions) => {
+export const _get = async (baseUrl: string, url: string, options?: GetOptions) => {
   const params = getSearchParams(options?.params, true);
 
   const response = await fetch(`${baseUrl}${url}${params}`, {
@@ -30,10 +30,10 @@ export const _get = async <T>(baseUrl: string, url: string, options?: GetOptions
     },
   });
 
-  return (await response.json()) as T;
+  return response;
 };
 
-export const _mutate = async <T>(baseUrl: string, method: string, url: string, options?: MutateOptions): Promise<T> => {
+export const _mutate = async (baseUrl: string, method: string, url: string, options?: MutateOptions) => {
   const params = getSearchParams(options?.params, true);
   const response = await fetch(`${baseUrl}${url}${params}`, {
     method,
@@ -47,5 +47,5 @@ export const _mutate = async <T>(baseUrl: string, method: string, url: string, o
   options?.revalidateTags?.forEach((tag) => revalidateTag(tag));
   options?.revalidatePath?.forEach((path) => revalidatePath(path.path, path.type));
 
-  return (await response.json()) as T;
+  return response;
 };
