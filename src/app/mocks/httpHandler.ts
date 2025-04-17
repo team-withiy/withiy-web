@@ -1,7 +1,10 @@
+import dotenv from "dotenv";
 import { DefaultBodyType, http, HttpHandler, HttpResponseResolver, PathParams, RequestHandlerOptions } from "msw";
 
-export const API_URL = "https://withiy-prod.zerohertz.xyz";
-export const BASE_URL = "http://localhost:3000";
+dotenv.config({ path: "env/.env.test" });
+
+export const API_URL = process.env.NEXT_PUBLIC_API_URL;
+export const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 
 type MockingHttpHandler = <
   Params extends PathParams<keyof Params> = PathParams,
