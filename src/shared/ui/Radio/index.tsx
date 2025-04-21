@@ -21,7 +21,7 @@ const Radio: React.FC<Props> = ({ size, className, children, ...props }) => {
   return (
     <label className={cx(styles.wrapper, SIZE_MAPPER[size], className)} data-testid="radio-wrapper">
       <div className={styles.box} data-testid="radio-box">
-        <input type="radio" hidden {...props} data-testid="radio" />
+        <input type="radio" hidden data-testid="radio" {...props} />
       </div>
       {children}
     </label>
