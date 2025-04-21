@@ -29,3 +29,6 @@ vi.mock("react-dom", async () => {
     createPortal: (node: ReactNode) => node,
   };
 });
+
+// MEMO: next/dynamic components
+vi.mock("./src/shared/ui/ModalPortal");
