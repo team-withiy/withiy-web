@@ -1,11 +1,10 @@
 import { Suspense } from "react";
 
-import BottomNavigation from "@/widgets/layout/ui/BottomNavigation";
-import GNB from "@/widgets/layout/ui/GNB";
+import CategoryList, { LoadingCategoryList } from "@/widgets/CategoryList/ui";
+import BottomNavigation from "@/widgets/Layout/ui/BottomNavigation";
+import GNB from "@/widgets/Layout/ui/GNB";
 
 import ScheduleCard from "@/entities/schedule/ui/ScheduleCard";
-
-import CategoryList, { LoadingCategoryList } from "./CategoryList";
 
 import styles from "./index.module.scss";
 

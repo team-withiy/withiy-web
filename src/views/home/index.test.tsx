@@ -5,7 +5,7 @@ import HomePage from "@/views/home";
 
 import { resolvePromiseComponent } from "@/shared/lib/test";
 
-test("Page", async () => {
+test("Home", async () => {
   const HomeResolved = await resolvePromiseComponent(HomePage, {});
   render(<HomeResolved />);
 });
