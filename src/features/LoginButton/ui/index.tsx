@@ -1,19 +1,21 @@
 "use client";
 
-import { type ComponentProps, type ReactNode, useTransition } from "react";
+import { type ReactNode } from "react";
+
+import Link from "next/link";
 
 import cx from "clsx";
 
 import type { SocialType } from "@/shared/api/auth/auth.interface";
 import Tooltip from "@/shared/ui/Tooltip";
 
-import { getOAuthLinkWithSetStateAction } from "../api/actions";
 import { IconGoogle, IconKakao, IconNaver } from "public/icons/auth";
 
 import styles from "./LoginButton.module.scss";
 
-interface Props extends Omit<ComponentProps<"button">, "children"> {
+interface Props {
   socialType: SocialType;
+  className?: string;
 }
 
 interface SocialTypeValue {
@@ -37,32 +39,20 @@ const SOCIAL_TYPE_MAPPER: Record<SocialType, SocialTypeValue> = {
   },
 };
 
-const LoginButton: React.FC<Props> = ({ socialType, className, ...props }) => {
+const LoginButton: React.FC<Props> = ({ socialType, className }) => {
   const { children, icon } = SOCIAL_TYPE_MAPPER[socialType];
 
-  const [isPending, startTransition] = useTransition();
-
-  const onClick = () => {
-    startTransition(async () => {
-      const redirectUrl = await getOAuthLinkWithSetStateAction(socialType);
-      window.open(redirectUrl, "_self");
-    });
-  };
-
   return (
-    <Tooltip tooltipContent="최근에 로그인했어요!" className={styles.wrapper} leftPositionBasedOnTail="85%">
-      <button
-        type="button"
-        disabled={isPending}
+    <Tooltip tooltipContent="최근에 로그인했어요!" className={styles.wrapper} leftPositionBasedOnTail="85%" isHidden>
+      <Link
         aria-label={`${socialType} 로그인 버튼`}
         className={cx(styles.loginButton, className, styles[socialType])}
         data-testid={`${socialType}-login-button`}
-        onClick={onClick}
-        {...props}
+        href={`${process.env.NEXT_PUBLIC_API_URL}/auth/${socialType}`}
       >
         {icon}
         {children}
-      </button>
+      </Link>
     </Tooltip>
   );
 };
