@@ -1,0 +1,40 @@
+@use "@/shared/ui/styles/constants" as c;
+@use "@/shared/ui/styles/mixins" as m;
+
+$CONTENT_MIN_VERTICAL_PADDING: 20px;
+
+.wrapper {
+  width: 100%;
+  background-color: var(--c-brand-primary-background);
+
+  .main {
+    @include m.flex(flex-start, center, column);
+    width: 100%;
+    height: 100%;
+    padding: 20px;
+
+    .top {
+      @include m.flex(center, center, column);
+      flex: 3;
+      padding: $CONTENT_MIN_VERTICAL_PADDING 0;
+
+      .title {
+        @include m.fontHeadline1(semibold);
+        color: var(--c-brand-primary);
+      }
+
+      .description {
+        @include m.fontBody1(medium);
+        color: var(--c-text-main-sub);
+      }
+    }
+
+    .bottom {
+      @include m.flex(flex-start, center, column);
+      flex: 2;
+      gap: 12px;
+      width: 100%;
+      padding: $CONTENT_MIN_VERTICAL_PADDING 0;
+    }
+  }
+}

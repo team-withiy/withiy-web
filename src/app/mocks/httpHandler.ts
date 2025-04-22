@@ -42,7 +42,7 @@ const serverHttpHandler = (() => {
 
 const localHttpHandler = (() => {
   const getUrl = (url: string) => {
-    return url.startsWith("http") ? url : `${BASE_URL}${url}`;
+    return url.startsWith("http") ? url : `${BASE_URL}/api${url}`;
   };
 
   const _localHttpHandler: ReturnHttpHandler = {

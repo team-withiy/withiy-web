@@ -4,7 +4,7 @@ import { _get, _mutate } from "./_server";
 
 import type { GetOptions, MutateOptions } from "./api.interface";
 
-const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL as string;
+const BASE_URL = `${process.env.NEXT_PUBLIC_BASE_URL}/api` as string;
 
 export const getRouteHandler = async (url: string, options?: GetOptions) => await _get(BASE_URL, url, options);
 export const postRouteHandler = async (url: string, options?: MutateOptions) =>

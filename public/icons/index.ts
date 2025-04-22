@@ -1,3 +1,6 @@
+// MEMO: CHARACTER
+export { default as IconCharacterDefault } from "./character-default.svg";
+
 // MEMO: BELL
 export { default as IconBell20 } from "./bell20.svg";
 

@@ -1,0 +1,31 @@
+@use "@/shared/ui/styles/constants" as c;
+@use "@/shared/ui/styles/mixins" as m;
+
+.wrapper {
+  @include m.fontBody2(semibold);
+  @include m.flex;
+  position: relative;
+  width: 100%;
+  padding: 16px 32px;
+  border-radius: 100px;
+
+  .icon {
+    @include m.posCenterY;
+    left: 32px;
+  }
+
+  &.kakao {
+    color: var(--c-text-main);
+    background-color: #fee500;
+  }
+
+  &.naver {
+    color: var(--c-grayscale-white);
+    background-color: #03c75a;
+  }
+
+  &.google {
+    color: var(--c-text-main);
+    background-color: var(--c-grayscale-white);
+  }
+}
