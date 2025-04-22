@@ -1,0 +1,24 @@
+@use "@/shared/ui/styles/constants" as c;
+@use "@/shared/ui/styles/mixins" as m;
+
+.wrapper {
+  position: relative;
+
+  .tooltip {
+    @include m.absolute(auto auto calc(100% + 6px) auto);
+    @include m.fontCaption1(semibold);
+    padding: 8px 16px;
+    color: var(--c-grayscale-white);
+    white-space: nowrap;
+    background-color: var(--c-grayscale-gray-950);
+    border-radius: 16px;
+    transform: translateX(calc(-100% + 16px));
+
+    &::after {
+      @include m.absolute(100% 16px auto auto);
+      content: "";
+      border: 4px solid transparent;
+      border-top: 6px solid var(--c-grayscale-gray-950);
+    }
+  }
+}

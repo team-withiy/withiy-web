@@ -10,11 +10,7 @@ export const getCookie = async (name: string) => {
 
 export const setCookie = async (name: string, value: string) => {
   const cookieStore = await cookies();
-  cookieStore.set(
-    name,
-    value,
-    //  { httpOnly: true, domain: process.env.NEXT_PUBLIC_BASE_URL }
-  );
+  cookieStore.set(name, value, { httpOnly: true, domain: process.env.NEXT_PUBLIC_BASE_URL, path: "/" });
 };
 
 export const deleteCookie = async (name: string) => {

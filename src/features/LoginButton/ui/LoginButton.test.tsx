@@ -24,6 +24,8 @@ describe("카카오 로그인 버튼", () => {
     expect(window.open).toHaveBeenCalled();
     expect(window.open).toHaveBeenCalledWith(expect.stringContaining("state="), "_self");
   });
+
+  test("최근에 로그인한 방법이 카카오일 경우, 툴팁이 노출된다.");
 });
 
 describe("구글 로그인 버튼", () => {
@@ -37,6 +39,8 @@ describe("구글 로그인 버튼", () => {
     expect(window.open).toHaveBeenCalled();
     expect(window.open).toHaveBeenCalledWith(expect.stringContaining("state="), "_self");
   });
+
+  test("최근에 로그인한 방법이 구글일 경우, 툴팁이 노출된다.");
 });
 
 describe("네이버 로그인 버튼", () => {
@@ -50,4 +54,6 @@ describe("네이버 로그인 버튼", () => {
     expect(window.open).toHaveBeenCalled();
     expect(window.open).toHaveBeenCalledWith(expect.stringContaining("state="), "_self");
   });
+
+  test("최근에 로그인한 방법이 네이버일 경우, 툴팁이 노출된다.");
 });

@@ -5,6 +5,7 @@ import { type ComponentProps, type ReactNode, useTransition } from "react";
 import cx from "clsx";
 
 import type { SocialType } from "@/shared/api/auth/auth.interface";
+import Tooltip from "@/shared/ui/Tooltip";
 
 import { getOAuthLinkWithSetStateAction } from "../api/actions";
 import { IconGoogle, IconKakao, IconNaver } from "public/icons/auth";
@@ -49,18 +50,20 @@ const LoginButton: React.FC<Props> = ({ socialType, className, ...props }) => {
   };
 
   return (
-    <button
-      type="button"
-      disabled={isPending}
-      aria-label={`${socialType} 로그인 버튼`}
-      className={cx(styles.wrapper, className, styles[socialType])}
-      data-testid={`${socialType}-login-button`}
-      onClick={onClick}
-      {...props}
-    >
-      {icon}
-      {children}
-    </button>
+    <Tooltip tooltipContent="최근에 로그인했어요!" className={styles.wrapper} leftPositionBasedOnTail="85%">
+      <button
+        type="button"
+        disabled={isPending}
+        aria-label={`${socialType} 로그인 버튼`}
+        className={cx(styles.loginButton, className, styles[socialType])}
+        data-testid={`${socialType}-login-button`}
+        onClick={onClick}
+        {...props}
+      >
+        {icon}
+        {children}
+      </button>
+    </Tooltip>
   );
 };
 
