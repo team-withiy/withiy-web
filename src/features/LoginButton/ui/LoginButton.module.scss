@@ -31,5 +31,9 @@
       color: var(--c-text-main);
       background-color: var(--c-grayscale-white);
     }
+
+    &.loading {
+      cursor: not-allowed;
+    }
   }
 }

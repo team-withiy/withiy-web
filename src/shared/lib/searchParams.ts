@@ -16,10 +16,10 @@ const preprocessValue = (params?: Record<string, SearchParamsValue>) => {
   );
 };
 
-export const getSearchParams = (params?: Record<string, SearchParamsValue>, withQuestion?: boolean) => {
+export const getSearchParams = (params?: Record<string, SearchParamsValue>) => {
   const preprocessedParams = preprocessValue(params);
-  if (!preprocessedParams) return "";
   const searchParams = new URLSearchParams();
+  if (!preprocessedParams) return searchParams;
 
   Object.entries(preprocessedParams).forEach(([key, values]) => {
     values.forEach((value) => {
@@ -27,6 +27,10 @@ export const getSearchParams = (params?: Record<string, SearchParamsValue>, with
     });
   });
 
-  const queryString = searchParams.toString();
-  return withQuestion ? `?${queryString}` : queryString;
+  return searchParams;
+};
+
+export const getSearchParamsString = (params?: Record<string, SearchParamsValue>) => {
+  const searchParams = getSearchParams(params);
+  return searchParams.toString() ? `?${searchParams.toString()}` : "";
 };

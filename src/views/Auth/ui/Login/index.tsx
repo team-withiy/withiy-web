@@ -1,6 +1,7 @@
-import LoginButton from "@/features/LoginButton/ui";
+import LoginButton, { LoadingLoginButton } from "@/features/LoginButton/ui";
 
 import DvhHeightLayout from "@/shared/ui/Layout/DvhHeightLayout";
+import { SSRSafeSuspense } from "@/shared/ui/SSRSafeSuspense";
 
 import BackButton from "./BackButton";
 import { IconCharacterDefault } from "public/icons";
@@ -17,9 +18,15 @@ const LoginPage: React.FC = () => {
           <p className={styles.description}>데이트 여정을 한 번에</p>
         </section>
         <section className={styles.bottom}>
-          <LoginButton socialType="google" />
-          <LoginButton socialType="kakao" />
-          <LoginButton socialType="naver" />
+          <SSRSafeSuspense fallback={<LoadingLoginButton socialType="google" />}>
+            <LoginButton socialType="google" />
+          </SSRSafeSuspense>
+          <SSRSafeSuspense fallback={<LoadingLoginButton socialType="kakao" />}>
+            <LoginButton socialType="kakao" />
+          </SSRSafeSuspense>
+          <SSRSafeSuspense fallback={<LoadingLoginButton socialType="naver" />}>
+            <LoginButton socialType="naver" />
+          </SSRSafeSuspense>
         </section>
         <BackButton />
       </main>

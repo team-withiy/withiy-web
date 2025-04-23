@@ -3,19 +3,19 @@
 import { revalidatePath, revalidateTag } from "next/cache";
 
 import { DEFAULT_REVALIDATE } from "../constants/api";
-import { getSearchParams } from "../lib/searchParams";
+import { getSearchParamsString } from "../lib/searchParams";
 
 import type { GetOptions, MutateOptions } from "./api.interface";
 
-const getNextRevalidate = (options?: GetOptions) => {
+const getNextRevalidate = (options: GetOptions) => {
   if (options?.cache === "no-store" || options?.cache === "default") return undefined;
   return typeof options?.revalidate === "number" || options?.revalidate === false
     ? options.revalidate
     : DEFAULT_REVALIDATE;
 };
 
-export const _get = async (baseUrl: string, url: string, options?: GetOptions) => {
-  const params = getSearchParams(options?.params, true);
+export const _get = async (baseUrl: string, url: string, options: GetOptions) => {
+  const params = getSearchParamsString(options?.params);
 
   const response = await fetch(`${baseUrl}${url}${params}`, {
     method: "GET",
@@ -33,19 +33,19 @@ export const _get = async (baseUrl: string, url: string, options?: GetOptions) =
   return response;
 };
 
-export const _mutate = async (baseUrl: string, method: string, url: string, options?: MutateOptions) => {
-  const params = getSearchParams(options?.params, true);
+export const _mutate = async (baseUrl: string, method: string, url: string, options: MutateOptions) => {
+  const params = getSearchParamsString(options.params);
   const response = await fetch(`${baseUrl}${url}${params}`, {
     method,
-    body: JSON.stringify(options?.body),
+    body: JSON.stringify(options.body),
     headers: {
       "Content-Type": "application/json",
-      ...options?.headers,
+      ...options.headers,
     },
   });
 
-  options?.revalidateTags?.forEach((tag) => revalidateTag(tag));
-  options?.revalidatePath?.forEach((path) => revalidatePath(path.path, path.type));
+  options.revalidateTags?.forEach((tag) => revalidateTag(tag));
+  options.revalidatePath?.forEach((path) => revalidatePath(path.path, path.type));
 
   return response;
 };

@@ -2,13 +2,14 @@
 
 import { type ReactNode } from "react";
 
-import Link from "next/link";
-
+import { useSuspenseQuery } from "@tanstack/react-query";
 import cx from "clsx";
 
 import type { SocialType } from "@/shared/api/auth/auth.interface";
+import { authQueries } from "@/shared/api/auth/auth.queries";
 import Tooltip from "@/shared/ui/Tooltip";
 
+import { useSetRecentLoginedSocialTypeMutation } from "../api/loginButton.mutations";
 import { IconGoogle, IconKakao, IconNaver } from "public/icons/auth";
 
 import styles from "./LoginButton.module.scss";
@@ -41,20 +42,54 @@ const SOCIAL_TYPE_MAPPER: Record<SocialType, SocialTypeValue> = {
 
 const LoginButton: React.FC<Props> = ({ socialType, className }) => {
   const { children, icon } = SOCIAL_TYPE_MAPPER[socialType];
+  const { data } = useSuspenseQuery(authQueries.getRecentLoginedSocialType);
+
+  const { mutateAsync } = useSetRecentLoginedSocialTypeMutation();
+
+  const onClick = async () => {
+    await mutateAsync(socialType);
+  };
 
   return (
-    <Tooltip tooltipContent="최근에 로그인했어요!" className={styles.wrapper} leftPositionBasedOnTail="85%" isHidden>
-      <Link
+    <Tooltip
+      tooltipContent="최근에 로그인했어요!"
+      className={styles.wrapper}
+      leftPositionBasedOnTail="85%"
+      isHidden={data.socialType !== socialType}
+    >
+      <button
+        type="button"
         aria-label={`${socialType} 로그인 버튼`}
         className={cx(styles.loginButton, className, styles[socialType])}
         data-testid={`${socialType}-login-button`}
-        href={`${process.env.NEXT_PUBLIC_API_URL}/auth/${socialType}`}
+        onClick={onClick}
       >
         {icon}
         {children}
-      </Link>
+      </button>
     </Tooltip>
   );
 };
 
 export default LoginButton;
+
+interface LoadingLoginButtonProps {
+  socialType: SocialType;
+  className?: string;
+}
+
+export const LoadingLoginButton: React.FC<LoadingLoginButtonProps> = ({ socialType, className }) => {
+  const { children, icon } = SOCIAL_TYPE_MAPPER[socialType];
+
+  return (
+    <div className={styles.wrapper}>
+      <div
+        className={cx(styles.loginButton, styles.loading, className, styles[socialType])}
+        data-testid={`${socialType}-login-button`}
+      >
+        {icon}
+        {children}
+      </div>
+    </div>
+  );
+};

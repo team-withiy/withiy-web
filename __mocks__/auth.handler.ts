@@ -1,0 +1,25 @@
+import { HttpResponse } from "msw";
+
+import { localHttpHandler } from "@/app/mocks/httpHandler";
+
+import { RecentLoginedSocialTypeResponse, SocialType } from "@/shared/api/auth/auth.interface";
+
+const getRecentLoginedSocialType = localHttpHandler.get<{}, undefined, RecentLoginedSocialTypeResponse>(
+  "/auth/recent-logined-social-types",
+  async () => {
+    return HttpResponse.json<RecentLoginedSocialTypeResponse>({
+      socialType: "google",
+    });
+  },
+);
+
+const setRecentLoginedSocialType = localHttpHandler.post<
+  {},
+  { socialType: SocialType },
+  RecentLoginedSocialTypeResponse
+>("/auth/recent-logined-social-types", async ({ request }) => {
+  const { socialType } = await request.json();
+  return HttpResponse.json({ socialType });
+});
+
+export const authHandlers = [getRecentLoginedSocialType, setRecentLoginedSocialType];

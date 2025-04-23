@@ -60,7 +60,6 @@ entities
         ├── domain.mutations.ts         # create, update, delete와 같은 기능을 하는 client service 함수
         ├── domain.server-mutations.ts  # apiServer를 사용해 server side에서 실행되는 mutation service 함수
         ├── domain.server.ts            # apiServer를 사용해 server side에서 실행되는 service 함수
-        ├── domain.route-handler.ts     # routeHandlerApi를 사용하는 함수
         └── domain.queries.ts           # query-key-factory를 사용한 쿼리 키
 
 ```

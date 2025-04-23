@@ -105,7 +105,7 @@ describe("서버 API 함수 테스트", () => {
     });
 
     test("커스텀 헤더가 추가되어야 함", async () => {
-      const headers = { Authorization: "Bearer token" };
+      const headers = { authorization: "Bearer token" };
 
       await _get(mockBaseUrl, mockUrl, { headers, cache: "default" });
 
@@ -114,7 +114,7 @@ describe("서버 API 함수 테스트", () => {
         expect.objectContaining({
           headers: {
             "Content-Type": "application/json",
-            Authorization: "Bearer token",
+            authorization: "Bearer token",
           },
         }),
       );
@@ -170,7 +170,7 @@ describe("서버 API 함수 테스트", () => {
     });
 
     test("커스텀 헤더가 추가되어야 함", async () => {
-      const headers = { Authorization: "Bearer token" };
+      const headers = { authorization: "Bearer token" };
 
       await _mutate(mockBaseUrl, "POST", mockUrl, { headers });
 
@@ -179,7 +179,7 @@ describe("서버 API 함수 테스트", () => {
         expect.objectContaining({
           headers: {
             "Content-Type": "application/json",
-            Authorization: "Bearer token",
+            authorization: "Bearer token",
           },
         }),
       );

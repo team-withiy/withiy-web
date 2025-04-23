@@ -3,10 +3,12 @@ import type { Metadata, Viewport } from "next";
 import cx from "clsx";
 
 import MSWProvider from "@/app/providers/MSWProvider";
+import ReactQueryProvider from "@/app/providers/ReactQueryProvider";
 import { PretendardJP } from "@/app/ui/fontFace";
 import MobileLayout from "@/app/ui/Layout/MobileLayout";
 
 import styles from "./layout.module.scss";
+
 import "@/app/ui/styles/global.scss";
 
 export const metadata: Metadata = {
@@ -29,11 +31,13 @@ export default function RootLayout({
     <html lang="ko">
       <body className={cx(PretendardJP.variable, styles.body)}>
         <MSWProvider>
-          <MobileLayout>
-            {children}
-            <div id="modal" />
-            <div id="toast" />
-          </MobileLayout>
+          <ReactQueryProvider>
+            <MobileLayout>
+              {children}
+              <div id="modal" />
+              <div id="toast" />
+            </MobileLayout>
+          </ReactQueryProvider>
         </MSWProvider>
       </body>
     </html>
