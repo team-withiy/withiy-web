@@ -1,6 +1,6 @@
 "use client";
 
-import { useLayoutEffect } from "react";
+import { useEffect } from "react";
 
 import { useRouter, useSearchParams } from "next/navigation";
 
@@ -15,10 +15,10 @@ const Callback: React.FC = () => {
   const [accessToken, refreshToken] = [searchParams.get("accessToken"), searchParams.get("refreshToken")];
   const { data } = useSuspenseQuery(authQueries.authCallback({ accessToken, refreshToken }));
 
-  useLayoutEffect(() => {
-    if (!!data) router.replace("/");
-    else router.replace("/auth");
-  }, [data, router]);
+  useEffect(() => {
+    if (!data.accessToken || !data.refreshToken) router.replace("/auth");
+    else router.replace("/");
+  }, [data.accessToken, data.refreshToken, router]);
 
   return null;
 };

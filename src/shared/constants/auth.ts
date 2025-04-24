@@ -9,3 +9,8 @@ export const SERVER_AUTH_ERROR: ErrorDTO = {
 };
 
 export const SOCIAL_TYPE = ["kakao", "google", "naver"] as const;
+
+export const RESTORE_PAGE_ENDPOINT = "/users/restore";
+export const REGISTER_PAGE_ENDPOINT = "/auth/register";
+export const LOGIN_PAGE_ENDPOINT = "/auth";
+export const HOME_PAGE_ENDPOINT = "/";

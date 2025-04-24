@@ -1,7 +1,6 @@
-import type { TermAgreementDTO } from "@/entities/term/api/@x/user";
-
 export interface UserDTO {
   nickname: string;
   thumbnail: string;
-  termAgreement: TermAgreementDTO;
+  /** 계정 복구 가능 여부 */
+  restoreEnabled: boolean;
 }

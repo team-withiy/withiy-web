@@ -41,6 +41,7 @@ export default defineConfig({
         "**/stories/**",
         "**/*.stories.{ts,tsx}",
         "**/*.stories.mdx",
+        "**/*.spec.{ts, tsx}",
         ".storybook/**",
         "coverage/**",
         "node_modules/**",
