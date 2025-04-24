@@ -2,6 +2,14 @@ import { beforeEach, describe, expect, test, vi } from "vitest";
 
 import { deleteCookie, deleteCookies, getCookie, getCookies, setCookie, setCookies } from "./cookies";
 
+const COOKIE_OPTIONS = {
+  httpOnly: true,
+  path: "/",
+  domain: process.env.NEXT_PUBLIC_COOKIE_DOMAIN,
+  secure: process.env.NODE_ENV === "production",
+  sameSite: "strict",
+};
+
 const mockGet = vi.fn();
 const mockSet = vi.fn();
 const mockDelete = vi.fn();
@@ -42,7 +50,7 @@ describe("setCookie", () => {
   test("쿠키를 설정할 수 있어야 한다.", async () => {
     await setCookie("test-cookie", "test-value");
 
-    expect(mockSet).toHaveBeenCalledWith("test-cookie", "test-value");
+    expect(mockSet).toHaveBeenCalledWith("test-cookie", "test-value", COOKIE_OPTIONS);
   });
 });
 
@@ -72,8 +80,8 @@ describe("setCookies", () => {
   test("여러 쿠키를 동시에 설정할 수 있어야 한다.", async () => {
     await setCookies({ cookie1: "value1", cookie2: "value2" });
     expect(mockSet).toHaveBeenCalledTimes(2);
-    expect(mockSet).toHaveBeenNthCalledWith(1, "cookie1", "value1");
-    expect(mockSet).toHaveBeenNthCalledWith(2, "cookie2", "value2");
+    expect(mockSet).toHaveBeenNthCalledWith(1, "cookie1", "value1", COOKIE_OPTIONS);
+    expect(mockSet).toHaveBeenNthCalledWith(2, "cookie2", "value2", COOKIE_OPTIONS);
   });
 });
 

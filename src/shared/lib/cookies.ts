@@ -10,7 +10,12 @@ export const getCookie = async (name: string) => {
 
 export const setCookie = async (name: string, value: string) => {
   const cookieStore = await cookies();
-  cookieStore.set(name, value);
+  cookieStore.set(name, value, {
+    httpOnly: true,
+    path: "/",
+    secure: process.env.NODE_ENV === "production",
+    sameSite: "strict",
+  });
 };
 
 export const deleteCookie = async (name: string) => {
