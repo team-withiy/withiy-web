@@ -1,0 +1,13 @@
+@use "@/shared/ui/styles/constants" as c;
+@use "@/shared/ui/styles/mixins" as m;
+
+.wrapper {
+  width: 100%;
+  padding-top: c.$S_HEADER_HEIGHT;
+
+  .title {
+    @include m.fontTitle4(semibold);
+    @include m.makeEllipsis;
+    color: var(--c-text-main);
+  }
+}

@@ -11,6 +11,7 @@ import { getMeApi } from "@/entities/user/api/user.server";
 
 import styles from "./index.module.scss";
 
+// https://velog.io/@haryan248/server-component-with-dx fetchBoundary 작업
 export default async function Home() {
   const data = await getMeApi();
 

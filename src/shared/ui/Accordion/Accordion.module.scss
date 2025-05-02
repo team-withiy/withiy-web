@@ -1,0 +1,29 @@
+@use "@/shared/ui/styles/constants" as c;
+@use "@/shared/ui/styles/mixins" as m;
+
+.wrapper {
+  .summary {
+    @include m.flex(space-between);
+    gap: 10px;
+    padding: 16px;
+
+    .chevronButton {
+      @include m.flex;
+      width: 24px;
+      height: 24px;
+
+      .chevron.isShow {
+        transform: rotate(180deg);
+      }
+    }
+  }
+
+  .details {
+    @include m.fontBody2(regular);
+    padding: 16px 12px;
+    color: var(--c-text-sub);
+    background-color: var(--c-grayscale-white);
+    border: 1px solid var(--c-divider-main-sub);
+    border-radius: 8px;
+  }
+}
