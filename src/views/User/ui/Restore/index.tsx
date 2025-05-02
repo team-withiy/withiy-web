@@ -1,20 +1,33 @@
 import Header from "@/widgets/Layout/ui/Header";
 
 import AuthorizationRouteHandler from "@/features/handleAuthorizationRoute/ui/AuthorizationRouteHandler";
+import RestoreUserButton from "@/features/restoreUser/ui/RestoreUserButton";
 
-import Test from "./Test";
+import DvhHeightLayout from "@/shared/ui/Layout/DvhHeightLayout";
+
+import { IconCharacterQuestion } from "public/icons";
 
 import styles from "./RestorePage.module.scss";
 
 const RestorePage: React.FC = () => {
   return (
     <AuthorizationRouteHandler isRestorePage requiredAuth>
-      <main className={styles.wrapper}>
-        <Header className={styles.header}>
-          <h2 className={styles.title}>이용약관 동의</h2>
-        </Header>
-        <Test />
-      </main>
+      <DvhHeightLayout heightType="height" dvh={100} className={styles.wrapper}>
+        <main className={styles.main}>
+          <Header className={styles.header}>
+            <h2 className={styles.title}>계정 복구</h2>
+          </Header>
+          <section className={styles.content}>
+            <IconCharacterQuestion />
+            <p className={styles.description}>
+              또 오셨네요!
+              <br />
+              계정 복구가 필요하신가요?
+            </p>
+          </section>
+          <RestoreUserButton />
+        </main>
+      </DvhHeightLayout>
     </AuthorizationRouteHandler>
   );
 };
