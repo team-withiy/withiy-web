@@ -8,3 +8,7 @@ export interface UserDTO {
   /** 커플 연결 코드 */
   code: string;
 }
+
+export interface RestoreAccountDTO {
+  restore: boolean;
+}
