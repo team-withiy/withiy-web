@@ -19,7 +19,6 @@ const Template = ({ blockCloseWhenClickOverlay, children }: ComponentProps<typeo
         blockCloseWhenClickOverlay={blockCloseWhenClickOverlay}
       >
         {children}
-        <div style={{ height: 4000 }} />
         <div style={{ display: "flex", justifyContent: "center", marginTop: 20 }}>
           <Button size={52} variant="default" type="button" onClick={() => setIsShow(false)}>
             [테스트용] 모달 닫기
@@ -54,6 +53,9 @@ const meta: Meta<typeof BaseModal> = {
   args: {
     blockCloseWhenClickOverlay: false,
     children: "모달 내용",
+  },
+  parameters: {
+    layout: "centered",
   },
 };
 
