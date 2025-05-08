@@ -8,6 +8,7 @@ import { PretendardJP } from "@/app/ui/fontFace";
 import MobileLayout from "@/app/ui/Layout/MobileLayout";
 
 import Alert from "@/shared/ui/Alert/Alert";
+import { Toast } from "@/shared/ui/Toast";
 
 import styles from "./layout.module.scss";
 
@@ -39,6 +40,7 @@ export default function RootLayout({
               <div id="modal" />
               <div id="toast" />
               <Alert />
+              <Toast />
             </MobileLayout>
           </ReactQueryProvider>
         </MSWProvider>

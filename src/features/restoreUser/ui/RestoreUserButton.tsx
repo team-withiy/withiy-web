@@ -5,11 +5,13 @@ import { useTransition } from "react";
 import useAlert from "@/shared/ui/Alert/useAlert";
 import BottomFloatingButtonWrapper from "@/shared/ui/BottomFloatingButtonWrapper";
 import Button from "@/shared/ui/Button/Button";
+import { useToast } from "@/shared/ui/Toast";
 
 import { cancelRestoreAction, restoreAction } from "../api/actions";
 
 const RestoreUserButton: React.FC = () => {
   const { showAlert, closeAlert } = useAlert();
+  const { addToast } = useToast();
 
   const [isPending, startTransition] = useTransition();
 
@@ -23,13 +25,15 @@ const RestoreUserButton: React.FC = () => {
       onCancel: () => {
         closeAlert();
         startTransition(async () => {
-          await cancelRestoreAction();
+          const message = await cancelRestoreAction();
+          addToast({ message, state: "danger" });
         });
       },
-      onConfirm: async () => {
+      onConfirm: () => {
         closeAlert();
         startTransition(async () => {
-          await restoreAction();
+          const message = await restoreAction();
+          addToast({ message, state: "danger" });
         });
       },
     });
