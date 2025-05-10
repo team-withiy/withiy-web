@@ -4,7 +4,7 @@ import CategoryList, { LoadingCategoryList } from "@/widgets/CategoryList/ui";
 import BottomNavigation from "@/widgets/Layout/ui/BottomNavigation";
 import GNB from "@/widgets/Layout/ui/GNB";
 
-import AuthorizationRouteHandler from "@/features/handleAuthorizationRoute/ui/AuthorizationRouteHandler";
+import { AuthorizationRouteHandler } from "@/features/handleAuthorizationRoute/ui";
 
 import { getCategoriesApi } from "@/entities/category/api/category.server";
 import ScheduleCard from "@/entities/schedule/ui/ScheduleCard";
@@ -18,20 +18,19 @@ export default async function Home() {
   const data = await getMeApi();
 
   return (
-    <AuthorizationRouteHandler>
-      <main className={styles.wrapper}>
-        <GNB />
-        {JSON.stringify(data)}
-        <div className={styles.top}>
-          <ScheduleCard />
-          <Suspense fallback={<LoadingCategoryList />}>
-            <FetchBoundary fetchFunctions={[getCategoriesApi]}>
-              {([categories]) => <CategoryList categories={categories.data} />}
-            </FetchBoundary>
-          </Suspense>
-        </div>
-        <BottomNavigation />
-      </main>
-    </AuthorizationRouteHandler>
+    <main className={styles.wrapper}>
+      <GNB />
+      {JSON.stringify(data)}
+      <div className={styles.top}>
+        <ScheduleCard />
+        <Suspense fallback={<LoadingCategoryList />}>
+          <FetchBoundary fetchFunctions={[getCategoriesApi]}>
+            {([categories]) => <CategoryList categories={categories.data} />}
+          </FetchBoundary>
+        </Suspense>
+      </div>
+      <BottomNavigation />
+      <AuthorizationRouteHandler />
+    </main>
   );
 }
