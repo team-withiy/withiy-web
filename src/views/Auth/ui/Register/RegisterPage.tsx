@@ -9,7 +9,7 @@ const RegisterPage: React.FC = () => {
 
   return (
     <>
-      <RegisterFunnelPage termPromise={termPromise} />;
+      <RegisterFunnelPage termPromise={termPromise} />
       <AuthorizationRouteHandler requiredAuth isRegisterPage />
     </>
   );

@@ -32,3 +32,6 @@ export { default as IconUserRound24 } from "./user-round24.svg";
 
 // MEMO: X
 export { default as IconX16 } from "./x16.svg";
+
+// MEMO: ARROW
+export { default as IconArrowLeft24 } from "./arrow-left24.svg";

@@ -3,10 +3,10 @@
 import { Suspense, useState } from "react";
 
 import type { TermAgreementDTO, TermDTO } from "@/entities/term/api/term.interface";
-import type { RegisterUserInDTO } from "@/entities/user/api/user.interface";
 
 import type { ApiResponseDTO } from "@/shared/api/common.interface";
 
+import ProfilePage from "./ProfilePage";
 import TermPage, { LoadingTermPage } from "./TermPage";
 
 type Tab = "terms" | "profile";
@@ -17,11 +17,15 @@ interface Props {
 
 const RegisterFunnelPage: React.FC<Props> = ({ termPromise }) => {
   const [tab, setTab] = useState<Tab>("terms");
-  const [form, setForm] = useState<RegisterUserInDTO>({ nickname: "", termAgreements: {} });
+  const [termAgreements, setTermAgreements] = useState<TermAgreementDTO>({});
 
   const onClickNextButtonInAgreeTerms = (data: TermAgreementDTO) => {
     setTab("profile");
-    setForm((prev) => ({ ...prev, termAgreements: data }));
+    setTermAgreements(data);
+  };
+
+  const onClickPrevButtonInProfile = () => {
+    setTab("terms");
   };
 
   return (
@@ -30,11 +34,12 @@ const RegisterFunnelPage: React.FC<Props> = ({ termPromise }) => {
         <Suspense fallback={<LoadingTermPage />}>
           <TermPage
             termPromise={termPromise}
-            defaultTermAgreements={form.termAgreements}
+            defaultTermAgreements={termAgreements}
             onClickNext={onClickNextButtonInAgreeTerms}
           />
         </Suspense>
       )}
+      {tab === "profile" && <ProfilePage termAgreements={termAgreements} onClickPrev={onClickPrevButtonInProfile} />}
     </>
   );
 };
