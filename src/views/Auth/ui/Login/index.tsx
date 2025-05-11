@@ -1,5 +1,5 @@
 import { AuthorizationRouteHandler } from "@/features/handleAuthorizationRoute/ui";
-import LoginButton, { LoadingLoginButton } from "@/features/LoginButton/ui";
+import LoginButton, { LoadingLoginButton } from "@/features/login/ui/LoginButton";
 
 import DvhHeightLayout from "@/shared/ui/Layout/DvhHeightLayout";
 import { SSRSafeSuspense } from "@/shared/ui/SSRSafeSuspense";

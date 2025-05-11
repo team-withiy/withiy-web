@@ -1,3 +1,5 @@
+import type { TermAgreementDTO } from "@/entities/term/api/@x/user";
+
 export interface UserDTO {
   nickname: string;
   thumbnail: string;
@@ -11,4 +13,9 @@ export interface UserDTO {
 
 export interface RestoreAccountDTO {
   restore: boolean;
+}
+
+export interface RegisterUserInDTO {
+  termAgreements: TermAgreementDTO;
+  nickname: string;
 }

@@ -16,7 +16,6 @@ interface Props {
   details?: ReactNode;
 }
 
-// TODO: ACCORDION 완성 / storybook
 const Accordion: React.FC<Props> = ({ isShow, className, details, summary, onClickButton }) => {
   const summaryId = useId();
   const detailsId = useId();

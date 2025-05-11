@@ -3,7 +3,7 @@ import { afterEach, describe, expect, test, vi } from "vitest";
 
 import { renderWithProviders } from "@/shared/lib/test";
 
-import LoginButton from ".";
+import LoginButton from "./LoginButton";
 
 afterEach(() => {
   cleanup();

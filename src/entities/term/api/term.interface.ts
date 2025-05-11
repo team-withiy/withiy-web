@@ -5,7 +5,4 @@ export interface TermDTO {
   required: boolean;
 }
 
-export interface TermAgreementDTO {
-  term: TermDTO;
-  agreed: boolean;
-}
+export type TermAgreementDTO = Record<string, boolean>;

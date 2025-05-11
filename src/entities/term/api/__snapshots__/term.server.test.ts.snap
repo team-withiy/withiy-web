@@ -1,0 +1,61 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`getTermsApi 1`] = `
+{
+  "data": [
+    {
+      "content": [
+        "Stillicidium bardus utrimque acsi spargo cur.",
+        "Aqua avaritia thesaurus volo combibo stultus utor.",
+        "Ago adflicto assentator utrimque altus curiositas vita expedita stultus comedo.",
+      ],
+      "id": 3756200289967619,
+      "required": false,
+      "title": "A cognatus arca aliquam audentia coniuratio crux fugit.",
+    },
+    {
+      "content": [
+        "Testimonium amet dedico ver claudeo.",
+        "Aperio accusantium spoliatio beneficium cena.",
+        "Adnuo natus arca odit subseco ambulo.",
+      ],
+      "id": 7517639729901717,
+      "required": true,
+      "title": "Tandem voveo tamisium.",
+    },
+    {
+      "content": [
+        "Apto apud timor cubicularis asperiores vestigium conqueror tantillus sursum vacuus.",
+        "Tantillus conscendo centum vehemens cursus vobis somnus.",
+        "Amplus vir defaeco nesciunt cumque capillus venio.",
+      ],
+      "id": 6254600583177373,
+      "required": false,
+      "title": "Admiratio facilis sonitus dolorum vinco occaecati.",
+    },
+    {
+      "content": [
+        "Studio vulpes at approbo vicissitudo subiungo aedificium temeritas tego vesica.",
+        "Ante accusantium acquiro ad cariosus undique fugit ipsum.",
+        "Ante cibo occaecati volubilis laudantium accusamus thesaurus candidus timor.",
+      ],
+      "id": 25853607495918,
+      "required": true,
+      "title": "Compello et valde consuasor ver qui accendo.",
+    },
+    {
+      "content": [
+        "Abundans aequitas volaticus minus barba casus tam.",
+        "Nobis voluntarius tyrannus capto.",
+        "Quam tricesimus aro accusamus aegrus depereo.",
+      ],
+      "id": 7778093548825340,
+      "required": false,
+      "title": "Iure approbo adulatio animus adinventitias amita caelum summisse.",
+    },
+  ],
+  "message": "success",
+  "status": 200,
+  "timestamp": "2022-07-27T15:08:18.351Z",
+}
+`;

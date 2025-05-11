@@ -31,6 +31,6 @@ exports[`getCategoriesApi 1`] = `
   ],
   "message": "success",
   "status": 200,
-  "timestamp": "2022-10-20T06:31:19.917Z",
+  "timestamp": "2022-07-27T15:08:18.351Z",
 }
 `;
