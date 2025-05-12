@@ -7,7 +7,7 @@
     "node": "22"
   },
   "scripts": {
-    "run:local": "env-cmd -f env/.env.local -x next dev -p \\$PORT",
+    "run:local": "rm -rf .next && env-cmd -f env/.env.local -x next dev -p \\$PORT",
     "run:dev": "env-cmd -f env/.env.development -x next dev -p \\$PORT",
     "run:prod": "env-cmd -f env/.env.production -x next start -p \\$PORT",
     "build:local": "env-cmd -f env/.env.local next build",

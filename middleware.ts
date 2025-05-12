@@ -5,7 +5,6 @@ import { TokenDTO } from "@/shared/api/auth/auth.interface";
 import { ApiResponseDTO } from "@/shared/api/common.interface";
 import { COOKIE_OPTIONS } from "@/shared/constants/cookies";
 import { ACCESS_TOKEN_KEY, REFRESH_TOKEN_KEY } from "@/shared/constants/storage";
-import { isStatusError } from "@/shared/lib/http";
 import { PromiseHolder } from "@/shared/lib/promiseHolder";
 import { getServerTokens } from "@/shared/models/auth/token";
 import { isValidToken } from "@/shared/models/auth/validateToken";
@@ -34,11 +33,9 @@ export async function middleware(request: NextRequest) {
 
       promiseHolder.hold();
 
-      const { status, data } = await postServer("/auth/refresh", {
+      const { data } = await postServer("/auth/refresh", {
         body: { refreshToken },
       }).then((res) => res.json<ApiResponseDTO<TokenDTO>>());
-
-      if (isStatusError(status)) throw new Error("토큰 리프레시 API 에러");
 
       const response = NextResponse.redirect(request.nextUrl);
       response.cookies.set(ACCESS_TOKEN_KEY, data.accessToken, COOKIE_OPTIONS);

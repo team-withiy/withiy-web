@@ -48,8 +48,8 @@ const ProfilePage: React.FC<Props> = ({ termAgreements, onClickPrev }) => {
   });
 
   const onSubmit: SubmitHandler<ProfileSchema> = async (data) => {
-    const message = await registerAction({ termAgreements, ...data });
-    addToast({ message, state: "danger" });
+    const errorMessage = await registerAction({ termAgreements, ...data });
+    addToast({ message: errorMessage, state: "danger" });
   };
 
   return (

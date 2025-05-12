@@ -4,6 +4,7 @@ import { revalidatePath, revalidateTag } from "next/cache";
 
 import { DEFAULT_REVALIDATE } from "../constants/api";
 import { getSearchParamsString } from "../lib/searchParams";
+import { FetchHTTPException, getFetchHTTPError } from "../models/auth/fetchHTTPException";
 
 import type { GetOptions, MutateOptions } from "./api.interface";
 
@@ -30,6 +31,10 @@ export const _get = async (baseUrl: string, url: string, options: GetOptions) =>
     },
   });
 
+  if (!response.ok) {
+    throw new FetchHTTPException(await getFetchHTTPError(response));
+  }
+
   return response;
 };
 
@@ -43,6 +48,10 @@ export const _mutate = async (baseUrl: string, method: string, url: string, opti
       ...options.headers,
     },
   });
+
+  if (!response.ok) {
+    throw new FetchHTTPException(await getFetchHTTPError(response));
+  }
 
   options.revalidateTags?.forEach((tag) => revalidateTag(tag));
   options.revalidatePath?.forEach((path) => revalidatePath(path.path, path.type));

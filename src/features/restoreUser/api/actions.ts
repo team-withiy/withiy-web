@@ -4,16 +4,24 @@ import { redirect } from "next/navigation";
 
 import { restoreUserApi } from "@/entities/user/api/user.server-mutations";
 
-import { isStatusError } from "@/shared/lib/http";
+import { isFetchHTTPError } from "@/shared/models/auth/fetchHTTPException";
 
 export const cancelRestoreAction = async () => {
-  const { message, status } = await restoreUserApi({ restore: false });
-  if (isStatusError(status)) return message;
-  redirect("/auth/register");
+  try {
+    await restoreUserApi({ restore: false });
+    redirect("/auth/register");
+  } catch (error) {
+    if (isFetchHTTPError(error)) return error.message;
+    throw error;
+  }
 };
 
 export const restoreAction = async () => {
-  const { message, status } = await restoreUserApi({ restore: true });
-  if (isStatusError(status)) return message;
-  redirect("/users/restore/complete");
+  try {
+    await restoreUserApi({ restore: true });
+    redirect("/auth/register");
+  } catch (error) {
+    if (isFetchHTTPError(error)) return error.message;
+    throw error;
+  }
 };

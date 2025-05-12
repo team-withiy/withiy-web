@@ -25,15 +25,15 @@ const RestoreUserButton: React.FC = () => {
       onCancel: () => {
         closeAlert();
         startTransition(async () => {
-          const message = await cancelRestoreAction();
-          addToast({ message, state: "danger" });
+          const errorMessage = await cancelRestoreAction();
+          addToast({ message: errorMessage, state: "danger" });
         });
       },
       onConfirm: () => {
         closeAlert();
         startTransition(async () => {
-          const message = await restoreAction();
-          addToast({ message, state: "danger" });
+          const errorMessage = await restoreAction();
+          addToast({ message: errorMessage, state: "danger" });
         });
       },
     });

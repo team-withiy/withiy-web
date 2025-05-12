@@ -2,18 +2,20 @@
 
 import { headers } from "next/headers";
 
+import { UNAUTHORIZED_STATUS } from "@/shared/constants/auth";
+import { isFetchHTTPError } from "@/shared/models/auth/fetchHTTPException";
 import { getServerAccessToken, getServerRefreshToken, setServerTokens } from "@/shared/models/auth/token";
 
 import { _get, _mutate } from "../_server";
 import { postServer } from "../apiServer";
-import { ApiResponseDTO } from "../common.interface";
+import { ApiResponseDTO, ErrorDTO } from "../common.interface";
 
 import type { GetOptions, MutateOptions } from "../api.interface";
 import type { TokenDTO } from "./auth.interface";
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_URL as string;
 
-const _refresh = async (refreshToken?: string) => {
+const _refresh = async (refreshToken: string) => {
   const tokens = await postServer("/auth/refresh", {
     headers: await headers(),
     body: { refreshToken },
@@ -34,9 +36,15 @@ const _mutateAuth = async (url: string, method: string, options: MutateOptions) 
       ...options,
       headers: { ...options?.headers, authorization: `Bearer ${accessToken}` },
     });
-  } catch {
-    const tokens = await _refresh(refreshToken);
-    return await _mutateAuth(url, method, { ...options, _tokens: tokens.data });
+  } catch (error) {
+    if (isFetchHTTPError(error) && error.status === UNAUTHORIZED_STATUS) {
+      if (!accessToken || !refreshToken) {
+        const errorBody: ErrorDTO = { message: error.message, status: error.status, timestamp: error.timestamp };
+        return new Response(JSON.stringify(errorBody), { status: UNAUTHORIZED_STATUS });
+      }
+      const tokens = await _refresh(refreshToken);
+      return await _mutate(BASE_URL, method, url, { ...options, _tokens: tokens.data });
+    } else throw error;
   }
 };
 
@@ -51,9 +59,15 @@ export const getAuthServer = async (url: string, options: GetOptions): Promise<R
       ...options,
       headers: { ...options?.headers, authorization: `Bearer ${accessToken}` },
     });
-  } catch {
-    const tokens = await _refresh(refreshToken);
-    return await getAuthServer(url, { ...options, _tokens: tokens.data });
+  } catch (error) {
+    if (isFetchHTTPError(error) && error.status === UNAUTHORIZED_STATUS) {
+      if (!accessToken || !refreshToken) {
+        const errorBody: ErrorDTO = { message: error.message, status: error.status, timestamp: error.timestamp };
+        return new Response(JSON.stringify(errorBody), { status: UNAUTHORIZED_STATUS });
+      }
+      const tokens = await _refresh(refreshToken);
+      return await getAuthServer(url, { ...options, _tokens: tokens.data });
+    } else throw error;
   }
 };
 
