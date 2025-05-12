@@ -2,6 +2,8 @@
 
 import { cookies } from "next/headers";
 
+import { COOKIE_OPTIONS } from "../constants/cookies";
+
 export const getCookie = async (name: string) => {
   const cookieStore = await cookies();
   const cookie = cookieStore.get(name);
@@ -10,12 +12,7 @@ export const getCookie = async (name: string) => {
 
 export const setCookie = async (name: string, value: string) => {
   const cookieStore = await cookies();
-  cookieStore.set(name, value, {
-    httpOnly: true,
-    path: "/",
-    secure: process.env.NODE_ENV === "production",
-    sameSite: "strict",
-  });
+  cookieStore.set(name, value, COOKIE_OPTIONS);
 };
 
 export const deleteCookie = async (name: string) => {

@@ -10,6 +10,7 @@ import { isStatusError } from "@/shared/lib/http";
 // TODO: 커플 연결 페이지 연결
 export const registerAction = async (data: RegisterUserInDTO) => {
   const { message, status } = await registerUserApi(data);
+
   if (isStatusError(status)) return message;
   redirect("/");
 };

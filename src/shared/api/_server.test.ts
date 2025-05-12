@@ -27,15 +27,15 @@ describe("서버 API 함수 테스트", () => {
 
   describe("_get 함수", () => {
     test("기본 GET 요청을 정상적으로 수행해야 함", async () => {
-      const result = await (await _get(mockBaseUrl, mockUrl)).json();
+      const result = await (await _get(mockBaseUrl, mockUrl, { cache: "default" })).json();
 
       expect(global.fetch).toHaveBeenCalledWith(`${mockBaseUrl}${mockUrl}`, {
         method: "GET",
         next: {
-          revalidate: DEFAULT_REVALIDATE,
+          revalidate: undefined,
           tags: undefined,
         },
-        cache: undefined,
+        cache: "default",
         headers: {
           "Content-Type": "application/json",
         },

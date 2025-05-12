@@ -17,14 +17,7 @@ export async function GET() {
 }
 
 export async function POST(request: NextRequest) {
-  const searchParams = new URLSearchParams(request.nextUrl.search);
-  const recentLoginedSocialType = searchParams.get("socialType");
-  if (!recentLoginedSocialType || !SOCIAL_TYPE.includes(recentLoginedSocialType)) {
-    return NextResponse.json<RecentLoginedSocialTypeResponse>({
-      socialType: null,
-    });
-  } else {
-    await setCookie(RECENT_LOGINED_SOCIAL_TYPE_KEY, recentLoginedSocialType);
-    return NextResponse.json<RecentLoginedSocialTypeResponse>({ socialType: recentLoginedSocialType as SocialType });
-  }
+  const { socialType } = await request.json<RecentLoginedSocialTypeResponse>();
+  await setCookie(RECENT_LOGINED_SOCIAL_TYPE_KEY, socialType as SocialType);
+  return NextResponse.json<RecentLoginedSocialTypeResponse>({ socialType });
 }

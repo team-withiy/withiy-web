@@ -1,13 +1,23 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { afterEach, beforeEach, describe, expect, test, vi } from "vitest";
 
-import { getServerAccessToken } from "@/shared/models/auth/token";
+import { getServerAccessToken, getServerRefreshToken } from "@/shared/models/auth/token";
 
 import { _get, _mutate } from "../_server";
+import { postServer } from "../apiServer";
 import { deleteAuthServer, getAuthServer, patchAuthServer, postAuthServer, putAuthServer } from "./authApiServer";
+
+vi.mock("next/headers", () => ({
+  headers: vi.fn().mockReturnValue(new Map()),
+}));
 
 vi.mock("@/shared/models/auth/token", () => ({
   getServerAccessToken: vi.fn(),
+  getServerRefreshToken: vi.fn(),
+  setServerTokens: vi.fn().mockResolvedValue(undefined),
+}));
+
+vi.mock("../apiServer", () => ({
+  postServer: vi.fn(),
 }));
 
 vi.mock("../../../shared/api/_server", () => ({
@@ -27,11 +37,25 @@ const mockResponse = {
   json: vi.fn().mockResolvedValue({ data: { name: "test" } }),
 };
 const mockAccessToken = "test-access-token";
+const mockRefreshToken = "test-refresh-token";
+const mockTokens = {
+  accessToken: "new-access-token",
+  refreshToken: "new-refresh-token",
+};
+const mockRefreshApiResponse = {
+  status: 200,
+  data: mockTokens,
+};
+const mockRefreshResponse = {
+  json: vi.fn().mockResolvedValue(mockRefreshApiResponse),
+};
 
 beforeEach(() => {
   vi.mocked(getServerAccessToken).mockResolvedValue(mockAccessToken);
-  vi.mocked(_get).mockResolvedValue(mockResponse as any);
-  vi.mocked(_mutate).mockResolvedValue(mockResponse as any);
+  vi.mocked(getServerRefreshToken).mockResolvedValue(mockRefreshToken);
+  vi.mocked(_get).mockResolvedValue(mockResponse as unknown as Response);
+  vi.mocked(_mutate).mockResolvedValue(mockResponse as unknown as Response);
+  vi.mocked(postServer).mockResolvedValue(mockRefreshResponse as unknown as Response);
 });
 
 afterEach(() => {

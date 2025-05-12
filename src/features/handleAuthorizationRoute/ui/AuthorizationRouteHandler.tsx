@@ -1,3 +1,5 @@
+import type { ReactNode } from "react";
+
 import { redirect } from "next/navigation";
 
 import { getMeApi } from "@/entities/user/api/user.server";
@@ -16,7 +18,11 @@ interface Props {
   isRegisterPage?: boolean;
 }
 
-const AuthorizationRouteHandler = async ({ requiredAuth, isRegisterPage, isRestorePage }: Props) => {
+const AuthorizationRouteHandler = async ({
+  requiredAuth,
+  isRegisterPage,
+  isRestorePage,
+}: Props): Promise<ReactNode> => {
   const { status, data } = await getMeApi();
 
   if (requiredAuth === true && status === UNAUTHORIZED_STATUS) return redirect(LOGIN_PAGE_ENDPOINT);

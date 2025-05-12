@@ -1,54 +1,64 @@
 "use server";
 
-import { getServerAccessToken } from "@/shared/models/auth/token";
+import { headers } from "next/headers";
+
+import { getServerAccessToken, getServerRefreshToken, setServerTokens } from "@/shared/models/auth/token";
 
 import { _get, _mutate } from "../_server";
+import { postServer } from "../apiServer";
+import { ApiResponseDTO } from "../common.interface";
 
 import type { GetOptions, MutateOptions } from "../api.interface";
+import type { TokenDTO } from "./auth.interface";
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_URL as string;
 
-export const getAuthServer = async (url: string, options: GetOptions) => {
-  const accessToken = await getServerAccessToken();
+const _refresh = async (refreshToken?: string) => {
+  const tokens = await postServer("/auth/refresh", {
+    headers: await headers(),
+    body: { refreshToken },
+  }).then((response) => response.json<ApiResponseDTO<TokenDTO>>());
 
-  return await _get(BASE_URL, url, {
-    ...options,
-    headers: { ...options?.headers, authorization: `Bearer ${accessToken}` },
-  });
+  await setServerTokens(tokens.data);
+  return tokens;
 };
 
-export const postAuthServer = async (url: string, options: MutateOptions) => {
-  const accessToken = await getServerAccessToken();
+const _mutateAuth = async (url: string, method: string, options: MutateOptions) => {
+  const [accessToken, refreshToken] = [
+    options._tokens?.accessToken || (await getServerAccessToken()),
+    options._tokens?.refreshToken || (await getServerRefreshToken()),
+  ];
 
-  return await _mutate(BASE_URL, "POST", url, {
-    ...options,
-    headers: { ...options?.headers, authorization: `Bearer ${accessToken}` },
-  });
+  try {
+    return await _mutate(BASE_URL, method, url, {
+      ...options,
+      headers: { ...options?.headers, authorization: `Bearer ${accessToken}` },
+    });
+  } catch {
+    const tokens = await _refresh(refreshToken);
+    return await _mutateAuth(url, method, { ...options, _tokens: tokens.data });
+  }
 };
 
-export const patchAuthServer = async (url: string, options: MutateOptions) => {
-  const accessToken = await getServerAccessToken();
+export const getAuthServer = async (url: string, options: GetOptions): Promise<Response> => {
+  const [accessToken, refreshToken] = [
+    options._tokens?.accessToken || (await getServerAccessToken()),
+    options._tokens?.refreshToken || (await getServerRefreshToken()),
+  ];
 
-  return await _mutate(BASE_URL, "PATCH", url, {
-    ...options,
-    headers: { ...options?.headers, authorization: `Bearer ${accessToken}` },
-  });
+  try {
+    return await _get(BASE_URL, url, {
+      ...options,
+      headers: { ...options?.headers, authorization: `Bearer ${accessToken}` },
+    });
+  } catch {
+    const tokens = await _refresh(refreshToken);
+    return await getAuthServer(url, { ...options, _tokens: tokens.data });
+  }
 };
 
-export const putAuthServer = async (url: string, options: MutateOptions) => {
-  const accessToken = await getServerAccessToken();
-
-  return await _mutate(BASE_URL, "PUT", url, {
-    ...options,
-    headers: { ...options?.headers, authorization: `Bearer ${accessToken}` },
-  });
-};
-
-export const deleteAuthServer = async (url: string, options: MutateOptions) => {
-  const accessToken = await getServerAccessToken();
-
-  return await _mutate(BASE_URL, "DELETE", url, {
-    ...options,
-    headers: { ...options?.headers, authorization: `Bearer ${accessToken}` },
-  });
-};
+export const postAuthServer = async (url: string, options: MutateOptions) => await _mutateAuth(url, "POST", options);
+export const patchAuthServer = async (url: string, options: MutateOptions) => await _mutateAuth(url, "PATCH", options);
+export const putAuthServer = async (url: string, options: MutateOptions) => await _mutateAuth(url, "PUT", options);
+export const deleteAuthServer = async (url: string, options: MutateOptions) =>
+  await _mutateAuth(url, "DELETE", options);

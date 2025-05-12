@@ -1,12 +1,12 @@
-import type { JSX, PropsWithChildren, ReactNode } from "react";
+import type { PropsWithChildren, ReactNode } from "react";
 
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { render, renderHook } from "@testing-library/react";
 
 export const resolvePromiseComponent = async <T = {},>(
-  Component: (props: T) => Promise<JSX.Element>,
+  Component: (props: T) => Promise<ReactNode>,
   props: T,
-): Promise<() => JSX.Element> => {
+): Promise<() => ReactNode> => {
   const ComponentResolved = await Component(props);
   return () => ComponentResolved;
 };

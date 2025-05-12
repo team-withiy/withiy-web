@@ -21,12 +21,12 @@ export const _get = async (baseUrl: string, url: string, options: GetOptions) =>
     method: "GET",
     next: {
       revalidate: getNextRevalidate(options),
-      tags: options?.tags,
+      tags: options.tags,
     },
-    cache: options?.cache,
+    cache: options.cache,
     headers: {
       "Content-Type": "application/json",
-      ...options?.headers,
+      ...options.headers,
     },
   });
 
