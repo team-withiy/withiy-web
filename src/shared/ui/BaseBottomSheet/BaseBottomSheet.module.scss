@@ -1,0 +1,13 @@
+@use "@/shared/ui/styles/constants" as c;
+@use "@/shared/ui/styles/mixins" as m;
+
+.wrapper {
+  width: 100%;
+  max-width: c.$S_MAX_WIDTH;
+  max-height: c.$S_BOTTOM_SHEET_MAX_HEIGHT;
+  padding: 40px 20px 8px;
+  overflow: auto;
+  background-color: var(--c-grayscale-white);
+  border-radius: 20px 20px 0 0;
+  box-shadow: c.$B_SHADOW_LG;
+}

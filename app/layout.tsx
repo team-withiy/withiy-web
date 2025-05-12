@@ -36,11 +36,12 @@ export default function RootLayout({
         <MSWProvider>
           <ReactQueryProvider>
             <MobileLayout>
-              {children}
               <div id="modal" />
               <div id="toast" />
+              <div id="bottom-sheet" />
               <Alert />
               <Toast />
+              {children}
             </MobileLayout>
           </ReactQueryProvider>
         </MSWProvider>
