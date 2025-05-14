@@ -15,19 +15,10 @@ export const setCookie = async (name: string, value: string) => {
   cookieStore.set(name, value, COOKIE_OPTIONS);
 };
 
-export const deleteCookie = async (name: string) => {
-  const cookieStore = await cookies();
-  cookieStore.delete(name);
-};
-
 export const getCookies = async (cookies: string[]) => {
   return await Promise.all(cookies.map((cookie) => getCookie(cookie)));
 };
 
 export const setCookies = async (cookies: Record<string, string>) => {
   return await Promise.all(Object.entries(cookies).map(([name, value]) => setCookie(name, value)));
-};
-
-export const deleteCookies = async (cookies: string[]) => {
-  return await Promise.all(cookies.map((cookie) => deleteCookie(cookie)));
 };

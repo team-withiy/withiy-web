@@ -2,7 +2,7 @@
 
 import type { TokenDTO } from "@/shared/api/auth/auth.interface";
 import { ACCESS_TOKEN_KEY, REFRESH_TOKEN_KEY } from "@/shared/constants/storage";
-import { deleteCookie, getCookie, setCookie } from "@/shared/lib/cookies";
+import { getCookie, setCookie } from "@/shared/lib/cookies";
 
 export const getServerAccessToken = async () => await getCookie(ACCESS_TOKEN_KEY);
 export const getServerRefreshToken = async () => await getCookie(REFRESH_TOKEN_KEY);
@@ -17,8 +17,3 @@ export const setServerRefreshToken = async (refreshToken: string) => await setCo
 export const setServerTokens = async ({ accessToken, refreshToken }: TokenDTO) => {
   await Promise.all([setServerAccessToken(accessToken), setServerRefreshToken(refreshToken)]);
 };
-
-export const removeServerAccessToken = async () => await deleteCookie(ACCESS_TOKEN_KEY);
-export const removeServerRefreshToken = async () => await deleteCookie(REFRESH_TOKEN_KEY);
-export const removeServerTokens = async () =>
-  await Promise.all([removeServerAccessToken(), removeServerRefreshToken()]);

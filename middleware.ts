@@ -60,5 +60,5 @@ export async function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/((?!api|_next|.*\\..*).*)", "/:path*"],
+  matcher: ["/((?!api|_next|.*\\..*).*)", "/(.*)"],
 };

@@ -19,7 +19,7 @@ export const cancelRestoreAction = async () => {
 export const restoreAction = async () => {
   try {
     await restoreUserApi({ restore: true });
-    redirect("/auth/register");
+    redirect("/");
   } catch (error) {
     if (isFetchHTTPError(error)) return error.message;
     throw error;
