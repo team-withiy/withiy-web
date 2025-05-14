@@ -1,0 +1,17 @@
+@use "@/shared/ui/styles/constants" as c;
+@use "@/shared/ui/styles/mixins" as m;
+
+.wrapper {
+  width: 100%;
+  padding: calc(c.$S_HEADER_HEIGHT + 24px) c.$S_PAGE_HORIZONTAL_PADDING
+    calc(c.$S_BOTTOM_FLOATING_BUTTON_WRAPPER_HEIGHT + c.$S_PAGE_VERTICAL_PADDING);
+
+  .header {
+    @include m.flex;
+
+    .title {
+      @include m.fontTitle4(semibold);
+      color: var(--c-text-main);
+    }
+  }
+}

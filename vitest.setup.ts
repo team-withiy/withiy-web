@@ -32,3 +32,9 @@ vi.mock("react-dom", async () => {
 
 // MEMO: next/dynamic components
 vi.mock("./src/shared/ui/ModalPortal");
+vi.mock("./src/shared/ui/BottomSheetPortal");
+vi.mock("./src/shared/ui/Toast");
+vi.mock("./src/features/handleAuthorizationRoute/ui");
+
+// MEMO: cookies
+vi.mock("./src/shared/lib/cookies");

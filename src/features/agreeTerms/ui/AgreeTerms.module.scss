@@ -1,0 +1,43 @@
+@use "@/shared/ui/styles/constants" as c;
+@use "@/shared/ui/styles/mixins" as m;
+
+.wrapper {
+  width: 100%;
+
+  .totalAgree {
+    display: inline-block;
+    width: 100%;
+    padding: 16px;
+    margin-bottom: 16px;
+    cursor: pointer;
+    background-color: var(--c-grayscale-gray-50);
+    border-radius: 8px;
+
+    .totalAgreeCheckbox {
+      @include m.fontBody1(semibold);
+      color: var(--c-text-main);
+    }
+  }
+
+  .termCheckbox {
+    @include m.fontBody1(regular);
+    color: var(--c-text-main);
+
+    .required {
+      margin-right: 4px;
+      color: var(--c-brand-primary);
+      white-space: nowrap;
+    }
+  }
+
+  .details {
+    @include m.fontBody2(regular);
+    padding-left: 12px;
+    color: var(--c-text-sub);
+    list-style-type: disc;
+
+    ::marker {
+      font-size: 12px;
+    }
+  }
+}

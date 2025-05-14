@@ -1,0 +1,12 @@
+@use "@/shared/ui/styles/constants" as c;
+@use "@/shared/ui/styles/mixins" as m;
+
+.wrapper {
+  width: c.$S_MODAL_WIDTH;
+  max-height: c.$S_MODAL_MAX_HEIGHT;
+  padding: 24px;
+  overflow: auto;
+  background-color: var(--c-grayscale-white);
+  border-radius: 20px;
+  box-shadow: c.$B_SHADOW;
+}

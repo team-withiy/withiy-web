@@ -8,6 +8,5 @@ export interface ApiResponseDTO<T> {
 export interface ErrorDTO {
   timestamp: Date;
   status: number;
-  error: string;
-  path: string;
+  message: string;
 }

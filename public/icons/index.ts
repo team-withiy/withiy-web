@@ -1,3 +1,8 @@
+// MEMO: CHARACTER
+export { default as IconCharacterDefault } from "./character-default.svg";
+export { default as IconCharacterQuestion } from "./character-question.svg";
+export { default as IconCharacterHeart } from "./character-heart.svg";
+
 // MEMO: BELL
 export { default as IconBell20 } from "./bell20.svg";
 
@@ -5,6 +10,7 @@ export { default as IconBell20 } from "./bell20.svg";
 export { default as IconCheckbox24 } from "./checkbox24.svg";
 export { default as IconCheckbox20 } from "./checkbox20.svg";
 export { default as IconCheck20 } from "./check20.svg";
+export { default as IconCheck16 } from "./check16.svg";
 
 // MEMO: CHEVRON
 export { default as IconChevronDown20 } from "./chevron-down20.svg";
@@ -23,3 +29,9 @@ export { default as IconBook24 } from "./book24.svg";
 
 // MEMO: USER
 export { default as IconUserRound24 } from "./user-round24.svg";
+
+// MEMO: X
+export { default as IconX16 } from "./x16.svg";
+
+// MEMO: ARROW
+export { default as IconArrowLeft24 } from "./arrow-left24.svg";

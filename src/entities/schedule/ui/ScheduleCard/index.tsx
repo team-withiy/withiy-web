@@ -11,7 +11,7 @@ interface Props {
 const ScheduleCard: React.FC<Props> = ({ className }) => {
   return (
     <button type="button" className={cx(styles.wrapper, className)}>
-      TODO
+      로그인한 사람만 클릭 가능
     </button>
   );
 };

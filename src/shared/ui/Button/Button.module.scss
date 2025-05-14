@@ -111,4 +111,8 @@
       color: var(--c-text-disabled);
     }
   }
+
+  &.full {
+    width: 100%;
+  }
 }

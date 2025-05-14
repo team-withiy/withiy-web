@@ -4,6 +4,7 @@ import { afterEach, beforeEach, describe, expect, test, vi } from "vitest";
 
 import { _get, _mutate } from "./_server";
 import { DEFAULT_REVALIDATE } from "../constants/api";
+import { FetchHTTPException } from "../models/auth/fetchHTTPException";
 
 vi.mock("next/cache", () => ({
   revalidatePath: vi.fn(),
@@ -17,6 +18,7 @@ describe("서버 API 함수 테스트", () => {
 
   beforeEach(() => {
     global.fetch = vi.fn().mockResolvedValue({
+      ok: true,
       json: vi.fn().mockResolvedValue(mockResponse),
     });
   });
@@ -27,15 +29,15 @@ describe("서버 API 함수 테스트", () => {
 
   describe("_get 함수", () => {
     test("기본 GET 요청을 정상적으로 수행해야 함", async () => {
-      const result = await (await _get(mockBaseUrl, mockUrl)).json();
+      const result = await (await _get(mockBaseUrl, mockUrl, { cache: "default" })).json();
 
       expect(global.fetch).toHaveBeenCalledWith(`${mockBaseUrl}${mockUrl}`, {
         method: "GET",
         next: {
-          revalidate: DEFAULT_REVALIDATE,
+          revalidate: undefined,
           tags: undefined,
         },
-        cache: undefined,
+        cache: "default",
         headers: {
           "Content-Type": "application/json",
         },
@@ -105,7 +107,7 @@ describe("서버 API 함수 테스트", () => {
     });
 
     test("커스텀 헤더가 추가되어야 함", async () => {
-      const headers = { Authorization: "Bearer token" };
+      const headers = { authorization: "Bearer token" };
 
       await _get(mockBaseUrl, mockUrl, { headers, cache: "default" });
 
@@ -114,10 +116,23 @@ describe("서버 API 함수 테스트", () => {
         expect.objectContaining({
           headers: {
             "Content-Type": "application/json",
-            Authorization: "Bearer token",
+            authorization: "Bearer token",
           },
         }),
       );
+    });
+
+    test("응답 상태가 ok가 아닐 경우 FetchHTTPException을 던져야 함", async () => {
+      const errorResponse = {
+        ok: false,
+        status: 404,
+        statusText: "Not Found",
+        json: vi.fn().mockResolvedValue({ message: "Resource not found" }),
+      };
+
+      global.fetch = vi.fn().mockResolvedValue(errorResponse);
+
+      await expect(_get(mockBaseUrl, mockUrl, { cache: "default" })).rejects.toThrow(FetchHTTPException);
     });
   });
 
@@ -169,8 +184,21 @@ describe("서버 API 함수 테스트", () => {
       expect(global.fetch).toHaveBeenCalledWith(`${mockBaseUrl}${mockUrl}?id=123`, expect.any(Object));
     });
 
+    test("응답 상태가 ok가 아닐 경우 FetchHTTPException을 던져야 함", async () => {
+      const errorResponse = {
+        ok: false,
+        status: 500,
+        statusText: "Internal Server Error",
+        json: vi.fn().mockResolvedValue({ message: "Server error" }),
+      };
+
+      global.fetch = vi.fn().mockResolvedValue(errorResponse);
+
+      await expect(_mutate(mockBaseUrl, "POST", mockUrl, { body: {} })).rejects.toThrow(FetchHTTPException);
+    });
+
     test("커스텀 헤더가 추가되어야 함", async () => {
-      const headers = { Authorization: "Bearer token" };
+      const headers = { authorization: "Bearer token" };
 
       await _mutate(mockBaseUrl, "POST", mockUrl, { headers });
 
@@ -179,7 +207,7 @@ describe("서버 API 함수 테스트", () => {
         expect.objectContaining({
           headers: {
             "Content-Type": "application/json",
-            Authorization: "Bearer token",
+            authorization: "Bearer token",
           },
         }),
       );

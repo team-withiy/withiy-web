@@ -7,7 +7,7 @@
     "node": "22"
   },
   "scripts": {
-    "run:local": "env-cmd -f env/.env.local -x next dev -p \\$PORT",
+    "run:local": "rm -rf .next && env-cmd -f env/.env.local -x next dev -p \\$PORT",
     "run:dev": "env-cmd -f env/.env.development -x next dev -p \\$PORT",
     "run:prod": "env-cmd -f env/.env.production -x next start -p \\$PORT",
     "build:local": "env-cmd -f env/.env.local next build",
@@ -17,7 +17,7 @@
     "lint": "next lint",
     "prettier": "prettier --write . --ignore-unknown --check",
     "stylelint": "stylelint 'src/**/*.scss' --fix",
-    "prepare": "husky",
+    "prepare": "husky && corepack enable",
     "test": "vitest --run",
     "test:watch": "vitest",
     "test:ui": "vitest --ui --coverage.enabled=true",
@@ -33,13 +33,17 @@
   "dependencies": {
     "@faker-js/faker": "^9.7.0",
     "@hookform/resolvers": "^5.0.1",
+    "@lukemorales/query-key-factory": "^1.3.4",
     "@sentry/nextjs": "^9.12.0",
+    "@tanstack/react-query": "^5.74.4",
     "clsx": "^2.1.1",
+    "jwt-decode": "^4.0.0",
     "ky": "^1.8.1",
     "lodash-es": "^4.17.21",
     "next": "15.3.0",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
+    "react-dropzone": "^14.3.8",
     "react-hook-form": "^7.55.0",
     "react-loading-skeleton": "^3.5.0",
     "react-transition-group": "^4.4.5",
@@ -119,5 +123,6 @@
     "extends": [
       "plugin:storybook/recommended"
     ]
-  }
+  },
+  "packageManager": "pnpm@10.10.0+sha512.d615db246fe70f25dcfea6d8d73dee782ce23e2245e3c4f6f888249fb568149318637dca73c2c5c8ef2a4ca0d5657fb9567188bfab47f566d1ee6ce987815c39"
 }

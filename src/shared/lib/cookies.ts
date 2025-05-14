@@ -1,0 +1,24 @@
+"use server";
+
+import { cookies } from "next/headers";
+
+import { COOKIE_OPTIONS } from "../constants/cookies";
+
+export const getCookie = async (name: string) => {
+  const cookieStore = await cookies();
+  const cookie = cookieStore.get(name);
+  return cookie?.value;
+};
+
+export const setCookie = async (name: string, value: string) => {
+  const cookieStore = await cookies();
+  cookieStore.set(name, value, COOKIE_OPTIONS);
+};
+
+export const getCookies = async (cookies: string[]) => {
+  return await Promise.all(cookies.map((cookie) => getCookie(cookie)));
+};
+
+export const setCookies = async (cookies: Record<string, string>) => {
+  return await Promise.all(Object.entries(cookies).map(([name, value]) => setCookie(name, value)));
+};

@@ -38,11 +38,3 @@ export interface MutateOptions {
   revalidateTags?: string[];
   revalidatePath?: RevalidatePathOptions[];
 }
-
-export interface BaseFetchApi {
-  get<T>(url: string, options?: GetOptions): Promise<T>;
-  post<T>(url: string, options?: MutateOptions): Promise<T>;
-  put<T>(url: string, options?: MutateOptions): Promise<T>;
-  patch<T>(url: string, options?: MutateOptions): Promise<T>;
-  delete<T>(url: string, options?: MutateOptions): Promise<T>;
-}

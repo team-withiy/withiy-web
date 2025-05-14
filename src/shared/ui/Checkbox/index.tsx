@@ -19,9 +19,9 @@ const SIZE_MAPPER: Record<Size, string> = {
   20: styles.medium,
 };
 
-const Checkbox: React.FC<Props> = ({ size, children, ...props }) => {
+const Checkbox: React.FC<Props> = ({ size, children, className, ...props }) => {
   return (
-    <label className={cx(styles.wrapper, SIZE_MAPPER[size])} data-testid="checkbox-wrapper">
+    <label className={cx(styles.wrapper, SIZE_MAPPER[size], className)} data-testid="checkbox-wrapper">
       <input type="checkbox" className={styles.checkbox} data-testid="checkbox-input" {...props} hidden />
       <div className={styles.box}>
         {size === 24 && <IconCheckbox24 className={styles.check} />}

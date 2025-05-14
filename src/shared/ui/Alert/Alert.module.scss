@@ -1,0 +1,31 @@
+@use "@/shared/ui/styles/constants" as c;
+@use "@/shared/ui/styles/mixins" as m;
+
+.wrapper {
+  @include m.flex(flex-start, center, column);
+
+  .textArea {
+    @include m.flex(flex-start, center, column);
+    gap: 12px;
+    padding-top: 8px;
+
+    .title {
+      @include m.fontTitle5(semibold);
+      color: var(--c-text-main);
+    }
+
+    .content {
+      @include m.fontBody2(regular);
+      @include m.makeEllipsis(2);
+      color: var(--c-text-sub);
+      text-align: center;
+    }
+  }
+
+  .footer {
+    @include m.flex(flex-start, center, column);
+    gap: 8px;
+    width: 100%;
+    padding-top: 24px;
+  }
+}

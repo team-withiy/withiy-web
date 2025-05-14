@@ -1,0 +1,16 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`getMeApi 1`] = `
+{
+  "data": {
+    "code": "i95blo",
+    "isRegistered": true,
+    "nickname": "Hayley",
+    "restoreEnabled": true,
+    "thumbnail": "https://avatars.githubusercontent.com/u/11437",
+  },
+  "message": "success",
+  "status": 200,
+  "timestamp": "2022-07-16T16:02:03.985Z",
+}
+`;
