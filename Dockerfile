@@ -1,5 +1,3 @@
-# syntax=docker.io/docker/dockerfile:1
-
 FROM node:22-alpine AS base
 
 LABEL maintainer="rldnd <gi981226@gmail.com>"
@@ -26,6 +24,9 @@ RUN npm install -g pnpm && pnpm run build:${STAGE}
 FROM base AS runner
 WORKDIR /app
 
+USER root
+RUN echo "192.168.219.200 withiy-prod.zerohertz.xyz" >> /etc/hosts
+
 RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 nextjs
 
@@ -38,4 +39,5 @@ USER nextjs
 EXPOSE 3000
 
 ENV HOSTNAME="0.0.0.0"
+
 CMD ["node", "server.js"]
