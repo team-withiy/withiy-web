@@ -17,7 +17,7 @@ vi.mock("../../api/actions", () => ({
   registerAction: vi.fn().mockResolvedValue("회원가입이 완료되었습니다."),
 }));
 
-vi.mock("@/features/agreeTerm/ui", () => ({
+vi.mock("@/features/agreeTerms/ui", () => ({
   default: vi.fn().mockImplementation(({ onClickNext }) => {
     return (
       <div data-testid="agree-terms">

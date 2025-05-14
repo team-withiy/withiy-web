@@ -46,7 +46,12 @@ const BottomSheetPortal: React.FC<BottomSheetPortalProps> = ({
       nodeRef={nodeRef}
       unmountOnExit
     >
-      <div className={cx(styles.wrapper, wrapperClassName)} ref={nodeRef} data-testid="bottom-sheet-wrapper">
+      <div
+        className={cx(styles.wrapper, wrapperClassName)}
+        ref={nodeRef}
+        data-testid="bottom-sheet-wrapper"
+        data-is-show={isShow}
+      >
         <Overlay
           className={cx(styles.overlay, overlayClassName, {
             [styles.blockCloseOverlay]: blockCloseWhenClickOverlay,

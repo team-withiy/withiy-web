@@ -4,7 +4,7 @@ import React, { use } from "react";
 
 import Header from "@/widgets/Layout/ui/Header";
 
-import AgreeTerms, { LoadingAgreeTerms } from "@/features/agreeTerm/ui";
+import AgreeTerms, { LoadingAgreeTerms } from "@/features/agreeTerms/ui";
 
 import type { TermAgreementDTO, TermDTO } from "@/entities/term/api/term.interface";
 

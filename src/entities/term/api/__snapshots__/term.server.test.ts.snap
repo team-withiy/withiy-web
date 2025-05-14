@@ -56,6 +56,6 @@ exports[`getTermsApi 1`] = `
   ],
   "message": "success",
   "status": 200,
-  "timestamp": "2022-07-27T15:08:18.351Z",
+  "timestamp": "2022-07-16T16:02:03.985Z",
 }
 `;

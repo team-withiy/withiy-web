@@ -1,0 +1,23 @@
+@use "@/shared/ui/styles/constants" as c;
+@use "@/shared/ui/styles/mixins" as m;
+
+.wrapper {
+  @include m.flex(flex-start, center, column);
+
+  .title {
+    @include m.fontTitle4(semibold);
+    margin-bottom: 8px;
+    color: var(--c-text-main);
+  }
+
+  .description {
+    @include m.fontBody2(regular);
+    color: var(--c-text-main-sub);
+  }
+
+  .link {
+    display: inline-block;
+    width: 100%;
+    margin: 24px 0 8px;
+  }
+}

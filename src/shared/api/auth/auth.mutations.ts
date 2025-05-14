@@ -2,6 +2,7 @@ import { getSearchParams } from "@/shared/lib/searchParams";
 import { Nullable } from "@/shared/lib/utils.interface";
 
 import { apiRouteHandler } from "../apiRouteHandler";
+import { revalidatePathApi } from "../revalidate.mutations";
 
 import type { RecentLoginedSocialTypeResponse, SocialType, TokenDTO } from "./auth.interface";
 
@@ -13,4 +14,5 @@ export const setRecentLoginedSocialTypeApi = (socialType: SocialType) =>
     .post("auth/recent-logined-social-types", { json: { socialType } })
     .json<RecentLoginedSocialTypeResponse>();
 
-export const removeTokensApi = () => apiRouteHandler.delete("auth/tokens");
+// TODO: revalidate 관련 로직 분리
+export const logoutApi = () => apiRouteHandler.delete("auth/logout").then(() => revalidatePathApi("/", "layout"));
