@@ -35,5 +35,5 @@ jobs:
           build-args: |
             STAGE=dev
           tags: |
-            ghcr.io/${{ secrets.GHCR_USER }}/withiy-web:latest,
+            ghcr.io/${{ secrets.GHCR_USER }}/withiy-web:latest
             ghcr.io/${{ secrets.GHCR_USER }}/withiy-web:${{ github.sha }}
