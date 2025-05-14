@@ -31,9 +31,11 @@ jobs:
       - name: Build and push image
         uses: docker/build-push-action@v6
         with:
+          context: .
           push: true
           build-args: |
             STAGE=dev
+          platforms: linux/amd64
           tags: |
             ghcr.io/${{ secrets.GHCR_USER }}/withiy-web:latest
             ghcr.io/${{ secrets.GHCR_USER }}/withiy-web:${{ github.sha }}
