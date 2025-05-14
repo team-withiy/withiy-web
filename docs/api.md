@@ -206,53 +206,48 @@ export const deleteServer = async (url: string, options: MutateOptions) =>
 
 ### authApiServer
 
-`authApiServer`는 인증이 필요한 API 요청을 처리하기 위한 특별한 서버 API 클라이언트입니다. 이 모듈은 특히 액세스 토큰과 리프레시 토큰을 관리하는 기능을 포함하고 있습니다.
+`authApiServer`는 인증이 필요한 API 요청을 처리하기 위한 특별한 서버 API 클라이언트입니다. 이 모듈은 인증 헤더 관리 기능을 제공합니다.
 
 주요 특징:
 
-1. 자동 토큰 갱신: 액세스 토큰이 만료된 경우 리프레시 토큰을 사용하여 자동으로 새 토큰을 발급받음
-2. 인증 헤더 관리: 모든 요청에 자동으로 액세스 토큰을 포함
-3. 재시도 로직: 토큰 갱신 후 실패한 요청을 자동으로 재시도
+1. 인증 헤더 관리: 모든 요청에 자동으로 액세스 토큰을 포함
+2. 401 에러 처리: 인증 실패 시 적절한 오류 응답 반환
 
 ```typescript
 // 인증이 필요한 요청을 처리하는 내부 함수
 const _mutateAuth = async (url: string, method: string, options: MutateOptions) => {
-  // 토큰 가져오기
-  const [accessToken, refreshToken] = [
-    options._tokens?.accessToken || (await getServerAccessToken()),
-    options._tokens?.refreshToken || (await getServerRefreshToken()),
-  ];
+  const accessToken = await getServerAccessToken();
 
   try {
-    // 액세스 토큰으로 요청 시도
     return await _mutate(BASE_URL, method, url, {
       ...options,
       headers: { ...options?.headers, authorization: `Bearer ${accessToken}` },
     });
-  } catch {
-    // 실패하면 토큰 갱신 후 재시도
-    const tokens = await _refresh(refreshToken);
-    return await _mutateAuth(url, method, { ...options, _tokens: tokens.data });
+  } catch (error) {
+    if (isFetchHTTPError(error) && error.status === UNAUTHORIZED_STATUS) {
+      const errorBody: ErrorDTO = { message: error.message, status: error.status, timestamp: error.timestamp };
+      return new Response(JSON.stringify(errorBody), { status: UNAUTHORIZED_STATUS });
+    }
+
+    throw error;
   }
 };
 
 // GET 요청 함수
-export const getAuthServer = async (url: string, options: GetOptions) => {
-  const [accessToken, refreshToken] = [
-    options._tokens?.accessToken || (await getServerAccessToken()),
-    options._tokens?.refreshToken || (await getServerRefreshToken()),
-  ];
+export const getAuthServer = async (url: string, options: GetOptions): Promise<Response> => {
+  const accessToken = await getServerAccessToken();
 
   try {
-    // 액세스 토큰으로 GET 요청 시도
     return await _get(BASE_URL, url, {
       ...options,
       headers: { ...options?.headers, authorization: `Bearer ${accessToken}` },
     });
-  } catch {
-    // 실패하면 토큰 갱신 후 재시도
-    const tokens = await _refresh(refreshToken);
-    return await getAuthServer(url, { ...options, _tokens: tokens.data });
+  } catch (error) {
+    if (isFetchHTTPError(error) && error.status === UNAUTHORIZED_STATUS) {
+      const errorBody: ErrorDTO = { message: error.message, status: error.status, timestamp: error.timestamp };
+      return new Response(JSON.stringify(errorBody), { status: UNAUTHORIZED_STATUS });
+    }
+    throw error;
   }
 };
 
@@ -269,19 +264,18 @@ export const deleteAuthServer = async (url: string, options: MutateOptions) =>
 
 ### 토큰 갱신 메커니즘
 
-토큰 갱신은 `middleware.ts`와 `authApiServer.ts`에서 두 단계로 이루어집니다:
+토큰 갱신은 전적으로 `middleware.ts`에서 이루어집니다:
 
-1. **미들웨어 단계 갱신**:
+- 페이지 요청 시 미들웨어에서 토큰 유효성 검사
+- 액세스 토큰 만료 & 리프레시 토큰 유효 → 자동 토큰 갱신
+- `PromiseHolder`로 동시 요청에 대한 race condition 방지
 
-   - 페이지 요청 시 미들웨어에서 토큰 유효성 검사
-   - 액세스 토큰 만료 & 리프레시 토큰 유효 → 자동 토큰 갱신
-   - `PromiseHolder`로 동시 요청에 대한 race condition 방지
+이 접근 방식에는 다음과 같은 이점이 있습니다:
 
-2. **API 요청 단계 갱신**:
-   - API 요청 실패 시 `authApiServer`에서 토큰 갱신
-   - 갱신 후 원래 요청 자동 재시도
-
-이 접근 방식은 클라이언트에게 토큰 관리 부담 없이 seamless한 인증 경험을 제공합니다.
+1. 중앙화된 토큰 관리: 한 곳에서 모든 토큰 갱신 로직 처리
+2. 효율성: 페이지 요청 시점에 토큰 유효성 확인 후 필요한 경우만 갱신
+3. 일관성: 모든 API 요청이 항상 최신 액세스 토큰 사용
+4. 보안 강화: 클라이언트에게 토큰 관리 부담 없이 seamless한 인증 경험 제공
 
 ---
 
