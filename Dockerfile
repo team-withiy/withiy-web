@@ -24,9 +24,6 @@ RUN npm install -g pnpm && pnpm run build:${STAGE}
 FROM base AS runner
 WORKDIR /app
 
-USER root
-RUN echo "192.168.219.200 withiy-prod.zerohertz.xyz" >> /etc/hosts
-
 RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 nextjs
 
