@@ -1,4 +1,4 @@
-name: "CI"
+name: "CI/CD"
 
 on:
   push:
@@ -39,3 +39,27 @@ jobs:
           tags: |
             ghcr.io/${{ secrets.GHCR_USER }}/withiy-web:latest
             ghcr.io/${{ secrets.GHCR_USER }}/withiy-web:${{ github.sha }}
+
+  cd:
+    name: Argo CD
+    needs: ci
+    runs-on: ubuntu-latest
+    environment: ci
+    steps:
+      - name: Checkout withiy-infra repository
+        uses: actions/checkout@v4
+        with:
+          repository: team-withiy/withiy-infra
+          path: withiy-infra
+          token: ${{ secrets.GHCR_TOKEN }}
+
+      - name: commit & push
+        run: |
+          cd withiy-infra
+          git config user.name "rldnd"
+          git config user.email "gi981226@gmail.com"
+          git config credential.helper store
+          sed -i 's|ghcr.io/team-withiy/withiy-web:[^ ]*|ghcr.io/team-withiy/withiy-web:${{ github.sha }}|' web-prod.yaml
+          git add web-prod.yaml
+          git commit -m ":tada: deploy: withiy-web [${{ github.sha }}]"
+          git push origin main
