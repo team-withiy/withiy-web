@@ -19,7 +19,7 @@ export async function GET() {
 export async function POST(request: NextRequest) {
   const { socialType } = await request.json<RecentLoginedSocialTypeResponse>();
   await setCookie(RECENT_LOGINED_SOCIAL_TYPE_KEY, socialType as SocialType, {
-    maxAge: RECENT_LOGINED_SOCIAL_TYPE_EXPIRES_MS,
+    expires: new Date(Date.now() + RECENT_LOGINED_SOCIAL_TYPE_EXPIRES_MS),
   });
   return NextResponse.json<RecentLoginedSocialTypeResponse>({ socialType });
 }
