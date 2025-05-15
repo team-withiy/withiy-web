@@ -2,6 +2,8 @@ import type { ErrorDTO } from "@/shared/api/common.interface";
 
 export const UNAUTHORIZED_STATUS = 401;
 
+export const RECENT_LOGINED_SOCIAL_TYPE_EXPIRES_MS = 365 * 24 * 60 * 60 * 1000;
+
 export const SERVER_AUTH_ERROR: ErrorDTO = {
   status: UNAUTHORIZED_STATUS,
   timestamp: new Date(),

@@ -7,7 +7,7 @@ import { COOKIE_OPTIONS } from "@/shared/constants/cookies";
 import { ACCESS_TOKEN_KEY, REFRESH_TOKEN_KEY } from "@/shared/constants/storage";
 import { PromiseHolder } from "@/shared/lib/promiseHolder";
 import { getServerTokens } from "@/shared/models/auth/token";
-import { isValidToken } from "@/shared/models/auth/validateToken";
+import { getTokenExpirationDate, isValidToken } from "@/shared/models/auth/validateToken";
 
 const promiseHolder = new PromiseHolder();
 
@@ -38,8 +38,14 @@ export async function middleware(request: NextRequest) {
       }).then((res) => res.json<ApiResponseDTO<TokenDTO>>());
 
       const response = NextResponse.redirect(request.nextUrl);
-      response.cookies.set(ACCESS_TOKEN_KEY, data.accessToken, COOKIE_OPTIONS);
-      response.cookies.set(REFRESH_TOKEN_KEY, data.refreshToken, COOKIE_OPTIONS);
+      response.cookies.set(ACCESS_TOKEN_KEY, data.accessToken, {
+        ...COOKIE_OPTIONS,
+        expires: getTokenExpirationDate(data.accessToken),
+      });
+      response.cookies.set(REFRESH_TOKEN_KEY, data.refreshToken, {
+        ...COOKIE_OPTIONS,
+        expires: getTokenExpirationDate(data.refreshToken),
+      });
 
       promiseHolder.successRelease();
       return response;
