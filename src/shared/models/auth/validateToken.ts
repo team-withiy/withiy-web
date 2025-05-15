@@ -2,31 +2,23 @@ import { jwtDecode } from "jwt-decode";
 
 import type { TokenDTO } from "@/shared/api/auth/auth.interface";
 
+export const getTokenExpirationDate = (token: string): Date => {
+  try {
+    const decoded = jwtDecode<{ exp: number }>(token);
+    return new Date(decoded.exp * 1000);
+  } catch {
+    return new Date(0);
+  }
+};
+
 type IsValidToken = {
   [K in keyof TokenDTO as `is${Capitalize<string & K>}Valid`]: boolean;
 };
 
 export const isValidToken = ({ accessToken, refreshToken }: TokenDTO): IsValidToken => {
-  const currentTime = Math.floor(Date.now() / 1000);
-
-  const result: IsValidToken = {
-    isAccessTokenValid: false,
-    isRefreshTokenValid: false,
+  const currentTime = new Date();
+  return {
+    isAccessTokenValid: getTokenExpirationDate(accessToken) > currentTime,
+    isRefreshTokenValid: getTokenExpirationDate(refreshToken) > currentTime,
   };
-
-  try {
-    const accessTokenPayload = jwtDecode<{ exp: number }>(accessToken);
-    result.isAccessTokenValid = accessTokenPayload.exp > currentTime;
-  } catch {
-    result.isAccessTokenValid = false;
-  }
-
-  try {
-    const refreshTokenPayload = jwtDecode<{ exp: number }>(refreshToken);
-    result.isRefreshTokenValid = refreshTokenPayload.exp > currentTime;
-  } catch {
-    result.isRefreshTokenValid = false;
-  }
-
-  return result;
 };
