@@ -13,7 +13,7 @@ const promiseHolder = new PromiseHolder();
 
 export async function middleware(request: NextRequest) {
   const { accessToken, refreshToken } = await getServerTokens();
-  if (!accessToken || !refreshToken) return NextResponse.next();
+  if (!refreshToken) return NextResponse.next();
 
   try {
     const { isAccessTokenValid, isRefreshTokenValid } = isValidToken({

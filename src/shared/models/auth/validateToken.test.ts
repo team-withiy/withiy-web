@@ -56,7 +56,7 @@ describe("isValidToken", () => {
     vi.mocked(getTokenExpirationDate).mockReturnValueOnce(mockInvalidDate).mockReturnValueOnce(mockValidDate);
 
     const result = isValidToken({
-      accessToken: "mock-access-token",
+      accessToken: null,
       refreshToken: "mock-refresh-token",
     });
 
@@ -65,7 +65,7 @@ describe("isValidToken", () => {
       isRefreshTokenValid: true,
     });
     expect(getTokenExpirationDate).toHaveBeenCalledTimes(2);
-    expect(getTokenExpirationDate).toHaveBeenNthCalledWith(1, "mock-access-token");
+    expect(getTokenExpirationDate).toHaveBeenNthCalledWith(1, null);
     expect(getTokenExpirationDate).toHaveBeenNthCalledWith(2, "mock-refresh-token");
   });
 
