@@ -12,6 +12,7 @@ import ScheduleCard from "@/entities/schedule/ui/ScheduleCard";
 import { getMeApi } from "@/entities/user/api/user.server";
 
 import FetchBoundary from "@/shared/ui/FetchBoundary";
+import Loading from "@/shared/ui/Loading";
 
 import Test from "./Test";
 
@@ -49,6 +50,7 @@ export default async function Home() {
       </div>
       <BottomNavigation />
       <AuthorizationRouteHandler />
+      <Loading />
     </main>
   );
 }

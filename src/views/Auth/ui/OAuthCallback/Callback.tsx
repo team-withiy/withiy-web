@@ -7,6 +7,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { useSuspenseQuery } from "@tanstack/react-query";
 
 import { authQueries } from "@/shared/api/auth/auth.queries";
+import Loading from "@/shared/ui/Loading";
 
 const Callback: React.FC = () => {
   const router = useRouter();
@@ -20,7 +21,7 @@ const Callback: React.FC = () => {
     else router.replace("/");
   }, [data.accessToken, data.refreshToken, router]);
 
-  return null;
+  return <Loading isShow />;
 };
 
 export default Callback;

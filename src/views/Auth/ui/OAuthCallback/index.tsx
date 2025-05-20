@@ -1,17 +1,17 @@
-import React from "react";
+import React, { Suspense } from "react";
 
 import { AuthorizationRouteHandler } from "@/features/handleAuthorizationRoute/ui";
 
-import { SSRSafeSuspense } from "@/shared/ui/SSRSafeSuspense";
+import Loading from "@/shared/ui/Loading";
 
 import Callback from "./Callback";
 
 const OAuthCallbackPage: React.FC = () => {
   return (
     <>
-      <SSRSafeSuspense fallback={null}>
+      <Suspense fallback={<Loading isShow />}>
         <Callback />
-      </SSRSafeSuspense>
+      </Suspense>
       <AuthorizationRouteHandler requiredAuth={false} />
     </>
   );
