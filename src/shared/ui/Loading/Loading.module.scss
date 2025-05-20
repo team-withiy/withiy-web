@@ -1,0 +1,68 @@
+@use "@/shared/ui/styles/constants" as c;
+@use "@/shared/ui/styles/mixins" as m;
+
+@keyframes loading_first {
+  0%,
+  100% {
+    transform: translate(calc(-50% - 20px), -50%);
+  }
+
+  20%,
+  30% {
+    transform: translate(calc(-50% - 20px), calc(-50% - 16px));
+  }
+}
+
+@keyframes loading_second {
+  0%,
+  100% {
+    transform: translate(-50%, -50%);
+  }
+
+  40%,
+  50% {
+    transform: translate(-50%, calc(-50% - 16px));
+  }
+}
+
+@keyframes loading_third {
+  0%,
+  100% {
+    transform: translate(calc(-50% + 20px), -50%);
+  }
+
+  60%,
+  70% {
+    transform: translate(calc(-50% + 20px), calc(-50% - 16px));
+  }
+}
+
+.wrapper {
+  @include m.fixed(0 0 0 0);
+  z-index: c.$Z_LOADING;
+  background-color: var(--c-black-opacity-dim);
+
+  .dot {
+    @include m.posCenter;
+    width: 12px;
+    height: 12px;
+    border-radius: c.$R_ROUNDED_FULL;
+
+    &.first {
+      background-color: var(--c-brand-primary);
+      transform: translate(calc(-50% - 20px), -50%);
+      animation: loading_first 1.5s linear infinite;
+    }
+
+    &.second {
+      background-color: var(--c-brand-primary-lighten);
+      animation: loading_second 1.5s linear infinite;
+    }
+
+    &.third {
+      background-color: var(--c-brand-primary-disabled);
+      transform: translate(calc(-50% + 20px), -50%);
+      animation: loading_third 1.5s linear infinite;
+    }
+  }
+}
