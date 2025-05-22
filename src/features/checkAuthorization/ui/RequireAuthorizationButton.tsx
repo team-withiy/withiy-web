@@ -6,9 +6,10 @@ import RequireAuthorizationBottomSheet from "./RequireAuthorizationBottomSheet";
 
 interface Props {
   className?: string;
+  callbackUrl: string;
 }
 
-const RequireAuthorizationButton: React.FC<PropsWithChildren<Props>> = ({ children, className }) => {
+const RequireAuthorizationButton: React.FC<PropsWithChildren<Props>> = ({ children, className, callbackUrl }) => {
   const [isShow, setIsShow] = useState(false);
 
   return (
@@ -22,7 +23,7 @@ const RequireAuthorizationButton: React.FC<PropsWithChildren<Props>> = ({ childr
       >
         {children}
       </div>
-      <RequireAuthorizationBottomSheet isShow={isShow} onClose={() => setIsShow(false)} />
+      <RequireAuthorizationBottomSheet isShow={isShow} onClose={() => setIsShow(false)} callbackUrl={callbackUrl} />
     </>
   );
 };
