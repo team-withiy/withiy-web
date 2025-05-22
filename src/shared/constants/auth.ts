@@ -16,3 +16,5 @@ export const RESTORE_PAGE_ENDPOINT = "/users/restore";
 export const REGISTER_PAGE_ENDPOINT = "/auth/register";
 export const LOGIN_PAGE_ENDPOINT = "/auth";
 export const HOME_PAGE_ENDPOINT = "/";
+
+export const DEFAULT_AUTH_CALLBACK_URL = HOME_PAGE_ENDPOINT;

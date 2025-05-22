@@ -25,6 +25,7 @@ export default async function Home() {
         <RequireAuthorizationWrapper
           fallbackWrapperClassName={styles.requireAuthorizationWrapper}
           fallback={<ScheduleCard />}
+          callbackUrl="/test"
         >
           <ScheduleCard />
         </RequireAuthorizationWrapper>

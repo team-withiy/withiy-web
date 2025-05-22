@@ -10,3 +10,7 @@ export type SocialType = (typeof SOCIAL_TYPE)[number];
 export interface RecentLoginedSocialTypeResponse {
   socialType: SocialType | null;
 }
+
+export interface AuthCallbackUrlResponse {
+  callbackUrl: string;
+}

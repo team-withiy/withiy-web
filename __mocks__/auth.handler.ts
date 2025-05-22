@@ -2,7 +2,7 @@ import { HttpResponse } from "msw";
 
 import { localHttpHandler } from "@/app/mocks/httpHandler";
 
-import { RecentLoginedSocialTypeResponse, SocialType } from "@/shared/api/auth/auth.interface";
+import { AuthCallbackUrlResponse, RecentLoginedSocialTypeResponse, SocialType } from "@/shared/api/auth/auth.interface";
 
 const getRecentLoginedSocialType = localHttpHandler.get<{}, undefined, RecentLoginedSocialTypeResponse>(
   "/auth/recent-logined-social-types",
@@ -22,4 +22,28 @@ const setRecentLoginedSocialType = localHttpHandler.post<
   return HttpResponse.json({ socialType });
 });
 
-export const authHandlers = [getRecentLoginedSocialType, setRecentLoginedSocialType];
+const getCallbackUrl = localHttpHandler.get<{}, undefined, AuthCallbackUrlResponse>("/auth/callback-url", async () => {
+  return HttpResponse.json<AuthCallbackUrlResponse>({
+    callbackUrl: "/",
+  });
+});
+
+const setCallbackUrl = localHttpHandler.post<{}, AuthCallbackUrlResponse, AuthCallbackUrlResponse>(
+  "/auth/callback-url",
+  async ({ request }) => {
+    const { callbackUrl } = await request.json();
+    return HttpResponse.json({ callbackUrl });
+  },
+);
+
+const deleteCallbackUrl = localHttpHandler.delete("/auth/callback-url", async () => {
+  return HttpResponse.json({});
+});
+
+export const authHandlers = [
+  getRecentLoginedSocialType,
+  setRecentLoginedSocialType,
+  getCallbackUrl,
+  setCallbackUrl,
+  deleteCallbackUrl,
+];

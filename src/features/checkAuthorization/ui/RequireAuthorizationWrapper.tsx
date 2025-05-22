@@ -8,11 +8,17 @@ import RequireAuthorizationButton from "./RequireAuthorizationButton";
 
 interface Props {
   fallback: ReactNode;
+  callbackUrl: string;
   children?: ReactNode;
   fallbackWrapperClassName?: string;
 }
 
-export default async function RequireAuthorizationWrapper({ fallback, children, fallbackWrapperClassName }: Props) {
+export default async function RequireAuthorizationWrapper({
+  fallback,
+  callbackUrl,
+  children,
+  fallbackWrapperClassName,
+}: Props) {
   return (
     <Suspense fallback={fallback}>
       <FetchBoundary fetchFunctions={[getMeApi]}>
@@ -20,7 +26,9 @@ export default async function RequireAuthorizationWrapper({ fallback, children, 
           <>
             {me && children}
             {!me && (
-              <RequireAuthorizationButton className={fallbackWrapperClassName}>{fallback}</RequireAuthorizationButton>
+              <RequireAuthorizationButton className={fallbackWrapperClassName} callbackUrl={callbackUrl}>
+                {fallback}
+              </RequireAuthorizationButton>
             )}
           </>
         )}
