@@ -49,7 +49,7 @@ vi.mock("next/navigation", async (importOriginal) => {
   });
   const useSearchParams = vi.fn().mockImplementation(() => {
     const router = useRouter();
-    return new URLSearchParams(router.query?.toString());
+    return new URLSearchParams(router.query as Record<string, string>);
   });
   return {
     ...actual,
