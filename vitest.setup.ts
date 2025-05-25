@@ -58,3 +58,8 @@ vi.mock("next/navigation", async (importOriginal) => {
     useSearchParams,
   };
 });
+
+Object.defineProperty(global.CSS, "supports", {
+  value: () => true,
+  writable: true,
+});

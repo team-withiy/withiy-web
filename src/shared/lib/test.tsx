@@ -2,6 +2,7 @@ import type { PropsWithChildren, ReactNode } from "react";
 
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { render, renderHook } from "@testing-library/react";
+import { MemoryRouterProvider } from "next-router-mock/MemoryRouterProvider";
 
 export const resolvePromiseComponent = async <T = {},>(
   Component: (props: T) => Promise<ReactNode>,
@@ -35,5 +36,7 @@ export const renderHookWithProviders: typeof renderHook = (render, options) => {
 
 export const renderWithProviders = (ui: ReactNode) => {
   const queryClient = createTestQueryClient();
-  return render(<QueryClientProvider client={queryClient}>{ui}</QueryClientProvider>);
+  return render(<QueryClientProvider client={queryClient}>{ui}</QueryClientProvider>, {
+    wrapper: MemoryRouterProvider,
+  });
 };
