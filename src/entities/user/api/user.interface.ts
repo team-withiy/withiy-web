@@ -19,3 +19,10 @@ export interface RegisterUserInDTO {
   termAgreements: TermAgreementDTO;
   nickname: string;
 }
+
+export interface UserProfileResponseDTO {
+  userCode: string;
+  nickname: string;
+  profileImageUrl: string;
+  hasCouple: boolean;
+}
