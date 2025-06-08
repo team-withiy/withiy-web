@@ -3,7 +3,7 @@ import { HttpResponse } from "msw";
 
 import { serverHttpHandler } from "@/app/mocks/httpHandler";
 
-import { UserDTO } from "@/entities/user/api/user.interface";
+import { UserDTO, UserProfileResponseDTO } from "@/entities/user/api/user.interface";
 
 import type { ApiResponseDTO } from "@/shared/api/common.interface";
 
@@ -30,4 +30,24 @@ const getMe = serverHttpHandler.get<{}, undefined, ApiResponseDTO<UserDTO>>("/ap
   );
 });
 
-export const userHandlers = [getMe];
+const getUserProfileByCode = serverHttpHandler.get<{}, { userCode: string }, ApiResponseDTO<UserProfileResponseDTO>>(
+  "/api/users/profile/:userCode",
+  () => {
+    return HttpResponse.json(
+      {
+        data: {
+          userCode: faker.string.alphanumeric(6),
+          nickname: faker.person.firstName(),
+          profileImageUrl: faker.image.avatar(),
+          hasCouple: faker.datatype.boolean(),
+        },
+        message: "success",
+        status: 200,
+        timestamp: faker.date.past(),
+      },
+      { status: 200 },
+    );
+  },
+);
+
+export const userHandlers = [getMe, getUserProfileByCode];
