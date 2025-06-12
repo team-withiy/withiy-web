@@ -11,6 +11,7 @@ $SKIP_BUTTON_SIZE: 40px;
     width: 100%;
     height: 100%;
     padding-top: c.$S_HEADER_HEIGHT;
+    padding-bottom: calc(c.$S_PAGE_VERTICAL_PADDING + c.$S_BOTTOM_FLOATING_TWO_BUTTONS_WRAPPER_HEIGHT);
 
     .header {
       padding-right: calc(20px + $SKIP_BUTTON_SIZE);
@@ -44,6 +45,11 @@ $SKIP_BUTTON_SIZE: 40px;
           @include m.fontBody2(regular);
           color: var(--c-text-main-sub);
         }
+      }
+
+      .image {
+        object-fit: cover;
+        border-radius: c.$R_ROUNDED_FULL;
       }
     }
   }
