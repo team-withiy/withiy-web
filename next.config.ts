@@ -1,5 +1,6 @@
 import type { NextConfig } from "next";
 
+import withPlaiceholder from "@plaiceholder/next";
 import { withSentryConfig } from "@sentry/nextjs";
 
 const nextConfig: NextConfig = {
@@ -69,15 +70,17 @@ const nextConfig: NextConfig = {
   },
 };
 
-export default withSentryConfig(nextConfig, {
-  org: process.env.SENTRY_ORG,
-  project: process.env.SENTRY_PROJECT,
-  silent: !process.env.CI,
-  disableLogger: true,
-  authToken: process.env.SENTRY_AUTH_TOKEN,
-  widenClientFileUpload: true,
-  tunnelRoute: "/monitoring",
-  reactComponentAnnotation: {
-    enabled: true,
-  },
-});
+export default withPlaiceholder(
+  withSentryConfig(nextConfig, {
+    org: process.env.SENTRY_ORG,
+    project: process.env.SENTRY_PROJECT,
+    silent: !process.env.CI,
+    disableLogger: true,
+    authToken: process.env.SENTRY_AUTH_TOKEN,
+    widenClientFileUpload: true,
+    tunnelRoute: "/monitoring",
+    reactComponentAnnotation: {
+      enabled: true,
+    },
+  }),
+);
