@@ -1,4 +1,3 @@
-import Image from "next/image";
 import { redirect } from "next/navigation";
 
 import Header from "@/widgets/Layout/ui/Header";
@@ -9,6 +8,7 @@ import { getUserProfileByCodeApi } from "@/entities/user/api/user.server";
 
 import BottomFloatingButtonWrapper from "@/shared/ui/BottomFloatingButtonWrapper";
 import Button from "@/shared/ui/Button/Button";
+import BlurImage from "@/shared/ui/Image/BlurImage";
 import DvhHeightLayout from "@/shared/ui/Layout/DvhHeightLayout";
 
 import styles from "./CoupleInvitationPage.module.scss";
@@ -36,12 +36,16 @@ const CoupleInvitationPage: React.FC<Props> = async ({ searchParams }) => {
             <br />
             <small className={styles.small}>함께 커플 공간을 만들고 추억을 공유할까요?</small>
           </p>
-          <Image
+          <BlurImage
             src={data.profileImageUrl}
             alt={`${data.nickname}의 프로필 이미지`}
-            width={180}
-            height={180}
             className={styles.image}
+            fallbackProps={{
+              src: "/images/default-profile.png",
+              alt: "기본 프로필 이미지",
+              width: 180,
+              height: 180,
+            }}
           />
         </section>
         <BottomFloatingButtonWrapper hasTwoButtons>
