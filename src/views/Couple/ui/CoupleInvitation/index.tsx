@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { redirect } from "next/navigation";
 
 import Header from "@/widgets/Layout/ui/Header";
@@ -6,6 +7,8 @@ import { AuthorizationRouteHandler } from "@/features/handleAuthorizationRoute/u
 
 import { getUserProfileByCodeApi } from "@/entities/user/api/user.server";
 
+import BottomFloatingButtonWrapper from "@/shared/ui/BottomFloatingButtonWrapper";
+import Button from "@/shared/ui/Button/Button";
 import DvhHeightLayout from "@/shared/ui/Layout/DvhHeightLayout";
 
 import styles from "./CoupleInvitationPage.module.scss";
@@ -33,7 +36,22 @@ const CoupleInvitationPage: React.FC<Props> = async ({ searchParams }) => {
             <br />
             <small className={styles.small}>함께 커플 공간을 만들고 추억을 공유할까요?</small>
           </p>
+          <Image
+            src={data.profileImageUrl}
+            alt={`${data.nickname}의 프로필 이미지`}
+            width={180}
+            height={180}
+            className={styles.image}
+          />
         </section>
+        <BottomFloatingButtonWrapper hasTwoButtons>
+          <Button size={52} full variant="default">
+            함께할게요
+          </Button>
+          <Button size={52} full variant="default">
+            함께할게요
+          </Button>
+        </BottomFloatingButtonWrapper>
       </main>
       <AuthorizationRouteHandler requiredAuth />
     </DvhHeightLayout>

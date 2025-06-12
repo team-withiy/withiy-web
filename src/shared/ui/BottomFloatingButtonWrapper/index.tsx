@@ -8,11 +8,19 @@ import styles from "./BottomFloatingButtonWrapper.module.scss";
 
 interface Props {
   className?: string;
+  hasTwoButtons?: boolean;
 }
 
-const BottomFloatingButtonWrapper: React.FC<PropsWithChildren<Props>> = ({ children, className }) => {
+const BottomFloatingButtonWrapper: React.FC<PropsWithChildren<Props>> = ({
+  children,
+  className,
+  hasTwoButtons = false,
+}) => {
   return (
-    <footer className={cx(styles.wrapper, className)} data-testid="bottom-floating-button-wrapper">
+    <footer
+      className={cx(styles.wrapper, className, { [styles.hasTwoButtons]: hasTwoButtons })}
+      data-testid="bottom-floating-button-wrapper"
+    >
       {children}
     </footer>
   );

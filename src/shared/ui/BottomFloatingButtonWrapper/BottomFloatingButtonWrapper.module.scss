@@ -10,4 +10,10 @@
   padding: 0 20px;
   background-color: var(--c-grayscale-white);
   transform: translateX(-50%);
+
+  &.hasTwoButtons {
+    @include m.flex(center, center, column);
+    gap: 8px;
+    height: c.$S_BOTTOM_FLOATING_TWO_BUTTONS_WRAPPER_HEIGHT;
+  }
 }

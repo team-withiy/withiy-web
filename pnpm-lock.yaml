@@ -38,6 +38,9 @@ importers:
       next:
         specifier: 15.3.0
         version: 15.3.0(@babel/core@7.26.10)(@opentelemetry/api@1.9.0)(@playwright/test@1.51.1)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(sass@1.86.0)
+      plaiceholder:
+        specifier: ^3.0.0
+        version: 3.0.0(sharp@0.34.1)
       react:
         specifier: ^19.1.0
         version: 19.1.0
@@ -47,6 +50,9 @@ importers:
       react-dropzone:
         specifier: ^14.3.8
         version: 14.3.8(react@19.1.0)
+      react-error-boundary:
+        specifier: ^6.0.0
+        version: 6.0.0(react@19.1.0)
       react-hook-form:
         specifier: ^7.55.0
         version: 7.55.0(react@19.1.0)
@@ -5548,6 +5554,11 @@ packages:
     resolution: {integrity: sha512-Ie9z/WINcxxLp27BKOCHGde4ITq9UklYKDzVo1nhk5sqGEXU3FpkwP5GM2voTGJkGd9B3Otl+Q4uwSOeSUtOBA==}
     engines: {node: '>=14.16'}
 
+  plaiceholder@3.0.0:
+    resolution: {integrity: sha512-jwHxxHPnr1BwRzPCeZgEK2BMsEy2327sWynw3qb6XC/oGgGDUTPtR8pFxFQmNArhMBwhkUbUr5OPhhIJpCa8eQ==}
+    peerDependencies:
+      sharp: '>= 0.30.6'
+
   playwright-core@1.51.1:
     resolution: {integrity: sha512-/crRMj8+j/Nq5s8QcvegseuyeZPxpQCZb6HNk3Sos3BlZyAknRjoyJPFWkpNn8v0+P3WiwqFF8P+zQo4eqiNuw==}
     engines: {node: '>=18'}
@@ -5766,6 +5777,11 @@ packages:
     engines: {node: '>= 10.13'}
     peerDependencies:
       react: '>= 16.8 || 18.0.0'
+
+  react-error-boundary@6.0.0:
+    resolution: {integrity: sha512-gdlJjD7NWr0IfkPlaREN2d9uUZUlksrfOx7SX62VRerwXbMY6ftGCIZua1VG1aXFNOimhISsTq+Owp725b9SiA==}
+    peerDependencies:
+      react: '>=16.13.1'
 
   react-hook-form@7.55.0:
     resolution: {integrity: sha512-XRnjsH3GVMQz1moZTW53MxfoWN7aDpUg/GpVNc4A3eXRVNdGXfbzJ4vM4aLQ8g6XCUh1nIbx70aaNCl7kxnjog==}
@@ -11167,13 +11183,11 @@ snapshots:
     dependencies:
       color-name: 1.1.4
       simple-swizzle: 0.2.2
-    optional: true
 
   color@4.2.3:
     dependencies:
       color-convert: 2.0.1
       color-string: 1.9.1
-    optional: true
 
   colord@2.9.3: {}
 
@@ -11478,8 +11492,7 @@ snapshots:
   detect-libc@1.0.3:
     optional: true
 
-  detect-libc@2.0.3:
-    optional: true
+  detect-libc@2.0.3: {}
 
   diffie-hellman@5.0.3:
     dependencies:
@@ -12529,8 +12542,7 @@ snapshots:
 
   is-arrayish@0.2.1: {}
 
-  is-arrayish@0.3.2:
-    optional: true
+  is-arrayish@0.3.2: {}
 
   is-async-function@2.1.1:
     dependencies:
@@ -13410,6 +13422,10 @@ snapshots:
     dependencies:
       find-up: 6.3.0
 
+  plaiceholder@3.0.0(sharp@0.34.1):
+    dependencies:
+      sharp: 0.34.1
+
   playwright-core@1.51.1: {}
 
   playwright@1.51.1:
@@ -13616,6 +13632,11 @@ snapshots:
       attr-accept: 2.2.5
       file-selector: 2.1.2
       prop-types: 15.8.1
+      react: 19.1.0
+
+  react-error-boundary@6.0.0(react@19.1.0):
+    dependencies:
+      '@babel/runtime': 7.27.0
       react: 19.1.0
 
   react-hook-form@7.55.0(react@19.1.0):
@@ -14174,7 +14195,6 @@ snapshots:
       '@img/sharp-wasm32': 0.34.1
       '@img/sharp-win32-ia32': 0.34.1
       '@img/sharp-win32-x64': 0.34.1
-    optional: true
 
   shebang-command@1.2.0:
     dependencies:
@@ -14227,7 +14247,6 @@ snapshots:
   simple-swizzle@0.2.2:
     dependencies:
       is-arrayish: 0.3.2
-    optional: true
 
   sirv@3.0.1:
     dependencies:
