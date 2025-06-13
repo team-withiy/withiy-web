@@ -9,6 +9,7 @@ export interface UserDTO {
   isRegistered: boolean;
   /** 커플 연결 코드 */
   code: string;
+  hasCouple: boolean;
 }
 
 export interface RestoreAccountDTO {

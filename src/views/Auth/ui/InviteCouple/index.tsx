@@ -40,7 +40,7 @@ const InviteCouplePage: React.FC = () => {
           {([{ data: me }]) => <CopyCoupleLinkButton code={me.code} />}
         </FetchBoundary>
       </Suspense>
-      <AuthorizationRouteHandler requiredAuth />
+      <AuthorizationRouteHandler requiredAuth requiredCouple={false} />
     </DvhHeightLayout>
   );
 };
