@@ -1,7 +1,9 @@
+import Link from "next/link";
 import { redirect } from "next/navigation";
 
 import Header from "@/widgets/Layout/ui/Header";
 
+import ConnectCoupleButton from "@/features/connectCouple/ui/ConnectCoupleButton";
 import { AuthorizationRouteHandler } from "@/features/handleAuthorizationRoute/ui";
 
 import { getUserProfileByCodeApi } from "@/entities/user/api/user.server";
@@ -49,15 +51,15 @@ const CoupleInvitationPage: React.FC<Props> = async ({ searchParams }) => {
           />
         </section>
         <BottomFloatingButtonWrapper hasTwoButtons>
-          <Button size={52} full variant="default">
-            함께할게요
-          </Button>
-          <Button size={52} full variant="default">
-            함께할게요
-          </Button>
+          <ConnectCoupleButton partnerCode={code} />
+          <Link href="/" replace className={styles.link}>
+            <Button size={52} full variant="text" type="button">
+              나중에 할게요
+            </Button>
+          </Link>
         </BottomFloatingButtonWrapper>
       </main>
-      <AuthorizationRouteHandler requiredAuth />
+      <AuthorizationRouteHandler requiredAuth requiredCouple={false} />
     </DvhHeightLayout>
   );
 };

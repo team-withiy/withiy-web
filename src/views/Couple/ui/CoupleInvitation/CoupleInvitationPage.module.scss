@@ -54,5 +54,10 @@ $SKIP_BUTTON_SIZE: 40px;
         border-radius: c.$R_ROUNDED_FULL;
       }
     }
+
+    .link {
+      display: inline-block;
+      width: 100%;
+    }
   }
 }

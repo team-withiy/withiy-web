@@ -14,12 +14,14 @@ import {
 
 interface Props {
   requiredAuth?: boolean;
+  requiredCouple?: boolean;
   isRestorePage?: boolean;
   isRegisterPage?: boolean;
 }
 
 const AuthorizationRouteHandler = async ({
   requiredAuth,
+  requiredCouple,
   isRegisterPage,
   isRestorePage,
 }: Props): Promise<ReactNode> => {
@@ -29,6 +31,8 @@ const AuthorizationRouteHandler = async ({
   if (requiredAuth === false && status !== UNAUTHORIZED_STATUS) return redirect(HOME_PAGE_ENDPOINT);
 
   if (status === 200) {
+    if (requiredCouple === true && !data.hasCouple) return redirect(HOME_PAGE_ENDPOINT);
+    if (requiredCouple === false && data.hasCouple) return redirect(HOME_PAGE_ENDPOINT);
     if (data.restoreEnabled && !isRestorePage) return redirect(RESTORE_PAGE_ENDPOINT);
     if (!data.restoreEnabled && isRestorePage) return redirect(HOME_PAGE_ENDPOINT);
     if (data.isRegistered && isRegisterPage) return redirect(HOME_PAGE_ENDPOINT);
