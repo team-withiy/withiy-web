@@ -9,8 +9,8 @@ import { isFetchHTTPError } from "@/shared/models/auth/fetchHTTPException";
 
 export const connectCoupleAction = async (body: CoupleConnectionRequestDTO) => {
   try {
-    const { data } = await connectCoupleApi(body);
-    redirect(`/couples/${data.id}`);
+    await connectCoupleApi(body);
+    redirect("/couples");
   } catch (error) {
     if (isFetchHTTPError(error)) return error.message;
     throw error;

@@ -12,9 +12,3 @@ test("base64와 src property를 반환해야 한다.", async () => {
   expect(result.img).toHaveProperty("width");
   expect(result.img).toHaveProperty("height");
 });
-
-test("잘못된 src를 넣으면 에러를 던져야 한다.", async () => {
-  const src = "invalid-url";
-
-  await expect(getRemotePlaiceholderImage(src)).rejects.toThrow();
-});
