@@ -1,0 +1,77 @@
+@use "@/shared/ui/styles/constants" as c;
+@use "@/shared/ui/styles/mixins" as m;
+
+$CELL_SIZE: 40px;
+
+.wrapper {
+  width: 100%;
+
+  .daysOfWeek {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+
+    .dayOfWeek {
+      @include m.flex;
+      @include m.fontCaption2(regular);
+      width: $CELL_SIZE;
+      height: $CELL_SIZE;
+      color: var(--c-text-sub);
+    }
+  }
+
+  .days {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+
+    .day {
+      @include m.flex;
+      @include m.fontCaption1(regular);
+      width: $CELL_SIZE;
+      height: $CELL_SIZE;
+      color: var(--c-text-main);
+      cursor: pointer;
+      border-radius: c.$R_ROUNDED_FULL;
+
+      &.isHoliday {
+        @include m.fontCaption1(regular);
+        color: var(--c-system-danger);
+      }
+
+      &.disabled {
+        color: var(--c-text-disabled);
+        cursor: not-allowed;
+      }
+
+      &.isToday {
+        @include m.fontCaption1(semibold);
+        color: var(--c-brand-primary);
+      }
+
+      &.isSelected {
+        @include m.fontCaption1(semibold);
+        color: var(--c-grayscale-white);
+        background-color: var(--c-brand-primary);
+      }
+
+      .label {
+        @include m.flex;
+        width: 100%;
+        height: 100%;
+        cursor: inherit;
+        border: 1px solid transparent;
+        border-radius: inherit;
+
+        &:hover {
+          @include m.fontCaption1(regular);
+          color: var(--c-brand-primary-darken);
+          background-color: var(--c-brand-primary-background);
+          border-color: var(--c-brand-primary-darken);
+        }
+
+        &:focus-visible {
+          border: 2px solid var(--c-brand-primary);
+        }
+      }
+    }
+  }
+}

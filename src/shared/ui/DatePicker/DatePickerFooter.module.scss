@@ -1,0 +1,8 @@
+@use "@/shared/ui/styles/constants" as c;
+@use "@/shared/ui/styles/mixins" as m;
+
+.wrapper {
+  @include m.flex(flex-end);
+  gap: 8px;
+  width: 100%;
+}
