@@ -2,7 +2,9 @@
 
 import BaseModal from "../BaseModal";
 import { useDatePickerContext } from "./DatePickerContext";
+import DatePickerFooter from "./DatePickerFooter";
 import DatePickerHeader from "./DatePickerHeader";
+import DatePickerMonthContent from "./DatePickerMonthContent";
 import DatePickerYearContent from "./DatePickerYearContent";
 
 import styles from "./DatePickerModal.module.scss";
@@ -18,6 +20,8 @@ const DatePickerModal: React.FC<Props> = ({ isShow }) => {
     <BaseModal isShow={isShow} onClose={onCancel} className={styles.wrapper} blockCloseWhenClickOverlay>
       <DatePickerHeader />
       {viewMode === "year" && <DatePickerYearContent />}
+      {viewMode === "month" && <DatePickerMonthContent />}
+      <DatePickerFooter />
     </BaseModal>
   );
 };
