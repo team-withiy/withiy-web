@@ -24,9 +24,9 @@ const useDatePicker = ({ onDateChange, selectedDate, onClose }: DatePickerContex
 
   const onClickArrowInYearViewMode: DatePickerContextType["onClickArrowInYearViewMode"] = useCallback((direction) => {
     if (direction === "left") {
-      setFocusedMonth((prev) => prev.subtract(1, "month"));
+      setFocusedMonth((prev) => prev.subtract(1, "year"));
     } else {
-      setFocusedMonth((prev) => prev.add(1, "month"));
+      setFocusedMonth((prev) => prev.add(1, "year"));
     }
   }, []);
 
