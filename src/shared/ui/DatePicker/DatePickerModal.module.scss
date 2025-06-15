@@ -2,5 +2,7 @@
 @use "@/shared/ui/styles/mixins" as m;
 
 .wrapper {
+  @include m.flex(flex-start, center, column);
+  gap: 20px;
   width: c.$S_DATE_PICKER_MODAL_WIDTH;
 }
