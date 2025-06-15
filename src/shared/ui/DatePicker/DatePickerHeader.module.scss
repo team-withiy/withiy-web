@@ -1,6 +1,20 @@
 @use "@/shared/ui/styles/constants" as c;
 @use "@/shared/ui/styles/mixins" as m;
 
+$ARROW_BUTTON_SIZE: 24px;
+
 .wrapper {
+  @include m.flex(space-between);
   width: 100%;
+
+  .arrowButton {
+    @include m.flex;
+    width: $ARROW_BUTTON_SIZE;
+    height: $ARROW_BUTTON_SIZE;
+  }
+
+  .monthText {
+    @include m.fontButton2(semibold);
+    color: var(--c-text-main);
+  }
 }
