@@ -3,7 +3,6 @@ import { redirect } from "next/navigation";
 
 import Header from "@/widgets/Layout/ui/Header";
 
-import ConnectCoupleButton from "@/features/connectCouple/ui/ConnectCoupleButton";
 import { AuthorizationRouteHandler } from "@/features/handleAuthorizationRoute/ui";
 
 import { getUserProfileByCodeApi } from "@/entities/user/api/user.server";
@@ -16,14 +15,13 @@ import DvhHeightLayout from "@/shared/ui/Layout/DvhHeightLayout";
 import styles from "./CoupleInvitationPage.module.scss";
 
 interface Props {
-  searchParams: Promise<{ code: string }>;
+  params: Promise<{ partnerCode: string }>;
 }
 
-const CoupleInvitationPage: React.FC<Props> = async ({ searchParams }) => {
-  const code = (await searchParams)?.code;
-  if (!code) redirect("/");
+const CoupleInvitationPage: React.FC<Props> = async ({ params }) => {
+  const partnerCode = (await params)?.partnerCode;
 
-  const { data } = await getUserProfileByCodeApi(code);
+  const { data } = await getUserProfileByCodeApi(partnerCode);
   if (!data || data.hasCouple) redirect("/");
 
   return (
@@ -51,7 +49,11 @@ const CoupleInvitationPage: React.FC<Props> = async ({ searchParams }) => {
           />
         </section>
         <BottomFloatingButtonWrapper hasTwoButtons>
-          <ConnectCoupleButton partnerCode={code} />
+          <Link href={`/couples/our-start/${partnerCode}`} className={styles.link}>
+            <Button size={52} full variant="default" type="button">
+              함께할게요
+            </Button>
+          </Link>
           <Link href="/" replace className={styles.link}>
             <Button size={52} full variant="text" type="button">
               나중에 할게요
