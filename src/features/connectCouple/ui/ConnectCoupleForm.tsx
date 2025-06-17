@@ -37,7 +37,7 @@ const ConnectCoupleForm: React.FC<Props> = ({ partnerCode }) => {
         const values = getValues();
         const formData = new FormData();
         formData.append("partnerCode", values.partnerCode);
-        formData.append("firstMetDate", values.firstMetDate ? formatDate(values.firstMetDate, "YYYY-MM-DD") : "");
+        if (values.firstMetDate) formData.append("firstMetDate", formatDate(values.firstMetDate, "YYYY-MM-DD"));
         formAction(formData);
       });
     })(e);
@@ -50,7 +50,7 @@ const ConnectCoupleForm: React.FC<Props> = ({ partnerCode }) => {
   }, [addToast, state]);
 
   return (
-    <form onSubmit={onSubmit}>
+    <form onSubmit={onSubmit} data-testid="connect-couple-form">
       <Controller
         control={control}
         name="firstMetDate"
@@ -64,7 +64,7 @@ const ConnectCoupleForm: React.FC<Props> = ({ partnerCode }) => {
         )}
       />
       <BottomFloatingButtonWrapper>
-        <Button type="submit" full size={52} variant="default">
+        <Button type="submit" full size={52} variant="default" data-testid="connect-couple-button">
           커플 정보 저장하기
         </Button>
       </BottomFloatingButtonWrapper>

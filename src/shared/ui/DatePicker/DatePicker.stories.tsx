@@ -5,9 +5,11 @@ import { Meta, StoryObj } from "@storybook/react";
 import DatePicker from ".";
 import type { SelectedDate } from "./datepicker.interface";
 
-const Template = ({ placeholder }: ComponentProps<typeof DatePicker>) => {
+const Template = ({ placeholder, label }: ComponentProps<typeof DatePicker>) => {
   const [selectedDate, setSelectedDate] = useState<SelectedDate>();
-  return <DatePicker selectedDate={selectedDate} onDateChange={setSelectedDate} placeholder={placeholder} />;
+  return (
+    <DatePicker selectedDate={selectedDate} onDateChange={setSelectedDate} placeholder={placeholder} label={label} />
+  );
 };
 
 const meta: Meta<typeof DatePicker> = {
@@ -42,9 +44,16 @@ const meta: Meta<typeof DatePicker> = {
         type: "text",
       },
     },
+    label: {
+      description: "DatePicker 상단 설명",
+      control: {
+        type: "text",
+      },
+    },
   },
   args: {
     placeholder: "날짜를 선택하세요",
+    label: "날짜 선택",
   },
 };
 
