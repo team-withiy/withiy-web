@@ -25,9 +25,4 @@ export const connectCoupleAction = async (_: FormActionState, payload: FormData)
       message: "커플 연결에 실패했습니다. 다시 시도해주세요.",
     };
   }
-
-  return {
-    status: FormActionStatus.Error,
-    message: "커플 연결에 실패했습니다. 다시 시도해주세요.",
-  };
 };

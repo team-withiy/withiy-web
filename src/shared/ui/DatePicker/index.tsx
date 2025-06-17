@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useId, useState } from "react";
 
 import cx from "clsx";
 
@@ -24,16 +24,22 @@ interface Props {
 }
 
 const DatePicker: React.FC<Props> = ({ label, full, selectedDate, onDateChange, placeholder, className }) => {
+  const id = useId();
   const [isShowDatePickerModal, setIsShowDatePickerModal] = useState(false);
 
   return (
     <label className={cx(styles.wrapper, { [styles.full]: full }, className)}>
-      {label && <span className={styles.label}>{label}</span>}
+      {label && (
+        <span id={id} className={styles.label}>
+          {label}
+        </span>
+      )}
       <button
         className={styles.datePickerButton}
         data-testid="date-picker"
         type="button"
         onClick={() => setIsShowDatePickerModal(true)}
+        {...(!!label && { "aria-labelledby": id })}
       >
         <IconCalendar24 />
         <span
