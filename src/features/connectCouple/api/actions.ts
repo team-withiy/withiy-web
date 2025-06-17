@@ -1,3 +1,5 @@
+"use server";
+
 import { connectCoupleApi } from "@/entities/couple/api/couple.server-mutations";
 
 import { type FormActionState, FormActionStatus } from "@/shared/api/common.interface";
