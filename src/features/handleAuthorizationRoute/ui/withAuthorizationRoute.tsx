@@ -14,6 +14,8 @@ const withAuthorizationRoute = <P extends object>(WrappedComponent: ComponentTyp
     );
   };
 
+  WithAuthorizationRoute.displayName = `WithAuthorizationRoute(${WrappedComponent.displayName || WrappedComponent.name || "Component"})`;
+
   return WithAuthorizationRoute;
 };
 
