@@ -20,6 +20,7 @@ const Template = (props: TemplateProps) => {
     <>
       <Button
         variant="default"
+        type="button"
         size={52}
         onClick={() =>
           showAlert({

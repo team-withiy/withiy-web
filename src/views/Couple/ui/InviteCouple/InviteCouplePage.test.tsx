@@ -8,7 +8,7 @@ import { renderWithProviders } from "@/shared/lib/test";
 import InviteCouplePage from ".";
 
 vi.mock("@/features/handleAuthorizationRoute/ui", () => ({
-  AuthorizationRouteHandler: vi.fn().mockReturnValue(null),
+  withAuthorizationRoute: vi.fn().mockImplementation((Component) => Component),
 }));
 
 afterEach(() => {

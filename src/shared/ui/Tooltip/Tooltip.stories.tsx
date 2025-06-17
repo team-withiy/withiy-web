@@ -9,7 +9,7 @@ import Tooltip from ".";
 const Template = ({ leftPositionBasedOnTail, tooltipContent, isHidden }: ComponentProps<typeof Tooltip>) => {
   return (
     <Tooltip tooltipContent={tooltipContent} leftPositionBasedOnTail={leftPositionBasedOnTail} isHidden={isHidden}>
-      <Button size={52} variant="default">
+      <Button type="button" size={52} variant="default">
         DEFAULT BUTTON
       </Button>
     </Tooltip>

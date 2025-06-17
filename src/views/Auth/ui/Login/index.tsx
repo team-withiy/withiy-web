@@ -1,4 +1,4 @@
-import { AuthorizationRouteHandler } from "@/features/handleAuthorizationRoute/ui";
+import { withAuthorizationRoute } from "@/features/handleAuthorizationRoute/ui";
 import LoginButton, { LoadingLoginButton } from "@/features/login/ui/LoginButton";
 
 import BackButton from "@/shared/ui/BackButton";
@@ -37,9 +37,8 @@ const LoginPage: React.FC = () => {
         </BackButton>
         <BackButton />
       </main>
-      <AuthorizationRouteHandler requiredAuth={false} />
     </DvhHeightLayout>
   );
 };
 
-export default LoginPage;
+export default withAuthorizationRoute(LoginPage, { requiredAuth: false });

@@ -2,7 +2,7 @@ import Link from "next/link";
 
 import Header from "@/widgets/Layout/ui/Header";
 
-import { AuthorizationRouteHandler } from "@/features/handleAuthorizationRoute/ui";
+import { withAuthorizationRoute } from "@/features/handleAuthorizationRoute/ui";
 
 import BottomFloatingButtonWrapper from "@/shared/ui/BottomFloatingButtonWrapper";
 import Button from "@/shared/ui/Button/Button";
@@ -35,9 +35,8 @@ const RestorePage: React.FC = () => {
           </Link>
         </BottomFloatingButtonWrapper>
       </main>
-      <AuthorizationRouteHandler requiredAuth />
     </DvhHeightLayout>
   );
 };
 
-export default RestorePage;
+export default withAuthorizationRoute(RestorePage, { requiredAuth: true });

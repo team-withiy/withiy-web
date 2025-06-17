@@ -12,7 +12,7 @@ const NotFoundPage: React.FC = () => {
         <h2 className={styles.title}>404 페이지</h2>
         <p className={styles.description}>디자이너님이 디자인 해주실거에요</p>
         <Link href="/">
-          <Button size={52} variant="default">
+          <Button type="button" size={52} variant="default">
             홈으로 돌아가기
           </Button>
         </Link>

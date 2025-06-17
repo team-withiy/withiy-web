@@ -1,6 +1,6 @@
 import React, { Suspense } from "react";
 
-import { AuthorizationRouteHandler } from "@/features/handleAuthorizationRoute/ui";
+import { withAuthorizationRoute } from "@/features/handleAuthorizationRoute/ui";
 
 import Loading from "@/shared/ui/Loading";
 
@@ -8,13 +8,10 @@ import Callback from "./Callback";
 
 const OAuthCallbackPage: React.FC = () => {
   return (
-    <>
-      <Suspense fallback={<Loading isShow />}>
-        <Callback />
-      </Suspense>
-      <AuthorizationRouteHandler requiredAuth={false} />
-    </>
+    <Suspense fallback={<Loading isShow />}>
+      <Callback />
+    </Suspense>
   );
 };
 
-export default OAuthCallbackPage;
+export default withAuthorizationRoute(OAuthCallbackPage, { requiredAuth: false });

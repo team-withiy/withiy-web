@@ -1,6 +1,6 @@
 import Header from "@/widgets/Layout/ui/Header";
 
-import { AuthorizationRouteHandler } from "@/features/handleAuthorizationRoute/ui";
+import { withAuthorizationRoute } from "@/features/handleAuthorizationRoute/ui";
 import RestoreUserButton from "@/features/restoreUser/ui/RestoreUserButton";
 
 import DvhHeightLayout from "@/shared/ui/Layout/DvhHeightLayout";
@@ -26,9 +26,8 @@ const RestorePage: React.FC = () => {
         </section>
         <RestoreUserButton />
       </main>
-      <AuthorizationRouteHandler isRestorePage requiredAuth />
     </DvhHeightLayout>
   );
 };
 
-export default RestorePage;
+export default withAuthorizationRoute(RestorePage, { isRestorePage: true, requiredAuth: true });
