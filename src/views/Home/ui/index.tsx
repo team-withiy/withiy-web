@@ -5,7 +5,6 @@ import BottomNavigation from "@/widgets/Layout/ui/BottomNavigation";
 import GNB from "@/widgets/Layout/ui/GNB";
 
 import RequireAuthorizationWrapper from "@/features/checkAuthorization/ui/RequireAuthorizationWrapper";
-import { AuthorizationRouteHandler } from "@/features/handleAuthorizationRoute/ui";
 
 import { getCategoriesApi } from "@/entities/category/api/category.server";
 import ScheduleCard from "@/entities/schedule/ui/ScheduleCard";
@@ -17,7 +16,7 @@ import Test from "./Test";
 
 import styles from "./index.module.scss";
 
-export default async function Home() {
+async function Home() {
   return (
     <main className={styles.wrapper}>
       <GNB />
@@ -49,7 +48,8 @@ export default async function Home() {
         </Suspense>
       </div>
       <BottomNavigation />
-      <AuthorizationRouteHandler />
     </main>
   );
 }
+
+export default Home;

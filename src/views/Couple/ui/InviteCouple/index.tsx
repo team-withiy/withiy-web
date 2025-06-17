@@ -5,7 +5,7 @@ import Link from "next/link";
 import Header from "@/widgets/Layout/ui/Header";
 
 import CopyCoupleLinkButton, { LoadingCopyCoupleLinkButton } from "@/features/copyCoupleLink/ui/CopyCoupleLinkButton";
-import { AuthorizationRouteHandler } from "@/features/handleAuthorizationRoute/ui";
+import { withAuthorizationRoute } from "@/features/handleAuthorizationRoute/ui";
 
 import { getMeApi } from "@/entities/user/api/user.server";
 
@@ -40,9 +40,8 @@ const InviteCouplePage: React.FC = () => {
           {([{ data: me }]) => <CopyCoupleLinkButton code={me.code} />}
         </FetchBoundary>
       </Suspense>
-      <AuthorizationRouteHandler requiredAuth requiredCouple={false} />
     </DvhHeightLayout>
   );
 };
 
-export default InviteCouplePage;
+export default withAuthorizationRoute(InviteCouplePage, { requiredAuth: true, requiredCouple: false });

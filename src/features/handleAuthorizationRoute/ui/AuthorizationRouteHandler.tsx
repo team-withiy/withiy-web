@@ -12,12 +12,9 @@ import {
   UNAUTHORIZED_STATUS,
 } from "@/shared/constants/auth";
 
-interface Props {
-  requiredAuth?: boolean;
-  requiredCouple?: boolean;
-  isRestorePage?: boolean;
-  isRegisterPage?: boolean;
-}
+import { AuthorizationConfig } from "./authorizationRoute.interface";
+
+interface Props extends AuthorizationConfig {}
 
 const AuthorizationRouteHandler = async ({
   requiredAuth,

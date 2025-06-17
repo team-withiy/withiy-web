@@ -3,7 +3,7 @@ import { redirect } from "next/navigation";
 
 import Header from "@/widgets/Layout/ui/Header";
 
-import { AuthorizationRouteHandler } from "@/features/handleAuthorizationRoute/ui";
+import { withAuthorizationRoute } from "@/features/handleAuthorizationRoute/ui";
 
 import { getUserProfileByCodeApi } from "@/entities/user/api/user.server";
 
@@ -61,9 +61,8 @@ const CoupleInvitationPage: React.FC<Props> = async ({ params }) => {
           </Link>
         </BottomFloatingButtonWrapper>
       </main>
-      <AuthorizationRouteHandler requiredAuth requiredCouple={false} />
     </DvhHeightLayout>
   );
 };
 
-export default CoupleInvitationPage;
+export default withAuthorizationRoute(CoupleInvitationPage, { requiredAuth: true, requiredCouple: false });

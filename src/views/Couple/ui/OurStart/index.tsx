@@ -1,7 +1,7 @@
 import Header from "@/widgets/Layout/ui/Header";
 
 import ConnectCoupleForm from "@/features/connectCouple/ui/ConnectCoupleForm";
-import { AuthorizationRouteHandler } from "@/features/handleAuthorizationRoute/ui";
+import { withAuthorizationRoute } from "@/features/handleAuthorizationRoute/ui";
 
 import BackButton from "@/shared/ui/BackButton";
 
@@ -17,19 +17,16 @@ const OurStartPage: React.FC<Props> = async ({ params }) => {
   const partnerCode = (await params).partnerCode;
 
   return (
-    <>
-      <main className={styles.wrapper}>
-        <Header className={styles.header}>
-          <BackButton className={styles.backButton}>
-            <IconArrowLeft24 />
-          </BackButton>
-          <h2 className={styles.title}>우리의 시작</h2>
-        </Header>
-        <ConnectCoupleForm partnerCode={partnerCode} />
-      </main>
-      <AuthorizationRouteHandler requiredAuth requiredCouple={false} />
-    </>
+    <main className={styles.wrapper}>
+      <Header className={styles.header}>
+        <BackButton className={styles.backButton}>
+          <IconArrowLeft24 />
+        </BackButton>
+        <h2 className={styles.title}>우리의 시작</h2>
+      </Header>
+      <ConnectCoupleForm partnerCode={partnerCode} />
+    </main>
   );
 };
 
-export default OurStartPage;
+export default withAuthorizationRoute(OurStartPage, { requiredAuth: true, requiredCouple: false });

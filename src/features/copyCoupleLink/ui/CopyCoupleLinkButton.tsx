@@ -38,7 +38,7 @@ export default CopyCoupleLinkButton;
 export const LoadingCopyCoupleLinkButton: React.FC = () => {
   return (
     <BottomFloatingButtonWrapper>
-      <Button size={52} variant="default" full disabled data-testid="loading-copy-couple-link-button">
+      <Button type="button" size={52} variant="default" full disabled data-testid="loading-copy-couple-link-button">
         커플 링크 복사하기
       </Button>
     </BottomFloatingButtonWrapper>
