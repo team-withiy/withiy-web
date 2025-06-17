@@ -14,7 +14,7 @@ vi.mock("@/entities/couple/api/couple.server-mutations", () => ({
 
 const mockConnectCoupleApi = vi.mocked(connectCoupleApi);
 
-describe.only("connectCoupleAction", () => {
+describe("connectCoupleAction", () => {
   const mockPrevState: FormActionState = { status: FormActionStatus.Default };
 
   beforeEach(() => {
