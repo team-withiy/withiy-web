@@ -36,7 +36,11 @@ export const renderHookWithProviders: typeof renderHook = (render, options) => {
 
 export const renderWithProviders = (ui: ReactNode) => {
   const queryClient = createTestQueryClient();
-  return render(<QueryClientProvider client={queryClient}>{ui}</QueryClientProvider>, {
-    wrapper: MemoryRouterProvider,
+  return render(ui, {
+    wrapper: ({ children }: PropsWithChildren) => (
+      <MemoryRouterProvider>
+        <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
+      </MemoryRouterProvider>
+    ),
   });
 };

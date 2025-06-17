@@ -15,20 +15,24 @@ import { IconCalendar24 } from "public/icons";
 import styles from "./DatePicker.module.scss";
 
 interface Props {
+  label?: string;
+  full?: boolean;
   selectedDate: SelectedDate;
   onDateChange: OnDateChange;
   placeholder?: string;
   className?: string;
 }
 
-const DatePicker: React.FC<Props> = ({ selectedDate, onDateChange, placeholder, className }) => {
+const DatePicker: React.FC<Props> = ({ label, full, selectedDate, onDateChange, placeholder, className }) => {
   const [isShowDatePickerModal, setIsShowDatePickerModal] = useState(false);
 
   return (
-    <>
+    <label className={cx(styles.wrapper, { [styles.full]: full }, className)}>
+      {label && <span className={styles.label}>{label}</span>}
       <button
-        className={cx(styles.wrapper, className)}
+        className={styles.datePickerButton}
         data-testid="date-picker"
+        type="button"
         onClick={() => setIsShowDatePickerModal(true)}
       >
         <IconCalendar24 />
@@ -46,7 +50,7 @@ const DatePicker: React.FC<Props> = ({ selectedDate, onDateChange, placeholder, 
       >
         <DatePickerModal isShow={isShowDatePickerModal} />
       </DatePickerContextProvider>
-    </>
+    </label>
   );
 };
 

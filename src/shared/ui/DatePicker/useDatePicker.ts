@@ -10,8 +10,10 @@ import type {
 } from "./datepicker.interface";
 
 const useDatePicker = ({ onDateChange, selectedDate, onClose }: DatePickerContextProps): DatePickerContextType => {
-  const [localSelectedDate, setLocalSelectedDate] = useState<SelectedDate>(selectedDate);
-  const [focusedMonth, setFocusedMonth] = useState<Dayjs>(() => dayjs(selectedDate));
+  const [localSelectedDate, setLocalSelectedDate] = useState<SelectedDate>(() =>
+    selectedDate ? dayjs(selectedDate) : undefined,
+  );
+  const [focusedMonth, setFocusedMonth] = useState<Dayjs>(() => dayjs(selectedDate || undefined));
   const [viewMode, setViewMode] = useState<DatePickerViewMode>("month");
 
   const onSelectDate: DatePickerContextType["onSelectDate"] = useCallback((date) => {

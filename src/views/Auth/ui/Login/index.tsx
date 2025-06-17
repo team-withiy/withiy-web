@@ -1,10 +1,11 @@
 import { AuthorizationRouteHandler } from "@/features/handleAuthorizationRoute/ui";
 import LoginButton, { LoadingLoginButton } from "@/features/login/ui/LoginButton";
 
+import BackButton from "@/shared/ui/BackButton";
+import UnderlineButton from "@/shared/ui/Button/UnderlineButton";
 import DvhHeightLayout from "@/shared/ui/Layout/DvhHeightLayout";
 import { SSRSafeSuspense } from "@/shared/ui/SSRSafeSuspense";
 
-import BackButton from "./BackButton";
 import { IconCharacterDefault } from "public/icons";
 
 import styles from "./LoginPage.module.scss";
@@ -29,6 +30,11 @@ const LoginPage: React.FC = () => {
             <LoginButton socialType="naver" />
           </SSRSafeSuspense>
         </section>
+        <BackButton>
+          <UnderlineButton size={20} type="button">
+            위디 둘러보기
+          </UnderlineButton>
+        </BackButton>
         <BackButton />
       </main>
       <AuthorizationRouteHandler requiredAuth={false} />

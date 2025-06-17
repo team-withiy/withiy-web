@@ -7,11 +7,10 @@ import { registerUserApi } from "@/entities/user/api/user.server-mutations";
 
 import { isFetchHTTPError } from "@/shared/models/auth/fetchHTTPException";
 
-// TODO: 커플 연결 페이지 연결
 export const registerAction = async (data: RegisterUserInDTO) => {
   try {
     await registerUserApi(data);
-    redirect("/");
+    redirect("/couples/invite");
   } catch (error) {
     if (isFetchHTTPError(error)) return error.message;
     throw error;

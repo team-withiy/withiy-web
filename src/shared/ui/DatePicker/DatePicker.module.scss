@@ -2,20 +2,35 @@
 @use "@/shared/ui/styles/mixins" as m;
 
 .wrapper {
-  @include m.flex(flex-start);
-  gap: 12px;
-  padding: 16px 20px;
-  cursor: pointer;
-  background-color: var(--c-grayscale-white);
-  border: 1px solid var(--c-grayscale-gray-300);
-  border-radius: 12px;
+  @include m.flex(flex-start, flex-start, column);
+  gap: 8px;
 
-  .selectedDate {
-    @include m.fontButton1(regular);
+  &.full {
+    width: 100%;
+  }
+
+  .label {
+    @include m.fontBody1(semibold);
     color: var(--c-text-main);
+  }
 
-    &.placeholder {
-      color: var(--c-grayscale-gray-500);
+  .datePickerButton {
+    @include m.flex(flex-start);
+    gap: 12px;
+    width: 100%;
+    padding: 16px 20px;
+    cursor: pointer;
+    background-color: var(--c-grayscale-white);
+    border: 1px solid var(--c-grayscale-gray-300);
+    border-radius: 12px;
+
+    .selectedDate {
+      @include m.fontButton1(regular);
+      color: var(--c-text-main);
+
+      &.placeholder {
+        color: var(--c-grayscale-gray-500);
+      }
     }
   }
 }

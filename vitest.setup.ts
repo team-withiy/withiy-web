@@ -43,6 +43,7 @@ vi.mock("./src/shared/lib/cookies");
 vi.mock("next/navigation", async (importOriginal) => {
   const actual = await importOriginal<typeof import("next/navigation")>();
   const { useRouter } = await vi.importActual<typeof import("next-router-mock")>("next-router-mock");
+
   const usePathname = vi.fn().mockImplementation(() => {
     const router = useRouter();
     return router.pathname;

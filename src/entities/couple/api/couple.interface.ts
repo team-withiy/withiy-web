@@ -14,4 +14,6 @@ export interface CoupleDTO {
 export interface CoupleConnectionRequestDTO {
   /** 상대방 유저 고유 코드 */
   partnerCode: string;
+  /** 처음 만난 날짜 ( YYYY-MM-DD ) */
+  firstMetDate?: string;
 }

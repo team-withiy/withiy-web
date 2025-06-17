@@ -1,0 +1,27 @@
+@use "@/shared/ui/styles/constants" as c;
+@use "@/shared/ui/styles/mixins" as m;
+
+$ICON_BACK_BUTTON_SIZE: 32px;
+
+.wrapper {
+  padding: calc(c.$S_HEADER_HEIGHT + 40px) c.$S_PAGE_HORIZONTAL_PADDING 0;
+
+  .header {
+    padding-left: calc($ICON_BACK_BUTTON_SIZE + 8px);
+
+    .backButton {
+      @include m.posCenterY;
+      @include m.flex;
+      left: 20px;
+      width: $ICON_BACK_BUTTON_SIZE;
+      height: $ICON_BACK_BUTTON_SIZE;
+      cursor: pointer;
+    }
+
+    .title {
+      @include m.fontTitle4(semibold);
+      @include m.makeEllipsis;
+      color: var(--c-text-main);
+    }
+  }
+}
