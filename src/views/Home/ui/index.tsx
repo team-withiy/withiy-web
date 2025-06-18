@@ -47,7 +47,7 @@ async function Home() {
           </FetchBoundary>
         </Suspense>
       </div>
-      <BottomNavigation />
+      <BottomNavigation currentHref="/" />
     </main>
   );
 }

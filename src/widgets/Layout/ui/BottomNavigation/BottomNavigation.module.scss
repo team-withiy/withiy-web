@@ -30,6 +30,7 @@
           width: 100%;
           height: 100%;
           color: var(--c-text-disabled);
+          cursor: pointer;
 
           .iconWrapper {
             @include m.flex;
