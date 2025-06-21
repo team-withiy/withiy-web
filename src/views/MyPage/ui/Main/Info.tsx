@@ -50,7 +50,7 @@ const Info: React.FC<Props> = ({ me }) => {
         </RequireCoupleAuthorizationWrapper>
       </div>
       <RequireCoupleAuthorizationWrapper
-        fallback={<div className={styles.catchPhrase}>커플 연동 후 둘만의 이야기를 기록해보세요!1</div>}
+        fallback={<div className={styles.catchPhrase}>커플 연동 후 둘만의 이야기를 기록해보세요!</div>}
         hasBottomSheet={false}
       >
         <div className={styles.catchPhrase}>
