@@ -16,10 +16,4 @@ comment:
   require_base: true
   require_head: true
   hide_project_coverage: false
-  show_critical_files: true
   after_n_builds: 1
-
-comment_management:
-  delete_old: true
-  maintain_last: true
-  delay_before_delete: 60
