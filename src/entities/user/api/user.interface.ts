@@ -1,18 +1,7 @@
 import type { CoupleDTO } from "@/entities/couple/api/@x/user";
 import type { TermAgreementDTO } from "@/entities/term/api/@x/user";
 
-type UserWithCoupleDTO = {
-  hasCouple: true;
-  couple: CoupleDTO;
-};
-
-type UserWithoutCoupleDTO = {
-  hasCouple: false;
-};
-
-export type UserResponseDTO = UserWithCoupleDTO | UserWithoutCoupleDTO;
-
-export type UserDTO = UserResponseDTO & {
+export type UserWithCoupleDTO = {
   nickname: string;
   thumbnail: string;
   /** 계정 복구 가능 여부 */
@@ -21,7 +10,23 @@ export type UserDTO = UserResponseDTO & {
   isRegistered: boolean;
   /** 커플 연결 코드 */
   code: string;
+  hasCouple: true;
+  couple: CoupleDTO;
 };
+
+export type UserWithoutCoupleDTO = {
+  nickname: string;
+  thumbnail: string;
+  /** 계정 복구 가능 여부 */
+  restoreEnabled: boolean;
+  /** 회원가입 여부 */
+  isRegistered: boolean;
+  /** 커플 연결 코드 */
+  code: string;
+  hasCouple: false;
+};
+
+export type UserDTO = UserWithCoupleDTO | UserWithoutCoupleDTO;
 
 export interface RestoreAccountDTO {
   restore: boolean;

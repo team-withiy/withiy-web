@@ -15,6 +15,12 @@ import {
 import { resolvePromiseComponent } from "@/shared/lib/test";
 
 import AuthorizationRouteHandler from "./AuthorizationRouteHandler";
+import {
+  mockUserRestoreEnabled,
+  mockUserWithCouple,
+  mockUserWithoutCouple,
+  mockUserWithoutRegistered,
+} from "__mocks__/user.handler";
 
 vi.mock("next/navigation", () => ({
   redirect: vi.fn(),
@@ -47,14 +53,7 @@ describe("로그인이 필요한 페이지", () => {
 
     test("복구 페이지로 redirect", async () => {
       vi.mocked(getMeApi).mockResolvedValue({
-        data: {
-          nickname: "testUser",
-          thumbnail: "test-thumbnail.jpg",
-          restoreEnabled: true,
-          code: "test-code",
-          isRegistered: true,
-          hasCouple: false,
-        },
+        data: mockUserRestoreEnabled,
         status: 200,
         message: "",
         timestamp: new Date(),
@@ -71,14 +70,7 @@ describe("로그인이 필요한 페이지", () => {
   describe("회원가입을 진행하지 않은 경우", () => {
     test("회원가입 페이지로 redirect", async () => {
       vi.mocked(getMeApi).mockResolvedValue({
-        data: {
-          nickname: "testUser",
-          thumbnail: "test-thumbnail.jpg",
-          restoreEnabled: false,
-          code: "test-code",
-          isRegistered: false,
-          hasCouple: false,
-        },
+        data: mockUserWithoutRegistered,
         status: 200,
         message: "",
         timestamp: new Date(),
@@ -101,14 +93,7 @@ describe("로그인이 하지 않아야 접근 가능한 페이지", () => {
   describe("로그인을 한 경우", () => {
     test("홈 페이지로 redirect", async () => {
       vi.mocked(getMeApi).mockResolvedValue({
-        data: {
-          nickname: "testUser",
-          thumbnail: "test-thumbnail.jpg",
-          restoreEnabled: false,
-          code: "test-code",
-          isRegistered: true,
-          hasCouple: false,
-        },
+        data: mockUserWithoutCouple,
         status: 200,
         message: "",
         timestamp: new Date(),
@@ -143,14 +128,7 @@ describe("커플만 접근 가능한 페이지", () => {
   describe("커플인 경우", () => {
     test("redirect가 일어나지 않음", async () => {
       vi.mocked(getMeApi).mockResolvedValue({
-        data: {
-          nickname: "testUser",
-          thumbnail: "test-thumbnail.jpg",
-          restoreEnabled: false,
-          code: "test-code",
-          isRegistered: true,
-          hasCouple: true,
-        },
+        data: mockUserWithCouple,
         status: 200,
         message: "",
         timestamp: new Date(),
@@ -168,14 +146,7 @@ describe("커플만 접근 가능한 페이지", () => {
   describe("커플이 아닌 경우", () => {
     test("홈 페이지로 redirect", async () => {
       vi.mocked(getMeApi).mockResolvedValue({
-        data: {
-          nickname: "testUser",
-          thumbnail: "test-thumbnail.jpg",
-          restoreEnabled: false,
-          code: "test-code",
-          isRegistered: true,
-          hasCouple: false,
-        },
+        data: mockUserWithoutCouple,
         status: 200,
         message: "",
         timestamp: new Date(),
@@ -212,14 +183,7 @@ describe("커플이지 않은 경우만 접근 가능한 페이지", () => {
   describe("커플이 아닌 경우", () => {
     test("redirect가 일어나지 않음", async () => {
       vi.mocked(getMeApi).mockResolvedValue({
-        data: {
-          nickname: "testUser",
-          thumbnail: "test-thumbnail.jpg",
-          restoreEnabled: false,
-          code: "test-code",
-          isRegistered: true,
-          hasCouple: false,
-        },
+        data: mockUserWithoutCouple,
         status: 200,
         message: "",
         timestamp: new Date(),

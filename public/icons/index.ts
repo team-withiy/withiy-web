@@ -40,6 +40,7 @@ export { default as IconArrowLeft24 } from "./arrow-left24.svg";
 // MEMO: CHEVRON
 export { default as IconChevronLeft20 } from "./chevron-left20.svg";
 export { default as IconChevronRight20 } from "./chevron-right20.svg";
+export { default as IconChevronRight24 } from "./chevron-right24.svg";
 
 // MEMO: SETTINGS
 export { default as IconSettings24 } from "./settings24.svg";

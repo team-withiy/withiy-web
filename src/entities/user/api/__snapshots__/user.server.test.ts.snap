@@ -3,28 +3,29 @@
 exports[`getMeApi 1`] = `
 {
   "data": {
-    "code": "i95blo",
+    "code": "jGST52",
+    "hasCouple": false,
     "isRegistered": true,
-    "nickname": "Hayley",
-    "restoreEnabled": true,
-    "thumbnail": "https://avatars.githubusercontent.com/u/11437",
+    "nickname": "Clotilde",
+    "restoreEnabled": false,
+    "thumbnail": "https://avatars.githubusercontent.com/u/96826158",
   },
   "message": "success",
   "status": 200,
-  "timestamp": "2022-07-16T16:02:03.985Z",
+  "timestamp": "2022-07-14T14:31:39.894Z",
 }
 `;
 
 exports[`getUserProfileByCodeApi 1`] = `
 {
   "data": {
-    "hasCouple": true,
-    "nickname": "Haylie",
-    "profileImageUrl": "https://avatars.githubusercontent.com/u/14038693",
-    "userCode": "pGcS1F",
+    "hasCouple": false,
+    "nickname": "Yasmin",
+    "profileImageUrl": "https://avatars.githubusercontent.com/u/28044399",
+    "userCode": "GjGP1K",
   },
   "message": "success",
   "status": 200,
-  "timestamp": "2022-10-20T06:31:19.917Z",
+  "timestamp": "2022-02-07T16:15:35.240Z",
 }
 `;

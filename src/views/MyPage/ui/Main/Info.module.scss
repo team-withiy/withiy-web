@@ -36,7 +36,7 @@ $THUMBNAIL_SIZE: 80px;
       @include m.fontBody2(regular);
       grid-area: badge;
       width: max-content;
-      padding: 4px 4px 4px 12px;
+      padding: 0 4px 0 12px;
       color: var(--c-grayscale-white);
       cursor: pointer;
       background-color: var(--c-brand-primary);
@@ -54,5 +54,10 @@ $THUMBNAIL_SIZE: 80px;
     color: var(--c-text-main);
     background-color: var(--c-grayscale-white);
     border-radius: c.$R_ROUNDED_LG;
+
+    .firstMetDate {
+      @include m.fontBody2(semibold);
+      color: var(--c-brand-primary);
+    }
   }
 }

@@ -23,12 +23,7 @@ type Props = BottomSheetProps & {
   fallbackWrapperClassName?: string;
 };
 
-export default async function RequireAuthorizationWrapper({
-  fallback,
-  children,
-  fallbackWrapperClassName,
-  ...props
-}: Props) {
+export default function RequireAuthorizationWrapper({ fallback, children, fallbackWrapperClassName, ...props }: Props) {
   return (
     <Suspense fallback={fallback || children}>
       <FetchBoundary fetchFunctions={[getMeApi]}>
