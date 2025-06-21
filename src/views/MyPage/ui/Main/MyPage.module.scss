@@ -19,4 +19,9 @@
       color: var(--c-brand-primary);
     }
   }
+
+  .nav {
+    width: 100%;
+    padding: 8px c.$S_PAGE_HORIZONTAL_PADDING;
+  }
 }

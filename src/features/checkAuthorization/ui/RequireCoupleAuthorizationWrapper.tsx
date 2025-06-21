@@ -1,6 +1,7 @@
 import { ReactNode, Suspense } from "react";
 
 import { getMeApi } from "@/entities/user/api/user.server";
+import { hasUserCouple } from "@/entities/user/models/hasCouple";
 
 import FetchBoundary from "@/shared/ui/FetchBoundary";
 
@@ -23,7 +24,7 @@ type Props = BottomSheetProps & {
   fallbackWrapperClassName?: string;
 };
 
-export default async function RequireCoupleAuthorizationWrapper({
+export default function RequireCoupleAuthorizationWrapper({
   fallback,
   children,
   fallbackWrapperClassName,
@@ -34,13 +35,13 @@ export default async function RequireCoupleAuthorizationWrapper({
       <FetchBoundary fetchFunctions={[getMeApi]}>
         {([{ data: me }]) => (
           <>
-            {me.hasCouple && children}
-            {!me.hasCouple && props.hasBottomSheet && (
+            {hasUserCouple(me) && children}
+            {!hasUserCouple(me) && props.hasBottomSheet && (
               <RequireCoupleAuthorizationButton className={fallbackWrapperClassName} callbackUrl={props.callbackUrl}>
                 {fallback || children}
               </RequireCoupleAuthorizationButton>
             )}
-            {!me.hasCouple && !props.hasBottomSheet && (fallback || children)}
+            {!hasUserCouple(me) && !props.hasBottomSheet && (fallback || children)}
           </>
         )}
       </FetchBoundary>
