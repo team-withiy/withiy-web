@@ -7,6 +7,7 @@ import { withAuthorizationRoute } from "@/features/handleAuthorizationRoute/ui";
 
 import { getUserProfileByCodeApi } from "@/entities/user/api/user.server";
 
+import { DEFAULT_PROFILE_IMAGE_SRC } from "@/shared/constants/image";
 import BottomFloatingButtonWrapper from "@/shared/ui/BottomFloatingButtonWrapper";
 import Button from "@/shared/ui/Button/Button";
 import BlurImage from "@/shared/ui/Image/BlurImage";
@@ -41,7 +42,7 @@ const CoupleInvitationPage: React.FC<Props> = async ({ params }) => {
             alt={`${data.nickname}의 프로필 이미지`}
             className={styles.image}
             fallbackProps={{
-              src: "/images/default-profile.png",
+              src: DEFAULT_PROFILE_IMAGE_SRC,
               alt: "기본 프로필 이미지",
               width: 180,
               height: 180,

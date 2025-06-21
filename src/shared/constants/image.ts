@@ -10,3 +10,5 @@ export const IMAGE_ACCEPT: Accept = {
   "image/bmp": [".bmp"],
   "image/tiff": [".tif"],
 };
+
+export const DEFAULT_PROFILE_IMAGE_SRC = "/images/default-profile.png";

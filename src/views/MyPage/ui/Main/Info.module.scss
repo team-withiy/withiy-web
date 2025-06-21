@@ -1,0 +1,57 @@
+@use "@/shared/ui/styles/constants" as c;
+@use "@/shared/ui/styles/mixins" as m;
+
+$THUMBNAIL_SIZE: 80px;
+
+.wrapper {
+  width: 100%;
+  padding: c.$S_PAGE_VERTICAL_PADDING c.$S_PAGE_HORIZONTAL_PADDING;
+  background-color: var(--c-brand-primary-background);
+
+  .infoWrapper {
+    display: grid;
+    grid-template-areas:
+      "thumbnail name"
+      "thumbnail badge";
+    grid-template-columns: $THUMBNAIL_SIZE minmax(0, 1fr);
+    gap: 8px 16px;
+    margin-bottom: 20px;
+
+    .thumbnail {
+      grid-area: thumbnail;
+      width: $THUMBNAIL_SIZE;
+      height: $THUMBNAIL_SIZE;
+      border-radius: c.$R_ROUNDED_FULL;
+    }
+
+    .name {
+      @include m.fontTitle5(semibold);
+      grid-area: name;
+      align-self: flex-end;
+      color: --text-main;
+    }
+
+    .badge {
+      @include m.flex;
+      @include m.fontBody2(regular);
+      grid-area: badge;
+      width: max-content;
+      padding: 4px 4px 4px 12px;
+      color: var(--c-grayscale-white);
+      background-color: var(--c-brand-primary);
+      border-radius: 100px;
+
+      .chevronRight path {
+        stroke: var(--c-grayscale-white);
+      }
+    }
+  }
+
+  .catchPhrase {
+    @include m.fontBody2(regular);
+    padding: 8px 16px;
+    color: var(--c-text-main);
+    background-color: var(--c-grayscale-white);
+    border-radius: c.$R_ROUNDED_LG;
+  }
+}
