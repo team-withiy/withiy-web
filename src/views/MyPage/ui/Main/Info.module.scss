@@ -28,7 +28,7 @@ $THUMBNAIL_SIZE: 80px;
       @include m.fontTitle5(semibold);
       grid-area: name;
       align-self: flex-end;
-      color: --text-main;
+      color: var(--c-text-main);
     }
 
     .badge {

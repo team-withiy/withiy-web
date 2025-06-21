@@ -32,7 +32,7 @@ const MyPage: React.FC = () => {
       <nav className={styles.nav}>
         <ChevronLink href="/my-page/profile">프로필 설정</ChevronLink>
         <ChevronLink href="/my-page/couples">커플 설정</ChevronLink>
-        <ChevronLink href="/my-page/bookmarks">프로필 설정</ChevronLink>
+        <ChevronLink href="/my-page/bookmarks">저장한 장소/코스</ChevronLink>
       </nav>
       <BottomNavigation currentHref="/my-page" />
     </main>
