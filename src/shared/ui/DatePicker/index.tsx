@@ -23,6 +23,7 @@ interface Props {
   className?: string;
 }
 
+// TODO: 가능한 날짜 필터링 기능 추가
 const DatePicker: React.FC<Props> = ({ label, full, selectedDate, onDateChange, placeholder, className }) => {
   const id = useId();
   const [isShowDatePickerModal, setIsShowDatePickerModal] = useState(false);

@@ -57,6 +57,7 @@ $THUMBNAIL_SIZE: 80px;
 
     .firstMetDate {
       @include m.fontBody2(semibold);
+      margin: 0 4px;
       color: var(--c-brand-primary);
     }
   }

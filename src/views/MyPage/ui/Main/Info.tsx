@@ -58,7 +58,9 @@ const Info: React.FC<Props> = ({ me }) => {
           {hasUserCoupleWithFirstMetDate(me) && (
             <>
               처음 만난 날은
-              <time dateTime={me.couple.firstMetDate}>{formatDate(me.couple.firstMetDate, "yyyy년 MM월 dd일")}</time>
+              <time className={styles.firstMetDate} dateTime={me.couple.firstMetDate}>
+                {formatDate(me.couple.firstMetDate, "YYYY년 MM월 DD일")}
+              </time>
               입니다.
             </>
           )}

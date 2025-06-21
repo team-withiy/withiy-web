@@ -5,6 +5,7 @@ import Link from "next/link";
 import BottomNavigation from "@/widgets/Layout/ui/BottomNavigation";
 import Header from "@/widgets/Layout/ui/Header";
 
+import RequireCoupleAuthorizationWrapper from "@/features/checkAuthorization/ui/RequireCoupleAuthorizationWrapper";
 import { withAuthorizationRoute } from "@/features/handleAuthorizationRoute/ui";
 
 import { getMeApi } from "@/entities/user/api/user.server";
@@ -31,7 +32,12 @@ const MyPage: React.FC = () => {
       </Suspense>
       <nav className={styles.nav}>
         <ChevronLink href="/my-page/profile">프로필 설정</ChevronLink>
-        <ChevronLink href="/my-page/couples">커플 설정</ChevronLink>
+        <RequireCoupleAuthorizationWrapper
+          fallback={<ChevronLink href="/my-page/couples/unconnected">커플 설정</ChevronLink>}
+          hasBottomSheet={false}
+        >
+          <ChevronLink href="/my-page/couples/connected">커플 설정</ChevronLink>
+        </RequireCoupleAuthorizationWrapper>
         <ChevronLink href="/my-page/bookmarks">저장한 장소/코스</ChevronLink>
       </nav>
       <BottomNavigation currentHref="/my-page" />
