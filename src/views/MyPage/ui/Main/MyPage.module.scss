@@ -3,4 +3,20 @@
 
 .wrapper {
   width: 100%;
+  padding: c.$S_HEADER_HEIGHT 0 c.$S_BOTTOM_NAVIGATION_HEIGHT;
+
+  .header {
+    @include m.flex(space-between);
+    padding: 0 c.$S_PAGE_HORIZONTAL_PADDING;
+    background-color: var(--c-brand-primary-background);
+
+    .title {
+      @include m.fontTitle4(semibold);
+      color: var(--c-text-main);
+    }
+
+    .settingButton {
+      color: var(--c-brand-primary);
+    }
+  }
 }
