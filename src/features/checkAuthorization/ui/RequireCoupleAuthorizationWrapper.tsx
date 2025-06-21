@@ -4,7 +4,7 @@ import { getMeApi } from "@/entities/user/api/user.server";
 
 import FetchBoundary from "@/shared/ui/FetchBoundary";
 
-import RequireAuthorizationButton from "./RequireAuthorizationButton";
+import RequireCoupleAuthorizationButton from "./RequireCoupleAuthorizationButton";
 
 type HasBottomSheetProps = {
   hasBottomSheet: true;
@@ -23,7 +23,7 @@ type Props = BottomSheetProps & {
   fallbackWrapperClassName?: string;
 };
 
-export default async function RequireAuthorizationWrapper({
+export default async function RequireCoupleAuthorizationWrapper({
   fallback,
   children,
   fallbackWrapperClassName,
@@ -34,13 +34,13 @@ export default async function RequireAuthorizationWrapper({
       <FetchBoundary fetchFunctions={[getMeApi]}>
         {([{ data: me }]) => (
           <>
-            {me && children}
-            {!me && props.hasBottomSheet && (
-              <RequireAuthorizationButton className={fallbackWrapperClassName} callbackUrl={props.callbackUrl}>
+            {me.hasCouple && children}
+            {!me.hasCouple && props.hasBottomSheet && (
+              <RequireCoupleAuthorizationButton className={fallbackWrapperClassName} callbackUrl={props.callbackUrl}>
                 {fallback || children}
-              </RequireAuthorizationButton>
+              </RequireCoupleAuthorizationButton>
             )}
-            {!me && !props.hasBottomSheet && (fallback || children)}
+            {!me.hasCouple && !props.hasBottomSheet && (fallback || children)}
           </>
         )}
       </FetchBoundary>

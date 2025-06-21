@@ -67,6 +67,7 @@ const BottomNavigation: React.FC<Props> = ({ currentHref }) => {
                 <RequireAuthorizationWrapper
                   fallbackWrapperClassName={styles.link}
                   callbackUrl={item.href}
+                  hasBottomSheet
                   fallback={
                     <div className={styles.link}>
                       <span className={styles.iconWrapper}>{item.icon}</span>

@@ -5,7 +5,7 @@ import Button from "@/shared/ui/Button/Button";
 
 import { useSetCallbackUrlMutation } from "../api/checkAuthorization.mutations";
 
-import styles from "./RequireAuthorizationBottomSheet.module.scss";
+import styles from "./RequireCoupleAuthorizationBottomSheet.module.scss";
 
 interface Props {
   isShow: boolean;
@@ -13,8 +13,8 @@ interface Props {
   callbackUrl: string;
 }
 
-const RequireAuthorizationBottomSheet: React.FC<Props> = ({ isShow, onClose, callbackUrl }) => {
-  const { mutate } = useSetCallbackUrlMutation("/auth");
+const RequireCoupleAuthorizationBottomSheet: React.FC<Props> = ({ isShow, onClose, callbackUrl }) => {
+  const { mutate } = useSetCallbackUrlMutation("/couples/invite");
 
   const onClick = () => {
     mutate(callbackUrl);
@@ -25,18 +25,18 @@ const RequireAuthorizationBottomSheet: React.FC<Props> = ({ isShow, onClose, cal
       isShow={isShow}
       onClose={onClose}
       className={styles.wrapper}
-      data-testid="require-authorization-bottom-sheet"
+      data-testid="require-couple-authorization-bottom-sheet"
       data-is-show={isShow}
     >
-      <h2 className={styles.title}>이 순간을 함께 기록해볼까요?</h2>
-      <p className={styles.description}>로그인하고 우리의 추억을 저장해보세요!</p>
+      <h2 className={styles.title}>커플 연동 후 사용할 수 있어요</h2>
+      <p className={styles.description}>둘만의 이야기를 기록해보세요! 💖</p>
       <Button
         size={52}
         variant="default"
         full
         onClick={onClick}
         type="button"
-        data-testid="login-button"
+        data-testid="connect-couple-button"
         className={styles.confirmButton}
       >
         지금 할게요
@@ -48,4 +48,4 @@ const RequireAuthorizationBottomSheet: React.FC<Props> = ({ isShow, onClose, cal
   );
 };
 
-export default RequireAuthorizationBottomSheet;
+export default RequireCoupleAuthorizationBottomSheet;

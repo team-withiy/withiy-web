@@ -8,7 +8,7 @@ import { useSetCallbackUrlMutation } from "./checkAuthorization.mutations";
 
 test("useSetCallbackUrlMutation", async () => {
   await mockRouter.push("/");
-  const { result } = renderHookWithProviders(() => useSetCallbackUrlMutation());
+  const { result } = renderHookWithProviders(() => useSetCallbackUrlMutation("/auth"));
   const mutateAsyncSpy = vi.spyOn(result.current, "mutateAsync");
 
   await act(() => result.current.mutateAsync("/"));

@@ -5,10 +5,10 @@ export interface CoupleDTO {
   partnerNickname: string;
   /** 파트너 프로필 이미지 */
   partnerThumbnail: string;
-  /** 처음 만난 날짜 */
-  firstMetDate: Date;
-  /** 연결된 날짜 */
-  connectedDate: Date;
+  /** 처음 만난 날짜 YYYY-MM-DD */
+  firstMetDate: string;
+  /** 연결된 날짜 YYYY-MM-DD */
+  connectedDate: string;
 }
 
 export interface CoupleConnectionRequestDTO {

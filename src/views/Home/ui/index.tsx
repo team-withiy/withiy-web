@@ -25,6 +25,7 @@ async function Home() {
           fallbackWrapperClassName={styles.requireAuthorizationWrapper}
           fallback={<ScheduleCard />}
           callbackUrl="/test"
+          hasBottomSheet
         >
           <ScheduleCard />
         </RequireAuthorizationWrapper>
