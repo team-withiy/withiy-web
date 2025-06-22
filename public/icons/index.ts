@@ -3,6 +3,7 @@ export { default as IconCharacterDefault } from "./character-default.svg";
 export { default as IconCharacterQuestion } from "./character-question.svg";
 export { default as IconCharacterHeart } from "./character-heart.svg";
 export { default as IconCharacterInvite } from "./character-invite.svg";
+export { default as IconCharacterLeave } from "./character-leave.svg";
 
 // MEMO: BELL
 export { default as IconBell20 } from "./bell20.svg";
@@ -33,6 +34,7 @@ export { default as IconUserRound24 } from "./user-round24.svg";
 
 // MEMO: X
 export { default as IconX16 } from "./x16.svg";
+export { default as IconX24 } from "./x24.svg";
 
 // MEMO: ARROW
 export { default as IconArrowLeft24 } from "./arrow-left24.svg";

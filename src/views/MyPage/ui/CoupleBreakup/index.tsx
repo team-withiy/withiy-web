@@ -1,0 +1,40 @@
+import Header from "@/widgets/Layout/ui/Header";
+
+import BreakupCoupleButton from "@/features/breakupCouple/ui/BreakupCoupleButton";
+import { withAuthorizationRoute } from "@/features/handleAuthorizationRoute/ui";
+
+import BackButton from "@/shared/ui/BackButton";
+import DvhHeightLayout from "@/shared/ui/Layout/DvhHeightLayout";
+
+import { IconCharacterLeave, IconX24 } from "public/icons";
+
+import styles from "./CoupleBreakupPage.module.scss";
+
+const CoupleBreakupPage: React.FC = () => {
+  return (
+    <DvhHeightLayout heightType="height" dvh={100} className={styles.wrapper}>
+      <main className={styles.main}>
+        <Header className={styles.header}>
+          <BackButton className={styles.xButton}>
+            <IconX24 />
+          </BackButton>
+          <h2 className={styles.title}>커플 연결 끊기</h2>
+        </Header>
+        <section className={styles.content}>
+          <IconCharacterLeave />
+          <p className={styles.description}>
+            정말 헤어지실 건가요..?
+            <small className={styles.small}>
+              함게 기록한 추억들이 모두 지워져요.
+              <br />
+              다시 보고 싶다면, 30일 안에는 복구할 수 있어요.
+            </small>
+          </p>
+        </section>
+      </main>
+      <BreakupCoupleButton />
+    </DvhHeightLayout>
+  );
+};
+
+export default withAuthorizationRoute(CoupleBreakupPage, { requiredAuth: true, requiredCouple: true });
