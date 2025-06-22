@@ -1,4 +1,4 @@
-import { Fragment } from "react";
+import Link from "next/link";
 
 import Skeleton from "react-loading-skeleton";
 
@@ -33,14 +33,12 @@ const Info: React.FC<Props> = ({ me }) => {
           {me.nickname}
         </span>
         <RequireCoupleAuthorizationWrapper
-          hasBottomSheet
-          callbackUrl="/my-page"
-          fallbackWrapperClassName={styles.badge}
+          hasBottomSheet={false}
           fallback={
-            <Fragment data-testid="connect-couple-badge">
+            <Link href="/couples/invite" data-testid="connect-couple-badge" className={styles.badge}>
               커플 연결하기
               <IconChevronRight20 className={styles.chevronRight} />
-            </Fragment>
+            </Link>
           }
         >
           <button type="button" className={styles.badge} data-testid="couple-badge">

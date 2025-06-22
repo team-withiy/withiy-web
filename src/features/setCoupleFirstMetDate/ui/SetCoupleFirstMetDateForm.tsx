@@ -21,7 +21,6 @@ interface Props {
   firstMetDate: string | null;
 }
 
-// TODO: 테스트 코드
 const SetCoupleFirstMetDateForm: React.FC<Props> = ({ firstMetDate }) => {
   const { addToast } = useToast();
   const { back } = useRouter();

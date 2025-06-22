@@ -21,6 +21,7 @@ interface Props {
   onDateChange: OnDateChange;
   placeholder?: string;
   className?: string;
+  filterEnableDates?: (date: Date) => boolean;
 }
 
 // TODO: 가능한 날짜 필터링 기능 추가
