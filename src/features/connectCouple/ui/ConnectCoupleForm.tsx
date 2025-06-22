@@ -5,7 +5,7 @@ import { FormEventHandler, startTransition, useActionState, useEffect } from "re
 import { Controller, useForm } from "react-hook-form";
 
 import { FormActionState, FormActionStatus } from "@/shared/api/common.interface";
-import { formatDate } from "@/shared/lib/date";
+import { dayjs, formatDate } from "@/shared/lib/date";
 import BottomFloatingButtonWrapper from "@/shared/ui/BottomFloatingButtonWrapper";
 import Button from "@/shared/ui/Button/Button";
 import DatePicker from "@/shared/ui/DatePicker";
@@ -58,6 +58,7 @@ const ConnectCoupleForm: React.FC<Props> = ({ partnerCode }) => {
           <DatePicker
             label="처음 사랑하게 된 날"
             placeholder="YYYY.MM.DD"
+            filterEnableDates={(date) => dayjs(date).isBefore(dayjs().add(1, "day"), "date")}
             onDateChange={field.onChange}
             selectedDate={field.value}
           />

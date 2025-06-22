@@ -9,7 +9,12 @@ import type {
   SelectedDate,
 } from "./datepicker.interface";
 
-const useDatePicker = ({ onDateChange, selectedDate, onClose }: DatePickerContextProps): DatePickerContextType => {
+const useDatePicker = ({
+  onDateChange,
+  selectedDate,
+  onClose,
+  filterEnableDates,
+}: DatePickerContextProps): DatePickerContextType => {
   const [localSelectedDate, setLocalSelectedDate] = useState<SelectedDate>(() =>
     selectedDate ? dayjs(selectedDate) : undefined,
   );
@@ -31,6 +36,30 @@ const useDatePicker = ({ onDateChange, selectedDate, onClose }: DatePickerContex
       setFocusedMonth((prev) => prev.add(1, "year"));
     }
   }, []);
+
+  const checkMonthAvailableInYearViewMode: DatePickerContextType["checkMonthAvailableInYearViewMode"] = useCallback(
+    (month) => {
+      if (!filterEnableDates) return true;
+
+      const monthFirstDay = month.startOf("month");
+      const monthLastDay = month.endOf("month");
+      const daysInMonth = monthLastDay.date();
+
+      return Array.from({ length: daysInMonth }, (_, index) => monthFirstDay.add(index, "day")).reduce((acc, cur) => {
+        if (acc) return true;
+        return filterEnableDates(cur);
+      }, false);
+    },
+    [filterEnableDates],
+  );
+
+  const checkDateAvailableInMonthViewMode: DatePickerContextType["checkDateAvailableInMonthViewMode"] = useCallback(
+    (date) => {
+      if (!filterEnableDates) return true;
+      return filterEnableDates(date);
+    },
+    [filterEnableDates],
+  );
 
   const onClickMonthInYearViewMode: DatePickerContextType["onClickMonthInYearViewMode"] = useCallback((month) => {
     setFocusedMonth(month);
@@ -54,6 +83,8 @@ const useDatePicker = ({ onDateChange, selectedDate, onClose }: DatePickerContex
     onSelectDate,
     onClickArrowInMonthViewMode,
     onClickArrowInYearViewMode,
+    checkMonthAvailableInYearViewMode,
+    checkDateAvailableInMonthViewMode,
     onClickMonthInYearViewMode,
     onCancel,
     onConfirm,

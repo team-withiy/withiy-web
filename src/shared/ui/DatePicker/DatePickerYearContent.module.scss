@@ -21,13 +21,22 @@
       }
     }
 
+    &.disabled {
+      cursor: not-allowed;
+
+      .label {
+        @include m.fontButton3(regular);
+        color: var(--c-text-disabled);
+      }
+    }
+
     .label {
+      @include m.fontButton3(regular);
+      @include m.flex;
       width: 100%;
       height: 100%;
       color: var(--c-text-main-sub);
       cursor: inherit;
-      @include m.fontButton3(regular);
-      @include m.flex;
     }
   }
 }

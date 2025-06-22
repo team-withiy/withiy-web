@@ -11,7 +11,8 @@ import { useDatePickerContext } from "./DatePickerContext";
 import styles from "./DatePickerYearContent.module.scss";
 
 const DatePickerYearContent: React.FC = () => {
-  const { focusedMonth, localSelectedDate, onClickMonthInYearViewMode } = useDatePickerContext();
+  const { focusedMonth, localSelectedDate, onClickMonthInYearViewMode, checkMonthAvailableInYearViewMode } =
+    useDatePickerContext();
   const focusedYear = focusedMonth.year();
 
   return (
@@ -23,10 +24,12 @@ const DatePickerYearContent: React.FC = () => {
           !!localSelectedDate &&
           formatDate(localSelectedDate, DATE_PICKER_MONTH_FORMAT) === formatDate(monthDate, DATE_PICKER_MONTH_FORMAT);
 
+        const isAvailable = checkMonthAvailableInYearViewMode(monthDate);
+
         return (
           <li
             key={`${focusedMonth}-${month}`}
-            className={cx(styles.item, { [styles.checked]: isChecked })}
+            className={cx(styles.item, { [styles.checked]: isChecked }, { [styles.disabled]: !isAvailable })}
             data-testid={`date-picker-year-content-item-${month}`}
           >
             <label className={styles.label}>
@@ -35,6 +38,7 @@ const DatePickerYearContent: React.FC = () => {
                 type="checkbox"
                 checked={isChecked}
                 onChange={() => onClickMonthInYearViewMode(monthDate)}
+                disabled={!isAvailable}
                 hidden
               />
             </label>
