@@ -17,7 +17,6 @@ import { IconArrowLeft24 } from "public/icons";
 
 import styles from "./ConnectedCouplePage.module.scss";
 
-// TODO: 테스트 코드
 const ConnectedCouplePage: React.FC = () => {
   return (
     <DvhHeightLayout dvh={100} heightType="height">
@@ -33,7 +32,7 @@ const ConnectedCouplePage: React.FC = () => {
             <SetCoupleFirstMetDateForm firstMetDate={hasUserCouple(me) ? me.couple.firstMetDate : null} />
           )}
         </FetchBoundary>
-        <Link href="/my-page/couples/connected/breakup" className={styles.breakupLink}>
+        <Link href="/my-page/couples/connected/breakup" className={styles.breakupLink} data-testid="breakup-link">
           <UnderlineButton type="button" size={20}>
             커플 연결 끊기
           </UnderlineButton>

@@ -5,7 +5,6 @@ import { setFirstMetDateApi } from "@/entities/couple/api/couple.server-mutation
 import { FormActionState, FormActionStatus } from "@/shared/api/common.interface";
 import { isFetchHTTPError } from "@/shared/models/auth/fetchHTTPException";
 
-// TODO: 테스트 코드
 export const setFirstMetDateAction = async (_: FormActionState, payload: FormData): Promise<FormActionState> => {
   try {
     const firstMetDate = payload.get("firstMetDate") as string;
