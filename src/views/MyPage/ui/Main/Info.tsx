@@ -35,7 +35,11 @@ const Info: React.FC<Props> = ({ me }) => {
         <RequireCoupleAuthorizationWrapper
           hasBottomSheet={false}
           fallback={
-            <Link href="/couples/invite" data-testid="connect-couple-badge" className={styles.badge}>
+            <Link
+              href="/my-page/couples/unconnected/connect"
+              data-testid="connect-couple-badge"
+              className={styles.badge}
+            >
               커플 연결하기
               <IconChevronRight20 className={styles.chevronRight} />
             </Link>
