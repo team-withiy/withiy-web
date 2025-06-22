@@ -25,7 +25,7 @@ const checkIsSelected = (date: Dayjs, localSelectedDate: SelectedDate) => {
 };
 
 const DatePickerMonthContent: React.FC = () => {
-  const { focusedMonth, localSelectedDate, onSelectDate } = useDatePickerContext();
+  const { focusedMonth, localSelectedDate, onSelectDate, checkDateAvailableInMonthViewMode } = useDatePickerContext();
   const firstWeekDayOfWeek = focusedMonth.startOf("month").day();
   const beforeMonthDate = focusedMonth.subtract(1, "month");
   const lastWeekDayOfWeek = focusedMonth.endOf("month").day();
@@ -61,6 +61,7 @@ const DatePickerMonthContent: React.FC = () => {
         {/* 현재 달의 날짜 */}
         {range(focusedMonth.endOf("month").date()).map((day) => {
           const date = focusedMonth.startOf("month").add(day, "day");
+          const isAvailable = checkDateAvailableInMonthViewMode(date);
 
           return (
             <li
@@ -68,6 +69,7 @@ const DatePickerMonthContent: React.FC = () => {
                 [styles.isToday]: checkIsDateToday(date),
                 [styles.isHoliday]: checkIsHoliday(date),
                 [styles.isSelected]: checkIsSelected(date, localSelectedDate),
+                [styles.disabled]: !isAvailable,
               })}
               key={formatDate(date, DATE_FORMAT)}
               data-testid={`date-picker-current-month-day-${day}`}
@@ -78,6 +80,7 @@ const DatePickerMonthContent: React.FC = () => {
                   type="checkbox"
                   checked={checkIsSelected(date, localSelectedDate)}
                   onChange={() => onSelectDate(date)}
+                  disabled={!isAvailable}
                   hidden
                 />
               </label>

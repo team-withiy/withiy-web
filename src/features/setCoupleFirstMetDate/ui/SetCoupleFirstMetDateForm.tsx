@@ -65,6 +65,7 @@ const SetCoupleFirstMetDateForm: React.FC<Props> = ({ firstMetDate }) => {
             full
             label="처음 사랑하게 된 날"
             placeholder="YYYY.MM.DD"
+            filterEnableDates={(date) => dayjs(date).isBefore(dayjs().add(1, "day"), "date")}
             onDateChange={field.onChange}
             selectedDate={field.value}
           />

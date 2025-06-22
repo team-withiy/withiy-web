@@ -40,6 +40,12 @@ $CELL_SIZE: 40px;
       &.disabled {
         color: var(--c-text-disabled);
         cursor: not-allowed;
+
+        .label:hover {
+          color: inherit;
+          background-color: transparent;
+          border-color: transparent;
+        }
       }
 
       &.isToday {

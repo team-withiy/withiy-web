@@ -7,7 +7,7 @@ import cx from "clsx";
 import { DATE_FORMAT } from "@/shared/constants/date";
 import { formatDate } from "@/shared/lib/date";
 
-import { type OnDateChange, type SelectedDate } from "./datepicker.interface";
+import { FilterEnableDates, type OnDateChange, type SelectedDate } from "./datepicker.interface";
 import DatePickerContextProvider from "./DatePickerContext";
 import DatePickerModal from "./DatePickerModal";
 import { IconCalendar24 } from "public/icons";
@@ -21,11 +21,18 @@ interface Props {
   onDateChange: OnDateChange;
   placeholder?: string;
   className?: string;
-  filterEnableDates?: (date: Date) => boolean;
+  filterEnableDates?: FilterEnableDates;
 }
 
-// TODO: 가능한 날짜 필터링 기능 추가
-const DatePicker: React.FC<Props> = ({ label, full, selectedDate, onDateChange, placeholder, className }) => {
+const DatePicker: React.FC<Props> = ({
+  label,
+  full,
+  selectedDate,
+  onDateChange,
+  placeholder,
+  className,
+  filterEnableDates,
+}) => {
   const id = useId();
   const [isShowDatePickerModal, setIsShowDatePickerModal] = useState(false);
 
@@ -54,6 +61,7 @@ const DatePicker: React.FC<Props> = ({ label, full, selectedDate, onDateChange, 
       <DatePickerContextProvider
         selectedDate={selectedDate}
         onDateChange={onDateChange}
+        filterEnableDates={filterEnableDates}
         onClose={() => setIsShowDatePickerModal(false)}
       >
         <DatePickerModal isShow={isShowDatePickerModal} />
