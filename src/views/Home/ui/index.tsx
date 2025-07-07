@@ -9,11 +9,8 @@ import { withAuthorizationRoute } from "@/features/handleAuthorizationRoute/ui";
 
 import { getCategoriesApi } from "@/entities/category/api/category.server";
 import ScheduleCard from "@/entities/schedule/ui/ScheduleCard";
-import { getMeApi } from "@/entities/user/api/user.server";
 
 import FetchBoundary from "@/shared/ui/FetchBoundary";
-
-import Test from "./Test";
 
 import styles from "./index.module.scss";
 
@@ -33,19 +30,6 @@ async function Home() {
         <Suspense fallback={<LoadingCategoryList />}>
           <FetchBoundary fetchFunctions={[getCategoriesApi]}>
             {([categories]) => <CategoryList categories={categories.data} />}
-          </FetchBoundary>
-        </Suspense>
-        <Suspense>
-          <FetchBoundary fetchFunctions={[getMeApi]}>
-            {([{ data: me }]) => (
-              <>
-                {me && (
-                  <>
-                    {me.nickname}님 환영합니당 <Test />
-                  </>
-                )}
-              </>
-            )}
           </FetchBoundary>
         </Suspense>
       </div>
