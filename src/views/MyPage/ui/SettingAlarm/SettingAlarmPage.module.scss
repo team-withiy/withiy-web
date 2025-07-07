@@ -1,0 +1,30 @@
+@use "@/shared/ui/styles/constants" as c;
+@use "@/shared/ui/styles/mixins" as m;
+
+$BACK_BUTTON_SIZE: 32px;
+
+.wrapper {
+  width: 100%;
+  padding: calc(c.$S_HEADER_HEIGHT + 8px) c.$S_PAGE_HORIZONTAL_PADDING c.$S_PAGE_VERTICAL_PADDING;
+
+  .header {
+    padding-right: calc(20px + $BACK_BUTTON_SIZE);
+    padding-left: calc(20px + $BACK_BUTTON_SIZE);
+
+    .backButton {
+      @include m.posCenterY;
+      @include m.flex;
+      left: 20px;
+      width: $BACK_BUTTON_SIZE;
+      height: $BACK_BUTTON_SIZE;
+      cursor: pointer;
+    }
+
+    .title {
+      @include m.makeEllipsis;
+      @include m.fontTitle4(semibold);
+      width: 100%;
+      text-align: center;
+    }
+  }
+}
