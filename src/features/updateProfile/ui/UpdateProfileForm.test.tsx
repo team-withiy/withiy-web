@@ -15,7 +15,7 @@ vi.mock("../api/actions", () => ({
   updateProfileAction: vi.fn(),
 }));
 
-vi.mock("./ThumbnailInput", () => ({
+vi.mock("@/entities/user/ui/ThumbnailInput", () => ({
   default: ({
     defaultValue,
     onDrop,

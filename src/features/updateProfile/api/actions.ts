@@ -12,8 +12,8 @@ interface UpdateProfileActionPayload {
 
 export const updateProfileAction = async ({ nickname, thumbnail }: UpdateProfileActionPayload) => {
   try {
-    if (thumbnail) {
-      const { data } = await uploadImageApi({ entityType: "user", file: thumbnail as File });
+    if (!!thumbnail) {
+      const { data } = await uploadImageApi({ entityType: "user", file: thumbnail });
       await updateProfileApi({ nickname, thumbnail: data.imageUrl });
     } else {
       await updateProfileApi({ nickname });
