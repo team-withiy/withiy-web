@@ -1,6 +1,6 @@
 "use client";
 
-import { startTransition } from "react";
+import { use, useTransition } from "react";
 
 import { useRouter } from "next/navigation";
 
@@ -11,8 +11,10 @@ import { z } from "zod";
 import Header from "@/widgets/Layout/ui/Header";
 
 import type { TermAgreementDTO } from "@/entities/term/api/term.interface";
+import type { UserDTO } from "@/entities/user/api/user.interface";
 import ThumbnailInput from "@/entities/user/ui/ThumbnailInput";
 
+import type { ApiResponseDTO } from "@/shared/api/common.interface";
 import BottomFloatingButtonWrapper from "@/shared/ui/BottomFloatingButtonWrapper";
 import Button from "@/shared/ui/Button/Button";
 import Input from "@/shared/ui/Input";
@@ -31,7 +33,7 @@ const profileSchema = z.object({
     .regex(/^[a-zA-Z0-9가-힣ㄱ-ㅎㅏ-ㅣ]*$/, {
       message: "한글, 숫자, 영어만 사용할 수 있어요",
     }),
-  thumbnail: z.instanceof(File).optional(),
+  thumbnail: z.instanceof(File).optional().or(z.string().optional()),
 });
 
 type ProfileSchema = z.infer<typeof profileSchema>;
@@ -39,9 +41,13 @@ type ProfileSchema = z.infer<typeof profileSchema>;
 interface Props {
   termAgreements: TermAgreementDTO;
   onClickPrev: () => void;
+  mePromise: Promise<ApiResponseDTO<UserDTO>>;
 }
 
-const ProfilePage: React.FC<Props> = ({ termAgreements, onClickPrev }) => {
+const ProfilePage: React.FC<Props> = ({ termAgreements, onClickPrev, mePromise }) => {
+  const [isPending, startTransition] = useTransition();
+  const { data: me } = use(mePromise);
+
   const { addToast } = useToast();
   const { replace } = useRouter();
 
@@ -53,6 +59,10 @@ const ProfilePage: React.FC<Props> = ({ termAgreements, onClickPrev }) => {
   } = useForm<ProfileSchema>({
     mode: "onTouched",
     resolver: zodResolver(profileSchema),
+    defaultValues: {
+      nickname: me.nickname || "",
+      thumbnail: me.thumbnail || "",
+    },
   });
 
   const onSubmit: SubmitHandler<ProfileSchema> = (data) => {
@@ -80,7 +90,8 @@ const ProfilePage: React.FC<Props> = ({ termAgreements, onClickPrev }) => {
           name="thumbnail"
           render={({ field }) => (
             <ThumbnailInput
-              file={field.value}
+              defaultValue={typeof field.value === "string" ? field.value : undefined}
+              file={typeof field.value === "object" ? field.value : undefined}
               className={styles.thumbnailInput}
               onDrop={(acceptedFiles) => field.onChange(acceptedFiles[0])}
               data-testid="thumbnail-input"
@@ -106,7 +117,7 @@ const ProfilePage: React.FC<Props> = ({ termAgreements, onClickPrev }) => {
             variant="default"
             full
             type="submit"
-            disabled={isSubmitting || !isValid}
+            disabled={isPending || isSubmitting || !isValid}
             data-testid="profile-submit-button"
           >
             프로필 만들기
