@@ -35,6 +35,7 @@ export interface RestoreAccountDTO {
 export interface RegisterUserInDTO {
   termAgreements: TermAgreementDTO;
   nickname: string;
+  thumbnail?: string;
 }
 
 export interface UserProfileResponseDTO {

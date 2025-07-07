@@ -9,13 +9,13 @@ import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { z } from "zod";
 
 import type { UserDTO } from "@/entities/user/api/user.interface";
+import ThumbnailInput, { LoadingThumbnailInput } from "@/entities/user/ui/ThumbnailInput";
 
 import BottomFloatingButtonWrapper from "@/shared/ui/BottomFloatingButtonWrapper";
 import Button from "@/shared/ui/Button/Button";
 import Input from "@/shared/ui/Input";
 import { useToast } from "@/shared/ui/Toast";
 
-import ThumbnailInput, { LoadingThumbnailInput } from "./ThumbnailInput";
 import { updateProfileAction } from "../api/actions";
 
 import styles from "./UpdateProfileForm.module.scss";

@@ -28,12 +28,16 @@ $BACK_BUTTON_SIZE: 32px;
     }
   }
 
-  .profileImage {
-    width: 128px;
-    height: 128px;
-    margin: 0 auto;
-    margin-bottom: 40px;
-    background-color: var(--c-brand-primary);
-    border-radius: c.$R_ROUNDED_FULL;
+  .form {
+    @include m.flex(flex-start, center, column);
+    width: 100%;
+
+    .thumbnailInput {
+      margin-bottom: 40px;
+    }
+
+    .input {
+      width: 100%;
+    }
   }
 }
