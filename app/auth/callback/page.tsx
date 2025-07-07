@@ -1,1 +1,1 @@
-export { default } from "@/views/Auth/ui/OAuthCallback";
+export { default } from "@/views/Auth/OAuthCallback/ui";

@@ -1,1 +1,1 @@
-export { default } from "@/views/MyPage/ui/ConnectCouple";
+export { default } from "@/views/MyPage/ConnectCouple/ui";

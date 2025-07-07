@@ -1,1 +1,1 @@
-export { default } from "@/views/MyPage/ui/Main";
+export { default } from "@/views/MyPage/Main/ui";

@@ -1,1 +1,1 @@
-export { default } from "@/views/Auth/ui/Register/RegisterPage";
+export { default } from "@/views/Auth/Register/ui/RegisterPage";
