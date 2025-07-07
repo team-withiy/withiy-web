@@ -17,8 +17,8 @@ import styles from "./ProfilePage.module.scss";
 const ProfilePage: React.FC = () => {
   return (
     <main className={styles.wrapper} data-testid="profile-page">
-      <Header className={styles.header} data-testid="header">
-        <BackButton className={styles.backButton} data-testid="back-button">
+      <Header className={styles.header}>
+        <BackButton className={styles.backButton}>
           <IconArrowLeft24 data-testid="arrow-left-icon" />
         </BackButton>
         <h1 className={styles.title} data-testid="title">
