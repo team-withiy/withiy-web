@@ -2,6 +2,7 @@ import { Suspense } from "react";
 
 import Header from "@/widgets/Layout/ui/Header";
 
+import { withAuthorizationRoute } from "@/features/handleAuthorizationRoute/ui";
 import UpdateProfileForm, { LoadingUpdateProfileForm } from "@/features/updateProfile/ui/UpdateProfileForm";
 
 import { getMeApi } from "@/entities/user/api/user.server";
@@ -31,4 +32,4 @@ const ProfilePage: React.FC = () => {
   );
 };
 
-export default ProfilePage;
+export default withAuthorizationRoute(ProfilePage, { requiredAuth: true });

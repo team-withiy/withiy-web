@@ -1,0 +1,10 @@
+@use "@/shared/ui/styles/constants" as c;
+@use "@/shared/ui/styles/mixins" as m;
+
+.wrapper {
+  @include m.fontBody1(medium);
+  width: 100%;
+  padding: 20px 0;
+  color: var(--c-text-main);
+  text-align: start;
+}

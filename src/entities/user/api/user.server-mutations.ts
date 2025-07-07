@@ -5,6 +5,9 @@ import type { ApiResponseDTO } from "@/shared/api/common.interface";
 
 import type { ProfileResponseDTO, ProfileUpdateDTO, RegisterUserInDTO, RestoreAccountDTO } from "./user.interface";
 
+export const logoutApi = async () =>
+  postAuthServer("/api/users/logout", { revalidateTags: ["user"] }).then((res) => res.json<ApiResponseDTO<null>>());
+
 export const restoreUserApi = async (body: RestoreAccountDTO) =>
   postAuthServer("/api/users/restore", { body, revalidateTags: ["user"] }).then((res) =>
     res.json<ApiResponseDTO<null>>(),
