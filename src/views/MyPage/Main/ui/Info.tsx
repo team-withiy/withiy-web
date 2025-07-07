@@ -42,6 +42,7 @@ const Info: React.FC<Props> = ({ me }) => {
           hasBottomSheet={false}
           fallback={
             <Link
+              key="connect-couple-badge"
               href="/my-page/couples/unconnected/connect"
               data-testid="connect-couple-badge"
               className={styles.badge}
@@ -58,7 +59,11 @@ const Info: React.FC<Props> = ({ me }) => {
         </RequireCoupleAuthorizationWrapper>
       </div>
       <RequireCoupleAuthorizationWrapper
-        fallback={<div className={styles.catchPhrase}>커플 연동 후 둘만의 이야기를 기록해보세요!</div>}
+        fallback={
+          <div key="catch-phrase" className={styles.catchPhrase}>
+            커플 연동 후 둘만의 이야기를 기록해보세요!
+          </div>
+        }
         hasBottomSheet={false}
       >
         <div className={styles.catchPhrase}>
