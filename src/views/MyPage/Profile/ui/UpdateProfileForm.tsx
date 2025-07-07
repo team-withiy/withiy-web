@@ -1,6 +1,6 @@
 "use client";
 
-import { startTransition } from "react";
+import { useTransition } from "react";
 
 import { useRouter } from "next/navigation";
 
@@ -38,6 +38,7 @@ interface Props {
 }
 
 const UpdateProfileForm: React.FC<Props> = ({ me }) => {
+  const [isPending, startTransition] = useTransition();
   const { addToast } = useToast();
   const { replace } = useRouter();
 
@@ -55,7 +56,7 @@ const UpdateProfileForm: React.FC<Props> = ({ me }) => {
     },
   });
 
-  const onSubmit: SubmitHandler<ProfileSchema> = async (data) => {
+  const onSubmit: SubmitHandler<ProfileSchema> = (data) => {
     startTransition(async () => {
       const errorMessage = await updateProfileAction(data);
       if (errorMessage) {
@@ -98,7 +99,7 @@ const UpdateProfileForm: React.FC<Props> = ({ me }) => {
           variant="default"
           full
           type="submit"
-          disabled={isSubmitting || !isValid}
+          disabled={isPending || isSubmitting || !isValid}
           data-testid="submit-button"
         >
           프로필 저장하기

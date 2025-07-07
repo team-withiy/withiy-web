@@ -3,6 +3,7 @@
 import { Suspense, useState } from "react";
 
 import type { TermAgreementDTO, TermDTO } from "@/entities/term/api/term.interface";
+import type { UserDTO } from "@/entities/user/api/user.interface";
 
 import type { ApiResponseDTO } from "@/shared/api/common.interface";
 
@@ -13,9 +14,10 @@ type Tab = "terms" | "profile";
 
 interface Props {
   termPromise: Promise<ApiResponseDTO<TermDTO[]>>;
+  mePromise: Promise<ApiResponseDTO<UserDTO>>;
 }
 
-const RegisterFunnelPage: React.FC<Props> = ({ termPromise }) => {
+const RegisterFunnelPage: React.FC<Props> = ({ termPromise, mePromise }) => {
   const [tab, setTab] = useState<Tab>("terms");
   const [termAgreements, setTermAgreements] = useState<TermAgreementDTO>({});
 
@@ -39,7 +41,9 @@ const RegisterFunnelPage: React.FC<Props> = ({ termPromise }) => {
           />
         </Suspense>
       )}
-      {tab === "profile" && <ProfilePage termAgreements={termAgreements} onClickPrev={onClickPrevButtonInProfile} />}
+      {tab === "profile" && (
+        <ProfilePage termAgreements={termAgreements} onClickPrev={onClickPrevButtonInProfile} mePromise={mePromise} />
+      )}
     </>
   );
 };
