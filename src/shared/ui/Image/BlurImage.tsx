@@ -11,7 +11,10 @@ interface Props extends Omit<ComponentProps<typeof Image>, "width" | "height" | 
 
 const BlurImage: React.FC<Props> = async ({ src, alt, fallbackProps, ...props }) => {
   try {
-    const { base64, img } = await getRemotePlaiceholderImage(src as string);
+    if (typeof src !== "string") {
+      throw new Error("Image src must be a string for blurring.");
+    }
+    const { base64, img } = await getRemotePlaiceholderImage(src);
 
     return (
       <Image

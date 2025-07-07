@@ -1,5 +1,7 @@
 "use client";
 
+import { useEffect, useState } from "react";
+
 import cx from "clsx";
 import Skeleton from "react-loading-skeleton";
 
@@ -22,7 +24,19 @@ interface Props {
 }
 
 const ThumbnailInput: React.FC<Props> = ({ className, onDrop, defaultValue, file, "data-testid": testId }) => {
-  const src = file ? URL.createObjectURL(file) : defaultValue;
+  const [preview, setPreview] = useState<string | undefined>(defaultValue);
+
+  useEffect(() => {
+    if (!file) {
+      setPreview(defaultValue);
+      return;
+    }
+
+    const objectUrl = URL.createObjectURL(file);
+    setPreview(objectUrl);
+
+    return () => URL.revokeObjectURL(objectUrl);
+  }, [file, defaultValue]);
 
   return (
     <Dropzone
@@ -31,7 +45,7 @@ const ThumbnailInput: React.FC<Props> = ({ className, onDrop, defaultValue, file
       data-testid={testId}
     >
       <FallbackHandlerImage
-        src={src || DEFAULT_PROFILE_IMAGE_SRC}
+        src={preview || DEFAULT_PROFILE_IMAGE_SRC}
         alt="thumbnail"
         className={styles.image}
         fallbackSrc={DEFAULT_PROFILE_IMAGE_SRC}
