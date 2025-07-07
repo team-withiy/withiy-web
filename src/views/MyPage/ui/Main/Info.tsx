@@ -27,7 +27,13 @@ const Info: React.FC<Props> = ({ me }) => {
           src={me.thumbnail}
           className={styles.thumbnail}
           alt={`${me.nickname}의 썸네일 이미지`}
-          fallbackProps={{ width: 80, height: 80, src: DEFAULT_PROFILE_IMAGE_SRC, alt: "기본 프로필 이미지" }}
+          fallbackProps={{
+            width: 80,
+            height: 80,
+            src: DEFAULT_PROFILE_IMAGE_SRC,
+            alt: "기본 프로필 이미지",
+            className: styles.thumbnail,
+          }}
         />
         <span className={styles.name} aria-label="내 닉네임">
           {me.nickname}

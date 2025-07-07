@@ -43,3 +43,10 @@ export interface UserProfileResponseDTO {
   profileImageUrl: string;
   hasCouple: boolean;
 }
+
+export interface ProfileUpdateDTO {
+  nickname: string;
+  thumbnail?: string;
+}
+
+export interface ProfileResponseDTO extends Required<ProfileUpdateDTO> {}

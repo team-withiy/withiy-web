@@ -59,8 +59,16 @@ const Input: React.FC<Props> = ({
         data-testid="input"
         {...props}
       />
-      {!successMessage && errorMessage && <span className={styles.errorMessage}>{errorMessage}</span>}
-      {successMessage && !errorMessage && <span className={styles.successMessage}>{successMessage}</span>}
+      {!successMessage && errorMessage && (
+        <span data-testid="input-error-message" className={styles.errorMessage}>
+          {errorMessage}
+        </span>
+      )}
+      {successMessage && !errorMessage && (
+        <span data-testid="input-success-message" className={styles.successMessage}>
+          {successMessage}
+        </span>
+      )}
     </label>
   );
 };

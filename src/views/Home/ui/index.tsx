@@ -5,6 +5,7 @@ import BottomNavigation from "@/widgets/Layout/ui/BottomNavigation";
 import GNB from "@/widgets/Layout/ui/GNB";
 
 import RequireAuthorizationWrapper from "@/features/checkAuthorization/ui/RequireAuthorizationWrapper";
+import { withAuthorizationRoute } from "@/features/handleAuthorizationRoute/ui";
 
 import { getCategoriesApi } from "@/entities/category/api/category.server";
 import ScheduleCard from "@/entities/schedule/ui/ScheduleCard";
@@ -53,4 +54,4 @@ async function Home() {
   );
 }
 
-export default Home;
+export default withAuthorizationRoute(Home, {});

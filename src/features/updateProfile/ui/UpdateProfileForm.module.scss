@@ -1,0 +1,15 @@
+@use "@/shared/ui/styles/constants" as c;
+@use "@/shared/ui/styles/mixins" as m;
+
+.wrapper {
+  @include m.flex(flex-start, center, column);
+  width: 100%;
+
+  .thumbnailInput {
+    margin-bottom: 40px;
+  }
+
+  .input {
+    width: 100%;
+  }
+}

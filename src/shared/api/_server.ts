@@ -40,13 +40,19 @@ export const _get = async (baseUrl: string, url: string, options: GetOptions) =>
 
 export const _mutate = async (baseUrl: string, method: string, url: string, options: MutateOptions) => {
   const params = getSearchParamsString(options.params);
+  const isFormData = options.isFormData;
+
   const response = await fetch(`${baseUrl}${url}${params}`, {
     method,
-    body: JSON.stringify(options.body),
-    headers: {
-      "Content-Type": "application/json",
-      ...options.headers,
-    },
+    body: isFormData ? (options.body as FormData) : JSON.stringify(options.body),
+    headers: isFormData
+      ? {
+          ...options.headers,
+        }
+      : {
+          "Content-Type": "application/json",
+          ...options.headers,
+        },
   });
 
   if (!response.ok) {
