@@ -1,0 +1,22 @@
+@use "@/shared/ui/styles/constants" as c;
+@use "@/shared/ui/styles/mixins" as m;
+
+.wrapper {
+  width: 100%;
+
+  .summary {
+    @include m.fontBody1(regular);
+    color: var(--c-text-main);
+  }
+
+  .details {
+    @include m.fontBody2(regular);
+    padding-left: 12px;
+    color: var(--c-text-sub);
+    list-style-type: disc;
+
+    ::marker {
+      font-size: 12px;
+    }
+  }
+}

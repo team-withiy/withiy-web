@@ -25,17 +25,17 @@ type Props = BottomSheetProps & {
 
 export default function RequireAuthorizationWrapper({ fallback, children, fallbackWrapperClassName, ...props }: Props) {
   return (
-    <Suspense fallback={fallback || children}>
+    <Suspense fallback={fallback ?? children}>
       <FetchBoundary fetchFunctions={[getMeApi]}>
         {([{ data: me }]) => (
           <>
             {me && children}
             {!me && props.hasBottomSheet && (
               <RequireAuthorizationButton className={fallbackWrapperClassName} callbackUrl={props.callbackUrl}>
-                {fallback || children}
+                {fallback ?? children}
               </RequireAuthorizationButton>
             )}
-            {!me && !props.hasBottomSheet && (fallback || children)}
+            {!me && !props.hasBottomSheet && (fallback ?? children)}
           </>
         )}
       </FetchBoundary>

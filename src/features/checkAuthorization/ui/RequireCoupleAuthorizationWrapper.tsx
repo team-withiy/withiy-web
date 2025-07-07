@@ -31,17 +31,17 @@ export default function RequireCoupleAuthorizationWrapper({
   ...props
 }: Props) {
   return (
-    <Suspense fallback={fallback || children}>
+    <Suspense fallback={fallback ?? children}>
       <FetchBoundary fetchFunctions={[getMeApi]}>
         {([{ data: me }]) => (
           <>
             {hasUserCouple(me) && children}
             {!hasUserCouple(me) && props.hasBottomSheet && (
               <RequireCoupleAuthorizationButton className={fallbackWrapperClassName} callbackUrl={props.callbackUrl}>
-                {fallback || children}
+                {fallback ?? children}
               </RequireCoupleAuthorizationButton>
             )}
-            {!hasUserCouple(me) && !props.hasBottomSheet && (fallback || children)}
+            {!hasUserCouple(me) && !props.hasBottomSheet && (fallback ?? children)}
           </>
         )}
       </FetchBoundary>
