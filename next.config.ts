@@ -67,8 +67,8 @@ const nextConfig: NextConfig = {
         pathname: "**",
       },
       {
-        protocol: "http",
-        hostname: "k.kakaocdn.net",
+        protocol: "https",
+        hostname: "d1de06vlwroep2.cloudfront.net",
         pathname: "**",
       },
     ],

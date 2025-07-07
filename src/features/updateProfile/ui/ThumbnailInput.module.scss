@@ -1,0 +1,37 @@
+@use "@/shared/ui/styles/constants" as c;
+@use "@/shared/ui/styles/mixins" as m;
+
+$IMAGE_SIZE: 128;
+$IMAGE_SIZE_PX: $IMAGE_SIZE + px;
+
+.wrapper {
+  position: relative;
+  width: $IMAGE_SIZE_PX;
+  height: $IMAGE_SIZE_PX;
+  cursor: pointer;
+  border-radius: 50%;
+
+  .image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: inherit;
+  }
+
+  .cameraIconWrapper {
+    @include m.flex;
+    @include m.absolute(auto 0 0 auto);
+    width: 40px;
+    height: 40px;
+    background-color: var(--c-brand-primary-darken);
+    border-radius: c.$R_ROUNDED_FULL;
+
+    .cameraIcon path {
+      stroke: var(--c-grayscale-white);
+    }
+  }
+}
+
+:export {
+  imageSize: $IMAGE_SIZE;
+}
