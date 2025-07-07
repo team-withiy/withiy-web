@@ -1,1 +1,1 @@
-export { default } from "@/views/MyPage/ui/SettingAlarm";
+export { default } from "@/views/MyPage/SettingAlarm/ui";

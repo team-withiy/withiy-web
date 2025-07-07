@@ -1,1 +1,1 @@
-export { default } from "@/views/User/ui/Restore/RestoreCompletePage";
+export { default } from "@/views/User/RestoreComplete/ui";

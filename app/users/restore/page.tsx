@@ -1,1 +1,1 @@
-export { default } from "@/views/User/ui/Restore/RestorePage";
+export { default } from "@/views/User/Restore/ui";
