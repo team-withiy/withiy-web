@@ -45,14 +45,10 @@ export const _mutate = async (baseUrl: string, method: string, url: string, opti
   const response = await fetch(`${baseUrl}${url}${params}`, {
     method,
     body: isFormData ? (options.body as FormData) : JSON.stringify(options.body),
-    headers: isFormData
-      ? {
-          ...options.headers,
-        }
-      : {
-          "Content-Type": "application/json",
-          ...options.headers,
-        },
+    headers: {
+      ...options.headers,
+      ...(!isFormData && { "Content-Type": "application/json" }),
+    },
   });
 
   if (!response.ok) {
