@@ -1,6 +1,6 @@
 "use server";
 
-import { patchAuthServer, postAuthServer } from "@/shared/api/auth/authApiServer";
+import { deleteAuthServer, patchAuthServer, postAuthServer } from "@/shared/api/auth/authApiServer";
 import type { ApiResponseDTO } from "@/shared/api/common.interface";
 
 import type { ProfileResponseDTO, ProfileUpdateDTO, RegisterUserInDTO, RestoreAccountDTO } from "./user.interface";
@@ -20,3 +20,6 @@ export const updateProfileApi = async (body: ProfileUpdateDTO) =>
   patchAuthServer("/api/users/profile", { body, revalidateTags: ["user"] }).then((res) =>
     res.json<ApiResponseDTO<ProfileResponseDTO>>(),
   );
+
+export const deleteUserApi = async () =>
+  deleteAuthServer("/api/users/me", { revalidateTags: ["user"] }).then((res) => res.json<ApiResponseDTO<null>>());
