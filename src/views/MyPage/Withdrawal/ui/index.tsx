@@ -27,7 +27,7 @@ const WithdrawalPage: React.FC = () => {
           <p className={styles.description} data-testid="description">
             정말 헤어지실 건가요..?
             <small className={styles.small}>
-              함게 기록한 추억들이 모두 지워져요.
+              함께 기록한 추억들이 모두 지워져요.
               <br />
               다시 보고 싶다면, 30일 안에는 복구할 수 있어요.
             </small>
