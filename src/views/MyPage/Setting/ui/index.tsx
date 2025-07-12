@@ -27,7 +27,7 @@ const SettingPage: React.FC = () => {
           </h1>
         </Header>
         <nav className={styles.list}>
-          <ChevronLink href="/my-page/settings/alarms" data-testid="alarm-link">
+          <ChevronLink href="/my-page/settings/notifications" data-testid="notification-link">
             알림 설정
           </ChevronLink>
           <ChevronLink href="/my-page/settings/terms" data-testid="terms-link">

@@ -17,7 +17,7 @@ test("정상적으로 렌더링되어야 한다.", () => {
   expect(screen.getByTestId("profile-page")).toBeInTheDocument();
   expect(screen.getByTestId("title")).toHaveTextContent("설정");
   expect(screen.getByTestId("arrow-left-icon")).toBeInTheDocument();
-  expect(screen.getByTestId("alarm-link")).toBeInTheDocument();
+  expect(screen.getByTestId("notification-link")).toBeInTheDocument();
   expect(screen.getByTestId("terms-link")).toBeInTheDocument();
   expect(screen.getByTestId("withdrawal-link")).toBeInTheDocument();
 });
@@ -26,9 +26,9 @@ test("알림 설정 링크가 올바른 경로로 연결되어야 한다.", asyn
   routerMock.setCurrentUrl({ pathname: "/my-page/settings" });
   renderWithProviders(<SettingPage />);
 
-  const alarmLink = screen.getByTestId("alarm-link");
-  await userEvent.click(alarmLink);
-  expect(routerMock.pathname).toBe("/my-page/settings/alarms");
+  const notificationLink = screen.getByTestId("notification-link");
+  await userEvent.click(notificationLink);
+  expect(routerMock.pathname).toBe("/my-page/settings/notifications");
 });
 
 test("이용약관 링크가 올바른 경로로 연결되어야 한다.", async () => {
