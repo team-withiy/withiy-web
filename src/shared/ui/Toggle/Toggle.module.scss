@@ -1,0 +1,47 @@
+@use "@/shared/ui/styles/constants" as c;
+@use "@/shared/ui/styles/mixins" as m;
+
+$HEIGHT: 31px;
+$GAP: 2px;
+
+.wrapper {
+  position: relative;
+  display: inline-block;
+  width: 51px;
+  height: $HEIGHT;
+  cursor: pointer;
+  background-color: var(--c-grayscale-gray-500);
+  border-radius: 100px;
+  transition: background-color 0.2s ease-in-out;
+
+  .slider {
+    @include m.posCenterY;
+    left: $GAP;
+    width: calc($HEIGHT - 2 * $GAP);
+    height: calc($HEIGHT - 2 * $GAP);
+    background-color: var(--c-grayscale-white);
+    border-radius: c.$R_ROUNDED_FULL;
+    box-shadow:
+      0 0 0 1px rgba(0, 0, 0, 4%),
+      0 3px 8px 0 rgba(0, 0, 0, 15%),
+      0 3px 1px 0 rgba(0, 0, 0, 6%);
+    transition: left 0.2s ease-in-out;
+  }
+
+  &:has(input:checked) {
+    background-color: var(--c-brand-primary);
+
+    .slider {
+      left: calc(100% - #{$HEIGHT} + $GAP);
+    }
+  }
+
+  &:has(input:disabled) {
+    cursor: not-allowed;
+    background-color: var(--c-grayscale-gray-300);
+
+    .slider {
+      background-color: var(--c-grayscale-gray-200);
+    }
+  }
+}

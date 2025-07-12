@@ -1,0 +1,19 @@
+@use "@/shared/ui/styles/constants" as c;
+@use "@/shared/ui/styles/mixins" as m;
+
+.wrapper {
+  width: 100%;
+
+  .list,
+  .item {
+    width: 100%;
+
+    .label {
+      @include m.flex(space-between);
+      @include m.fontBody1(medium);
+      width: 100%;
+      padding: 20px 0;
+      color: var(--c-text-main);
+    }
+  }
+}
