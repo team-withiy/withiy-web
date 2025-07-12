@@ -4,11 +4,11 @@ import BackButton from "@/shared/ui/BackButton";
 
 import { IconArrowLeft24 } from "public/icons";
 
-import styles from "./SettingAlarmPage.module.scss";
+import styles from "./SettingNotificationPage.module.scss";
 
-const SettingAlarmPage: React.FC = () => {
+const SettingNotificationPage: React.FC = () => {
   return (
-    <main className={styles.wrapper} data-testid="setting-alarm-page">
+    <main className={styles.wrapper} data-testid="setting-notification-page">
       <Header className={styles.header}>
         <BackButton className={styles.backButton}>
           <IconArrowLeft24 data-testid="arrow-left-icon" />
@@ -21,4 +21,4 @@ const SettingAlarmPage: React.FC = () => {
   );
 };
 
-export default SettingAlarmPage;
+export default SettingNotificationPage;
