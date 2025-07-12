@@ -1,7 +1,13 @@
+import { Suspense } from "react";
+
 import Header from "@/widgets/Layout/ui/Header";
 
-import BackButton from "@/shared/ui/BackButton";
+import { getNotificationSettingsApi } from "@/entities/user/api/user.server";
 
+import BackButton from "@/shared/ui/BackButton";
+import FetchBoundary from "@/shared/ui/FetchBoundary";
+
+import NotificationList, { LoadingNotificationList } from "./NotificationList";
 import { IconArrowLeft24 } from "public/icons";
 
 import styles from "./SettingNotificationPage.module.scss";
@@ -17,6 +23,11 @@ const SettingNotificationPage: React.FC = () => {
           알림 설정
         </h1>
       </Header>
+      <Suspense fallback={<LoadingNotificationList />}>
+        <FetchBoundary fetchFunctions={[getNotificationSettingsApi]}>
+          {([{ data: notificationSettings }]) => <NotificationList notificationSettings={notificationSettings} />}
+        </FetchBoundary>
+      </Suspense>
     </main>
   );
 };

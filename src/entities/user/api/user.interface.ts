@@ -51,3 +51,12 @@ export interface ProfileUpdateDTO {
 }
 
 export interface ProfileResponseDTO extends Required<ProfileUpdateDTO> {}
+
+export interface NotificationSettingRequestDTO {
+  dateNotificationEnabled: boolean;
+  eventNotificationEnabled: boolean;
+}
+
+export interface UserNotificationSettingResponseDTO extends NotificationSettingRequestDTO {
+  userId: number;
+}
