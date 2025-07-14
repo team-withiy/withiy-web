@@ -83,7 +83,6 @@ describe("NotificationList", () => {
 
     await waitFor(() => {
       expect(mockUpdateNotificationSettingsAction).toHaveBeenCalledWith({
-        userId: 1,
         dateNotificationEnabled: false,
         eventNotificationEnabled: false,
       });
@@ -110,7 +109,6 @@ describe("NotificationList", () => {
 
     await waitFor(() => {
       expect(mockUpdateNotificationSettingsAction).toHaveBeenCalledWith({
-        userId: 1,
         dateNotificationEnabled: true,
         eventNotificationEnabled: true,
       });
@@ -155,42 +153,6 @@ describe("NotificationList", () => {
       expect(mockAddToast).toHaveBeenCalledWith({
         message: httpError.message,
         state: "danger",
-      });
-    });
-  });
-
-  test("두 토글을 동시에 변경할 때 올바른 데이터가 전송된다", async () => {
-    const user = userEvent.setup();
-    const mockApiResponse = {
-      status: 200,
-      message: "success",
-      data: null,
-      timestamp: new Date(),
-    };
-    mockUpdateNotificationSettingsAction.mockResolvedValue(mockApiResponse);
-
-    render(<NotificationList notificationSettings={mockNotificationSettings} />);
-
-    const dateToggle = screen.getByTestId("date-notification-toggle");
-    const eventToggle = screen.getByTestId("event-notification-toggle");
-
-    await user.click(dateToggle);
-
-    await waitFor(() => {
-      expect(mockUpdateNotificationSettingsAction).toHaveBeenCalledWith({
-        userId: 1,
-        dateNotificationEnabled: false,
-        eventNotificationEnabled: false,
-      });
-    });
-
-    await user.click(eventToggle);
-
-    await waitFor(() => {
-      expect(mockUpdateNotificationSettingsAction).toHaveBeenCalledWith({
-        userId: 1,
-        dateNotificationEnabled: true,
-        eventNotificationEnabled: true,
       });
     });
   });

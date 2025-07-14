@@ -27,9 +27,10 @@ const NotificationList: React.FC<Props> = ({ notificationSettings }) => {
 
     startTransition(async () => {
       setOptimisticSettings((prev) => ({ ...prev, [name]: isChecked }));
+      const { userId, ...requestBody } = optimisticSettings;
 
       try {
-        await updateNotificationSettingsAction({ ...optimisticSettings, [name]: isChecked });
+        await updateNotificationSettingsAction({ ...requestBody, [name]: isChecked });
       } catch (error) {
         if (isFetchHTTPError(error)) {
           addToast({ message: error.message, state: "danger" });
