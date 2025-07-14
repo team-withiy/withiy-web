@@ -2,6 +2,8 @@ import { Suspense } from "react";
 
 import Header from "@/widgets/Layout/ui/Header";
 
+import { withAuthorizationRoute } from "@/features/handleAuthorizationRoute/ui";
+
 import { getNotificationSettingsApi } from "@/entities/user/api/user.server";
 
 import BackButton from "@/shared/ui/BackButton";
@@ -32,4 +34,4 @@ const SettingNotificationPage: React.FC = () => {
   );
 };
 
-export default SettingNotificationPage;
+export default withAuthorizationRoute(SettingNotificationPage, { requiredAuth: true });
