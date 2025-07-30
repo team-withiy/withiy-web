@@ -5,6 +5,7 @@ exports[`getMeApi 1`] = `
   "data": {
     "code": "jGST52",
     "hasCouple": false,
+    "hasRestorableCouple": false,
     "isRegistered": true,
     "nickname": "Clotilde",
     "restoreEnabled": false,

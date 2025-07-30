@@ -17,6 +17,7 @@ export const mockUserWithoutRegistered: UserDTO = {
   isRegistered: false,
   code: faker.string.alphanumeric(6),
   hasCouple: false,
+  hasRestorableCouple: false,
 };
 
 export const mockUserRestoreEnabled: UserDTO = {
@@ -26,6 +27,7 @@ export const mockUserRestoreEnabled: UserDTO = {
   isRegistered: false,
   code: faker.string.alphanumeric(6),
   hasCouple: false,
+  hasRestorableCouple: false,
 };
 
 export const mockUserWithoutCouple: UserDTO = {
@@ -35,6 +37,7 @@ export const mockUserWithoutCouple: UserDTO = {
   isRegistered: true,
   code: faker.string.alphanumeric(6),
   hasCouple: false,
+  hasRestorableCouple: false,
 };
 
 export const mockUserWithCouple: UserDTO = {

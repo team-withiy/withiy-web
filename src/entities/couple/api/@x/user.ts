@@ -1,1 +1,1 @@
-export type { CoupleDTO } from "../couple.interface";
+export type { ActiveCoupleDTO, RestorableCoupleDTO } from "../couple.interface";
