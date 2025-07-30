@@ -1,6 +1,8 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
 
+import { josa } from "es-hangul";
+
 import Header from "@/widgets/Layout/ui/Header";
 
 import { withAuthorizationRoute } from "@/features/handleAuthorizationRoute/ui";
@@ -33,7 +35,7 @@ const CoupleInvitationPage: React.FC<Props> = async ({ params }) => {
         </Header>
         <section className={styles.content}>
           <p className={styles.description}>
-            {data.nickname}이 초대했어요!
+            {josa(data.nickname, "이/가")} 초대했어요!
             <br />
             <small className={styles.small}>함께 커플 공간을 만들고 추억을 공유할까요?</small>
           </p>
