@@ -1,4 +1,4 @@
-export interface CoupleDTO {
+export interface ActiveCoupleDTO {
   /** 커플 고유 ID */
   id: number;
   /** 파트너 닉네임 */
@@ -10,6 +10,8 @@ export interface CoupleDTO {
   /** 연결된 날짜 YYYY-MM-DD */
   connectedDate: string;
 }
+
+export interface RestorableCoupleDTO extends Pick<ActiveCoupleDTO, "id" | "partnerNickname" | "partnerThumbnail"> {}
 
 export interface CoupleConnectionRequestDTO {
   /** 상대방 유저 고유 코드 */
