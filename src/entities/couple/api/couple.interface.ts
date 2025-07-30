@@ -24,3 +24,7 @@ export interface FirstMetDateUpdateDTO {
   /** 처음 만난 날짜 ( YYYY-MM-DD ) */
   firstMetDate?: string;
 }
+
+export interface RestoreCoupleDTO {
+  restore: boolean;
+}

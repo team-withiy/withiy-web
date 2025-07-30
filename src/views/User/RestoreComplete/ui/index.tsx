@@ -22,9 +22,9 @@ const RestorePage: React.FC = () => {
         <section className={styles.content}>
           <IconCharacterHeart />
           <p className={styles.description}>
-            닉네임과 다시 연결되었어요 🎉
+            위디에 다시 돌아왔어요 🎉
             <br />
-            <span className={styles.small}>다시 데이트 여정을 쌓아봐요</span>
+            <span className={styles.small}>잊고 있던 추억부터, 새로운 시간까지 함께해요</span>
           </p>
         </section>
         <BottomFloatingButtonWrapper>
