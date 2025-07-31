@@ -3,7 +3,7 @@
 import React from "react";
 
 import { QueryClient, QueryErrorResetBoundary, useQueryClient } from "@tanstack/react-query";
-import { ErrorBoundary } from "react-error-boundary";
+import { ErrorBoundary as ReactErrorBoundary } from "react-error-boundary";
 
 interface FallbackRenderProps {
   resetErrorBoundary: () => void;
@@ -22,13 +22,13 @@ const resetErrorQuery = (queryClient: QueryClient) => {
   queryClient.resetQueries({ queryKey });
 };
 
-const CustomErrorBoundary: React.FC<Props> = ({ children, fallbackRender }) => {
+const ErrorBoundary: React.FC<Props> = ({ children, fallbackRender }) => {
   const queryClient = useQueryClient();
 
   return (
     <QueryErrorResetBoundary>
       {({ reset }) => (
-        <ErrorBoundary
+        <ReactErrorBoundary
           fallbackRender={fallbackRender}
           onReset={() => {
             reset();
@@ -36,10 +36,10 @@ const CustomErrorBoundary: React.FC<Props> = ({ children, fallbackRender }) => {
           }}
         >
           {children}
-        </ErrorBoundary>
+        </ReactErrorBoundary>
       )}
     </QueryErrorResetBoundary>
   );
 };
 
-export default CustomErrorBoundary;
+export default ErrorBoundary;

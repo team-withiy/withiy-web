@@ -1,13 +1,9 @@
-import { getSearchParams } from "@/shared/lib/searchParams";
-import { Nullable } from "@/shared/lib/utils.interface";
-
 import { apiRouteHandler } from "../apiRouteHandler";
 import { revalidatePathApi } from "../revalidate.mutations";
 
 import type { AuthCallbackUrlResponse, RecentLoginedSocialTypeResponse, SocialType, TokenDTO } from "./auth.interface";
 
-export const setTokensApi = (params: Nullable<TokenDTO>) =>
-  apiRouteHandler.post("auth/callback", { searchParams: getSearchParams(params) }).json<TokenDTO>();
+export const setTokensApi = (json: TokenDTO) => apiRouteHandler.post("auth/tokens", { json });
 
 export const setRecentLoginedSocialTypeApi = (socialType: SocialType) =>
   apiRouteHandler
