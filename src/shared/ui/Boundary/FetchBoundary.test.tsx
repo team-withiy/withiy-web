@@ -1,7 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import { expect, test, vi } from "vitest";
 
-import FetchBoundary from ".";
+import FetchBoundary from "./FetchBoundary";
 
 test("fetch 함수 결과를 children에게 전달해야 한다", async () => {
   const mockData1 = { name: "Test User" };

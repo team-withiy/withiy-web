@@ -7,7 +7,7 @@ import { renderWithProviders } from "@/shared/lib/test";
 
 import ConnectedCouplePage from ".";
 
-vi.mock("@/shared/ui/FetchBoundary", () => ({
+vi.mock("@/shared/ui/Boundary/FetchBoundary", () => ({
   __esModule: true,
   default: () => null,
 }));

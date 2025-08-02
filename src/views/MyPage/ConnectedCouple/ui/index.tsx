@@ -8,8 +8,8 @@ import { getMeApi } from "@/entities/user/api/user.server";
 import { hasUserCouple } from "@/entities/user/models/hasCouple";
 
 import BackButton from "@/shared/ui/BackButton";
+import FetchBoundary from "@/shared/ui/Boundary/FetchBoundary";
 import UnderlineButton from "@/shared/ui/Button/UnderlineButton";
-import FetchBoundary from "@/shared/ui/FetchBoundary";
 import DvhHeightLayout from "@/shared/ui/Layout/DvhHeightLayout";
 
 import SetCoupleFirstMetDateForm from "./SetCoupleFirstMetDateForm";

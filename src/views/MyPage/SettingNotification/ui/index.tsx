@@ -7,7 +7,7 @@ import { withAuthorizationRoute } from "@/features/handleAuthorizationRoute/ui";
 import { getNotificationSettingsApi } from "@/entities/user/api/user.server";
 
 import BackButton from "@/shared/ui/BackButton";
-import FetchBoundary from "@/shared/ui/FetchBoundary";
+import FetchBoundary from "@/shared/ui/Boundary/FetchBoundary";
 
 import NotificationList, { LoadingNotificationList } from "./NotificationList";
 import { IconArrowLeft24 } from "public/icons";

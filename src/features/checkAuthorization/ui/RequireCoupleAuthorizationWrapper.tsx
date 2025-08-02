@@ -3,7 +3,7 @@ import { ReactNode, Suspense } from "react";
 import { getMeApi } from "@/entities/user/api/user.server";
 import { hasUserCouple } from "@/entities/user/models/hasCouple";
 
-import FetchBoundary from "@/shared/ui/FetchBoundary";
+import FetchBoundary from "@/shared/ui/Boundary/FetchBoundary";
 
 import RequireCoupleAuthorizationButton from "./RequireCoupleAuthorizationButton";
 

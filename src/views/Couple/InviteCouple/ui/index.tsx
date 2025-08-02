@@ -9,7 +9,7 @@ import { withAuthorizationRoute } from "@/features/handleAuthorizationRoute/ui";
 
 import { getMeApi } from "@/entities/user/api/user.server";
 
-import FetchBoundary from "@/shared/ui/FetchBoundary";
+import FetchBoundary from "@/shared/ui/Boundary/FetchBoundary";
 import DvhHeightLayout from "@/shared/ui/Layout/DvhHeightLayout";
 
 import { IconCharacterInvite } from "public/icons";

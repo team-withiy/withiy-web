@@ -10,7 +10,7 @@ import { withAuthorizationRoute } from "@/features/handleAuthorizationRoute/ui";
 import { getCategoriesApi } from "@/entities/category/api/category.server";
 import ScheduleCard from "@/entities/schedule/ui/ScheduleCard";
 
-import FetchBoundary from "@/shared/ui/FetchBoundary";
+import FetchBoundary from "@/shared/ui/Boundary/FetchBoundary";
 
 import styles from "./index.module.scss";
 

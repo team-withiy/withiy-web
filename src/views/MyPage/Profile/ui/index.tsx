@@ -7,7 +7,7 @@ import { withAuthorizationRoute } from "@/features/handleAuthorizationRoute/ui";
 import { getMeApi } from "@/entities/user/api/user.server";
 
 import BackButton from "@/shared/ui/BackButton";
-import FetchBoundary from "@/shared/ui/FetchBoundary";
+import FetchBoundary from "@/shared/ui/Boundary/FetchBoundary";
 
 import UpdateProfileForm, { LoadingUpdateProfileForm } from "./UpdateProfileForm";
 import { IconArrowLeft24 } from "public/icons";
