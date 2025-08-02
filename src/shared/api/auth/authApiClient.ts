@@ -13,7 +13,7 @@ let tokenExpiry = new Date(0);
 // TODO: test codes
 /**
  * If you use this authApiClient with `Suspense`, you need to wrap your components with `SSRSafeSuspense`
- * Because of using Route Handler, it will unexpected behavior in SSR.
+ * Because of using Route Handler, it will cause unexpected behavior in SSR.
  */
 export const authApiClient = apiClient.extend({
   hooks: {
@@ -41,6 +41,8 @@ export const authApiClient = apiClient.extend({
           return request;
         } catch (error) {
           promiseHolder.failRelease();
+          cachedToken = null;
+          tokenExpiry = new Date(0);
           throw error;
         }
       },

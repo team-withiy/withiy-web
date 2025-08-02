@@ -10,8 +10,8 @@ import { getMeApi } from "@/entities/user/api/user.server";
 import { hasUserCouple } from "@/entities/user/models/hasCouple";
 
 import BottomFloatingButtonWrapper from "@/shared/ui/BottomFloatingButtonWrapper";
+import FetchBoundary from "@/shared/ui/Boundary/FetchBoundary";
 import Button from "@/shared/ui/Button/Button";
-import FetchBoundary from "@/shared/ui/FetchBoundary";
 import DvhHeightLayout from "@/shared/ui/Layout/DvhHeightLayout";
 
 import { IconCharacterHeart } from "public/icons";

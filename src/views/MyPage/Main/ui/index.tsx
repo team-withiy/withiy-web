@@ -10,8 +10,8 @@ import { withAuthorizationRoute } from "@/features/handleAuthorizationRoute/ui";
 
 import { getMeApi } from "@/entities/user/api/user.server";
 
+import FetchBoundary from "@/shared/ui/Boundary/FetchBoundary";
 import ChevronLink from "@/shared/ui/ChevronLink";
-import FetchBoundary from "@/shared/ui/FetchBoundary";
 
 import Info, { LoadingInfo } from "./Info";
 import { IconSettings24 } from "public/icons";

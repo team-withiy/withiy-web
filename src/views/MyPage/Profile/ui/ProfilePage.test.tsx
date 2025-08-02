@@ -15,7 +15,7 @@ vi.mock("react", async () => {
   };
 });
 
-vi.mock("@/shared/ui/FetchBoundary", () => ({
+vi.mock("@/shared/ui/Boundary/FetchBoundary", () => ({
   default: ({ children }: { children: (data: Array<{ data: UserDTO }>) => React.ReactNode }) => {
     return children([{ data: mockUserWithoutCouple }]);
   },

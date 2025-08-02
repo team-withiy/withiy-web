@@ -27,7 +27,7 @@ vi.mock("@/shared/ui/Toast", () => ({
   })),
 }));
 
-vi.mock("@/shared/ui/FetchBoundary", () => ({
+vi.mock("@/shared/ui/Boundary/FetchBoundary", () => ({
   default: ({ children }: { children: (data: Array<{ data: unknown }>) => React.ReactNode }) => {
     const mockData = {
       userId: 1,

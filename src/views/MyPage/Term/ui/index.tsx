@@ -7,7 +7,7 @@ import { withAuthorizationRoute } from "@/features/handleAuthorizationRoute/ui";
 import { getTermsApi } from "@/entities/term/api/term.server";
 
 import BackButton from "@/shared/ui/BackButton";
-import FetchBoundary from "@/shared/ui/FetchBoundary";
+import FetchBoundary from "@/shared/ui/Boundary/FetchBoundary";
 
 import TermList, { LoadingTermList } from "./TermList";
 import { IconArrowLeft24 } from "public/icons";
