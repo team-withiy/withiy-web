@@ -10,7 +10,7 @@ import Overlay from "../Overlay";
 
 import styles from "./ModalPortal.module.scss";
 
-const modalRoot = document.querySelector("#modal") as HTMLDivElement;
+const modalRoot = (document.querySelector("#modal") as HTMLDivElement) || document.createElement("div");
 
 export interface ModalPortalProps {
   isShow: boolean;
