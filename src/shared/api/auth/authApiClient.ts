@@ -1,3 +1,4 @@
+import { UNAUTHORIZED_MESSAGE } from "@/shared/constants/auth";
 import { PromiseHolder } from "@/shared/lib/promiseHolder";
 import { Nullable } from "@/shared/lib/utils.interface";
 import { getTokenExpirationDate } from "@/shared/models/auth/validateToken";
@@ -30,7 +31,7 @@ export const authApiClient = apiClient.extend({
 
         try {
           const { accessToken } = await apiRouteHandler.get("auth/tokens").json<Nullable<TokenDTO>>();
-          if (!accessToken) throw new Error("No access token received");
+          if (!accessToken) throw new Error(UNAUTHORIZED_MESSAGE);
 
           cachedToken = accessToken;
           tokenExpiry = getTokenExpirationDate(accessToken);
@@ -49,3 +50,5 @@ export const authApiClient = apiClient.extend({
     ],
   },
 });
+
+export { getKyHTTPError, isKyHTTPError } from "../apiClient";

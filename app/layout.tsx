@@ -4,6 +4,7 @@ import cx from "clsx";
 
 import MSWProvider from "@/app/providers/MSWProvider";
 import ReactQueryProvider from "@/app/providers/ReactQueryProvider";
+import CustomErrorBoundary from "@/app/ui/Errors/CustomErrorBoundary";
 import { PretendardJP } from "@/app/ui/fontFace";
 import MobileLayout from "@/app/ui/Layout/MobileLayout";
 
@@ -36,12 +37,14 @@ export default function RootLayout({
         <MSWProvider>
           <ReactQueryProvider>
             <MobileLayout>
-              <div id="modal" />
-              <div id="toast" />
-              <div id="bottom-sheet" />
-              <Alert />
-              <Toast />
-              {children}
+              <CustomErrorBoundary>
+                <div id="modal" />
+                <div id="toast" />
+                <div id="bottom-sheet" />
+                <Alert />
+                <Toast />
+                {children}
+              </CustomErrorBoundary>
             </MobileLayout>
           </ReactQueryProvider>
         </MSWProvider>

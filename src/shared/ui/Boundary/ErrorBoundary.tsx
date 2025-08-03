@@ -5,7 +5,7 @@ import React from "react";
 import { QueryClient, QueryErrorResetBoundary, useQueryClient } from "@tanstack/react-query";
 import { type FallbackProps, ErrorBoundary as ReactErrorBoundary } from "react-error-boundary";
 
-type FallbackRenderType = (props: FallbackProps) => React.ReactNode;
+export type FallbackRenderType = (props: FallbackProps) => React.ReactNode;
 
 interface Props {
   fallbackRender: FallbackRenderType;

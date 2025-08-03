@@ -1,1 +1,1 @@
-export { default } from "@/views/NotFound/ui";
+export { default } from "@/app/ui/Errors/NotFoundError";

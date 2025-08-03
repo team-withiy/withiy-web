@@ -1,6 +1,9 @@
 import type { ErrorDTO } from "@/shared/api/common.interface";
 
 export const UNAUTHORIZED_STATUS = 401;
+export const UNAUTHORIZED_MESSAGE = "Unauthorized access. Please log in again.";
+export const FORBIDDEN_STATUS = 403;
+export const FORBIDDEN_MESSAGE = "You do not have permission to access this resource.";
 
 export const RECENT_LOGINED_SOCIAL_TYPE_EXPIRES_MS = 365 * 24 * 60 * 60 * 1000;
 

@@ -35,7 +35,7 @@ const TOAST_ICON_MAPPER = {
   ),
 } as const satisfies Record<ToastState, ReactNode>;
 
-const toastRoot = document.querySelector("#toast") as HTMLDivElement;
+const toastRoot = (document.querySelector("#toast") as HTMLDivElement) || document.createElement("div");
 
 const Toast: React.FC = () => {
   const timers = useRef<Record<string, NodeJS.Timeout>>({});
