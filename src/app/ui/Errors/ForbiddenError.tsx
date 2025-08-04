@@ -26,8 +26,8 @@ const ForbiddenError: FallbackRenderType = ({ resetErrorBoundary }) => {
           </section>
         </section>
         <BottomFloatingButtonWrapper>
-          <Link href="/" className={styles.link}>
-            <Button size={52} full variant="default" type="button" onClick={resetErrorBoundary}>
+          <Link className={styles.link} href="/" onNavigate={resetErrorBoundary}>
+            <Button size={52} full variant="default" type="button">
               위디 홈으로 바로가기
             </Button>
           </Link>

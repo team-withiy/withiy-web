@@ -1,44 +1,36 @@
-import Link from "next/link";
+"use client";
 
+import { useSuspenseQuery } from "@tanstack/react-query";
 import Skeleton from "react-loading-skeleton";
 
-import RequireCoupleAuthorizationWrapper from "@/features/checkAuthorization/ui/RequireCoupleAuthorizationWrapper";
-
-import type { UserDTO } from "@/entities/user/api/user.interface";
-import { hasUserCoupleWithFirstMetDate } from "@/entities/user/models/hasCouple";
+import { userQueries } from "@/entities/user/api/user.queries";
 
 import { DEFAULT_PROFILE_IMAGE_SRC } from "@/shared/constants/image";
-import { formatDate } from "@/shared/lib/date";
-import BlurImage from "@/shared/ui/Image/BlurImage";
+import FallbackHandlerImage from "@/shared/ui/Image/FallbackHandlerImage";
+import SSRSafeSuspense from "@/shared/ui/Suspense/SSRSafeSuspense";
 
 import { IconChevronRight20 } from "public/icons";
 
 import styles from "./Info.module.scss";
 
-interface Props {
-  me: UserDTO;
-}
+const Info: React.FC = () => {
+  const { data: me } = useSuspenseQuery(userQueries.getMe).data;
 
-const Info: React.FC<Props> = ({ me }) => {
   return (
     <section className={styles.wrapper}>
       <div className={styles.infoWrapper}>
-        <BlurImage
+        <FallbackHandlerImage
           src={me.thumbnail}
           className={styles.thumbnail}
           alt={`${me.nickname}의 썸네일 이미지`}
-          fallbackProps={{
-            width: 80,
-            height: 80,
-            src: DEFAULT_PROFILE_IMAGE_SRC,
-            alt: "기본 프로필 이미지",
-            className: styles.thumbnail,
-          }}
+          fallbackSrc={DEFAULT_PROFILE_IMAGE_SRC}
+          width={Number(styles.thumbnailSize)}
+          height={Number(styles.thumbnailSize)}
         />
         <span className={styles.name} aria-label="내 닉네임">
           {me.nickname}
         </span>
-        <RequireCoupleAuthorizationWrapper
+        {/* <RequireCoupleAuthorizationWrapper
           hasBottomSheet={false}
           fallback={
             <Link
@@ -56,9 +48,9 @@ const Info: React.FC<Props> = ({ me }) => {
             위디 커플
             <IconChevronRight20 className={styles.chevronRight} />
           </button>
-        </RequireCoupleAuthorizationWrapper>
+        </RequireCoupleAuthorizationWrapper> */}
       </div>
-      <RequireCoupleAuthorizationWrapper
+      {/* <RequireCoupleAuthorizationWrapper
         fallback={
           <div key="catch-phrase" className={styles.catchPhrase}>
             커플 연동 후 둘만의 이야기를 기록해보세요!
@@ -78,14 +70,12 @@ const Info: React.FC<Props> = ({ me }) => {
             </>
           )}
         </div>
-      </RequireCoupleAuthorizationWrapper>
+      </RequireCoupleAuthorizationWrapper> */}
     </section>
   );
 };
 
-export default Info;
-
-export const LoadingInfo: React.FC = () => {
+const LoadingInfo: React.FC = () => {
   return (
     <section className={styles.wrapper}>
       <div className={styles.infoWrapper}>
@@ -100,3 +90,5 @@ export const LoadingInfo: React.FC = () => {
     </section>
   );
 };
+
+export default SSRSafeSuspense.with(Info, { fallback: <LoadingInfo /> });

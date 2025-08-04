@@ -3,7 +3,7 @@ import { withAuthorizationRoute } from "@/features/handleAuthorizationRoute/ui";
 import BackButton from "@/shared/ui/BackButton";
 import UnderlineButton from "@/shared/ui/Button/UnderlineButton";
 import DvhHeightLayout from "@/shared/ui/Layout/DvhHeightLayout";
-import { SSRSafeSuspense } from "@/shared/ui/SSRSafeSuspense";
+import SSRSafeSuspense from "@/shared/ui/Suspense/SSRSafeSuspense";
 
 import LoginButton, { LoadingLoginButton } from "./LoginButton";
 import { IconCharacterDefault } from "public/icons";
