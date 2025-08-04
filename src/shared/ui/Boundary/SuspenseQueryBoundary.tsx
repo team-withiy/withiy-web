@@ -1,3 +1,5 @@
+"use client";
+
 import type { ReactNode } from "react";
 
 import { type SuspenseQueriesOptions, type SuspenseQueriesResults, useSuspenseQueries } from "@tanstack/react-query";

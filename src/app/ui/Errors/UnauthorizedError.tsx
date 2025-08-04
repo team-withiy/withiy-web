@@ -26,13 +26,13 @@ const UnauthorizedError: FallbackRenderType = ({ resetErrorBoundary }) => {
           </section>
         </section>
         <BottomFloatingButtonWrapper hasTwoButtons>
-          <Link href="/auth" className={styles.link}>
-            <Button size={52} full variant="default" type="button" onClick={resetErrorBoundary}>
+          <Link href="/auth" className={styles.link} onNavigate={resetErrorBoundary}>
+            <Button size={52} full variant="default" type="button">
               지금 로그인하러 가기
             </Button>
           </Link>
-          <Link href="/" className={styles.link}>
-            <Button size={52} full variant="text" type="button" onClick={resetErrorBoundary}>
+          <Link href="/" className={styles.link} onNavigate={resetErrorBoundary}>
+            <Button size={52} full variant="text" type="button">
               위디 홈으로 바로가기
             </Button>
           </Link>

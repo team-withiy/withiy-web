@@ -41,7 +41,7 @@ export const authApiClient = apiClient.extend({
           request.headers.set("Authorization", `Bearer ${accessToken}`);
           return request;
         } catch (error) {
-          promiseHolder.failRelease();
+          promiseHolder.successRelease();
           cachedToken = null;
           tokenExpiry = new Date(0);
           throw error;

@@ -1,40 +1,47 @@
-import type { ReactNode } from "react";
+"use client";
 
-import { redirect } from "next/navigation";
+import { useEffect } from "react";
 
-import { getMeApi } from "@/entities/user/api/user.server";
+import { useRouter } from "next/navigation";
+
+import { useQuery } from "@tanstack/react-query";
+
+import { userQueries } from "@/entities/user/api/user.queries";
 
 import {
-  HOME_PAGE_ENDPOINT,
-  LOGIN_PAGE_ENDPOINT,
+  FORBIDDEN_MESSAGE,
   REGISTER_PAGE_ENDPOINT,
   RESTORE_PAGE_ENDPOINT,
-  UNAUTHORIZED_STATUS,
+  UNAUTHORIZED_MESSAGE,
 } from "@/shared/constants/auth";
 
 import { AuthorizationConfig } from "./authorizationRoute.interface";
 
 interface Props extends AuthorizationConfig {}
 
-const AuthorizationRouteHandler = async ({
+const AuthorizationRouteHandler: React.FC<Props> = ({
   requiredAuth,
   requiredCouple,
   isRegisterPage,
   isRestorePage,
-}: Props): Promise<ReactNode> => {
-  const { status, data } = await getMeApi();
+}) => {
+  const { data, isFetched } = useQuery({ ...userQueries.getMe, throwOnError: false });
+  const { replace } = useRouter();
 
-  if (requiredAuth === true && status === UNAUTHORIZED_STATUS) return redirect(LOGIN_PAGE_ENDPOINT);
-  if (requiredAuth === false && status !== UNAUTHORIZED_STATUS) return redirect(HOME_PAGE_ENDPOINT);
+  useEffect(() => {
+    if (!isFetched) return;
+    if (requiredAuth === true && !data) throw new Error(UNAUTHORIZED_MESSAGE);
+    if (requiredAuth === false && !!data) throw new Error(FORBIDDEN_MESSAGE);
 
-  if (status === 200) {
-    if (requiredCouple === true && !data.hasCouple) return redirect(HOME_PAGE_ENDPOINT);
-    if (requiredCouple === false && data.hasCouple) return redirect(HOME_PAGE_ENDPOINT);
-    if (data.restoreEnabled && !isRestorePage) return redirect(RESTORE_PAGE_ENDPOINT);
-    if (!data.restoreEnabled && isRestorePage) return redirect(HOME_PAGE_ENDPOINT);
-    if (data.isRegistered && isRegisterPage) return redirect(HOME_PAGE_ENDPOINT);
-    if (!data.isRegistered && !isRegisterPage) return redirect(REGISTER_PAGE_ENDPOINT);
-  }
+    if (!!data) {
+      if (requiredCouple === true && !data.data.hasCouple) throw new Error(FORBIDDEN_MESSAGE);
+      if (requiredCouple === false && data.data.hasCouple) throw new Error(FORBIDDEN_MESSAGE);
+      if (data.data.restoreEnabled && !isRestorePage) void replace(RESTORE_PAGE_ENDPOINT);
+      if (!data.data.restoreEnabled && isRestorePage) throw new Error(FORBIDDEN_MESSAGE);
+      if (data.data.isRegistered && isRegisterPage) throw new Error(FORBIDDEN_MESSAGE);
+      if (!data.data.isRegistered && !isRegisterPage) void replace(REGISTER_PAGE_ENDPOINT);
+    }
+  }, [data, isFetched, isRegisterPage, isRestorePage, replace, requiredAuth, requiredCouple]);
 
   return null;
 };

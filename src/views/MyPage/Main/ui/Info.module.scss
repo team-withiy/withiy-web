@@ -62,3 +62,7 @@ $THUMBNAIL_SIZE: 80px;
     }
   }
 }
+
+:export {
+  thumbnailSize: $THUMBNAIL_SIZE / 1px;
+}

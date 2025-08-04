@@ -10,6 +10,8 @@ export type FallbackRenderType = (props: FallbackProps) => React.ReactNode;
 interface Props {
   fallbackRender: FallbackRenderType;
   children: React.ReactNode;
+  onReset?: () => void;
+  onError?: ((error: Error, info: React.ErrorInfo) => void) | undefined;
 }
 
 const resetErrorQuery = (queryClient: QueryClient) => {
@@ -18,7 +20,7 @@ const resetErrorQuery = (queryClient: QueryClient) => {
   queryClient.resetQueries({ queryKey });
 };
 
-const ErrorBoundary: React.FC<Props> = ({ children, fallbackRender }) => {
+const ErrorBoundary: React.FC<Props> = ({ children, fallbackRender, onReset, onError }) => {
   const queryClient = useQueryClient();
 
   return (
@@ -26,9 +28,11 @@ const ErrorBoundary: React.FC<Props> = ({ children, fallbackRender }) => {
       {({ reset }) => (
         <ReactErrorBoundary
           fallbackRender={fallbackRender}
+          onError={onError}
           onReset={() => {
             reset();
             resetErrorQuery(queryClient);
+            onReset?.();
           }}
         >
           {children}

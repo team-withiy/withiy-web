@@ -1,4 +1,4 @@
-import { ReactNode, Suspense } from "react";
+import React, { ReactNode, Suspense } from "react";
 
 import { getMeApi } from "@/entities/user/api/user.server";
 import { hasUserCouple } from "@/entities/user/models/hasCouple";
@@ -24,12 +24,12 @@ type Props = BottomSheetProps & {
   fallbackWrapperClassName?: string;
 };
 
-export default function RequireCoupleAuthorizationWrapper({
+const RequireCoupleAuthorizationWrapper: React.FC<Props> = ({
   fallback,
   children,
   fallbackWrapperClassName,
   ...props
-}: Props) {
+}) => {
   return (
     <Suspense fallback={fallback ?? children}>
       <FetchBoundary fetchFunctions={[getMeApi]}>
@@ -47,4 +47,6 @@ export default function RequireCoupleAuthorizationWrapper({
       </FetchBoundary>
     </Suspense>
   );
-}
+};
+
+export default RequireCoupleAuthorizationWrapper;
