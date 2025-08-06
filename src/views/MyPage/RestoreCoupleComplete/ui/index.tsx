@@ -14,7 +14,7 @@ import FetchBoundary from "@/shared/ui/Boundary/FetchBoundary";
 import Button from "@/shared/ui/Button/Button";
 import DvhHeightLayout from "@/shared/ui/Layout/DvhHeightLayout";
 
-import { IconCharacterHeart } from "public/icons";
+import { IconHeart } from "public/icons";
 
 import styles from "./RestoreCoupleCompletePage.module.scss";
 
@@ -26,7 +26,7 @@ const RestoreCoupleCompletePage: React.FC = () => {
           <h2 className={styles.title}>계정 복구</h2>
         </Header>
         <section className={styles.content}>
-          <IconCharacterHeart />
+          <IconHeart />
           <FetchBoundary fetchFunctions={[getMeApi]}>
             {([{ data: me }]) => (
               <p className={styles.description}>

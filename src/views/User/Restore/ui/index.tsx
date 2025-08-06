@@ -5,7 +5,7 @@ import { withAuthorizationRoute } from "@/features/handleAuthorizationRoute/ui";
 import DvhHeightLayout from "@/shared/ui/Layout/DvhHeightLayout";
 
 import RestoreUserButton from "./RestoreUserButton";
-import { IconCharacterQuestion } from "public/icons";
+import { IconCharacterRabbit } from "public/icons";
 
 import styles from "./RestorePage.module.scss";
 
@@ -17,7 +17,7 @@ const RestorePage: React.FC = () => {
           <h2 className={styles.title}>계정 복구</h2>
         </Header>
         <section className={styles.content}>
-          <IconCharacterQuestion />
+          <IconCharacterRabbit />
           <p className={styles.description}>
             또 오셨네요!
             <br />

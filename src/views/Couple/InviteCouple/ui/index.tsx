@@ -12,7 +12,7 @@ import { getMeApi } from "@/entities/user/api/user.server";
 import FetchBoundary from "@/shared/ui/Boundary/FetchBoundary";
 import DvhHeightLayout from "@/shared/ui/Layout/DvhHeightLayout";
 
-import { IconCharacterInvite } from "public/icons";
+import { IconLetter } from "public/icons";
 
 import styles from "./InviteCouplePage.module.scss";
 
@@ -27,7 +27,7 @@ const InviteCouplePage: React.FC = () => {
           </Link>
         </Header>
         <section className={styles.content}>
-          <IconCharacterInvite />
+          <IconLetter />
           <p className={styles.description}>
             연인이 링크를 클릭하면
             <br />

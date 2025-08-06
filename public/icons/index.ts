@@ -4,6 +4,14 @@ export { default as IconCharacterQuestion } from "./character-question.svg";
 export { default as IconCharacterHeart } from "./character-heart.svg";
 export { default as IconCharacterInvite } from "./character-invite.svg";
 export { default as IconCharacterLeave } from "./character-leave.svg";
+export { default as IconCharacterBear } from "./character-bear.svg";
+export { default as IconCharacterRabbit } from "./character-rabbit.svg";
+
+// MEMO: LETTER
+export { default as IconLetter } from "./letter.svg";
+
+// MEMO: HEART
+export { default as IconHeart } from "./heart.svg";
 
 // MEMO: BELL
 export { default as IconBell20 } from "./bell20.svg";
