@@ -11,7 +11,7 @@ import BackButton from "@/shared/ui/BackButton";
 import FetchBoundary from "@/shared/ui/Boundary/FetchBoundary";
 import DvhHeightLayout from "@/shared/ui/Layout/DvhHeightLayout";
 
-import { IconArrowLeft24, IconCharacterInvite } from "public/icons";
+import { IconCharacterInvite, IconLetter } from "public/icons";
 
 import styles from "./ConnectCouplePage.module.scss";
 
@@ -21,7 +21,7 @@ const ConnectCouplePage: React.FC = () => {
       <main className={styles.main}>
         <Header className={styles.header}>
           <BackButton className={styles.backButton}>
-            <IconArrowLeft24 />
+            <IconLetter />
           </BackButton>
           <h2 className={styles.title}>커플 연결</h2>
         </Header>

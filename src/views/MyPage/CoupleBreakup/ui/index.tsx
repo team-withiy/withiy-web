@@ -6,7 +6,7 @@ import BackButton from "@/shared/ui/BackButton";
 import DvhHeightLayout from "@/shared/ui/Layout/DvhHeightLayout";
 
 import BreakupCoupleButton from "./BreakupCoupleButton";
-import { IconCharacterLeave, IconX24 } from "public/icons";
+import { IconCharacterBear, IconX24 } from "public/icons";
 
 import styles from "./CoupleBreakupPage.module.scss";
 
@@ -21,7 +21,7 @@ const CoupleBreakupPage: React.FC = () => {
           <h2 className={styles.title}>커플 연결 끊기</h2>
         </Header>
         <section className={styles.content}>
-          <IconCharacterLeave />
+          <IconCharacterBear />
           <p className={styles.description}>
             정말 헤어지실 건가요..?
             <small className={styles.small}>

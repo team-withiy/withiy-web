@@ -11,7 +11,7 @@ import BackButton from "@/shared/ui/BackButton";
 import DvhHeightLayout from "@/shared/ui/Layout/DvhHeightLayout";
 
 import RestoreCoupleButton from "./RestoreCoupleButton";
-import { IconArrowLeft24, IconCharacterQuestion } from "public/icons";
+import { IconCharacterQuestion, IconCharacterRabbit } from "public/icons";
 
 import styles from "./RestoreCouplePage.module.scss";
 
@@ -24,7 +24,7 @@ const RestoreCouplePage: React.FC = async () => {
       <main className={styles.wrapper}>
         <Header className={styles.header}>
           <BackButton className={styles.backButton}>
-            <IconArrowLeft24 />
+            <IconCharacterRabbit />
           </BackButton>
           <h2 className={styles.title}>커플 복구</h2>
         </Header>

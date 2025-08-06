@@ -6,7 +6,7 @@ import BackButton from "@/shared/ui/BackButton";
 import DvhHeightLayout from "@/shared/ui/Layout/DvhHeightLayout";
 
 import WithdrawButton from "./WithdrawButton";
-import { IconCharacterLeave, IconX24 } from "public/icons";
+import { IconCharacterBear, IconX24 } from "public/icons";
 
 import styles from "./WithdrawalPage.module.scss";
 
@@ -23,7 +23,7 @@ const WithdrawalPage: React.FC = () => {
           </h2>
         </Header>
         <section className={styles.content}>
-          <IconCharacterLeave />
+          <IconCharacterBear />
           <p className={styles.description} data-testid="description">
             정말 헤어지실 건가요..?
             <small className={styles.small}>
