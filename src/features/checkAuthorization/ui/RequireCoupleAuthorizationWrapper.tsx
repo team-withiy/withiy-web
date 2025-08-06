@@ -1,9 +1,12 @@
-import React, { ReactNode, Suspense } from "react";
+"use client";
 
-import { getMeApi } from "@/entities/user/api/user.server";
+import React, { ReactNode } from "react";
+
+import { userQueries } from "@/entities/user/api/user.queries";
 import { hasUserCouple } from "@/entities/user/models/hasCouple";
 
-import FetchBoundary from "@/shared/ui/Boundary/FetchBoundary";
+import QueryBoundary from "@/shared/ui/Boundary/QueryBoundary";
+import SSRSafeSuspense from "@/shared/ui/Suspense/SSRSafeSuspense";
 
 import RequireCoupleAuthorizationButton from "./RequireCoupleAuthorizationButton";
 
@@ -31,21 +34,21 @@ const RequireCoupleAuthorizationWrapper: React.FC<Props> = ({
   ...props
 }) => {
   return (
-    <Suspense fallback={fallback ?? children}>
-      <FetchBoundary fetchFunctions={[getMeApi]}>
+    <SSRSafeSuspense fallback={fallback ?? children}>
+      <QueryBoundary queries={[userQueries.getMe]}>
         {([{ data: me }]) => (
           <>
-            {hasUserCouple(me) && children}
-            {!hasUserCouple(me) && props.hasBottomSheet && (
+            {me?.data && hasUserCouple(me.data) && children}
+            {(!me?.data || !hasUserCouple(me.data)) && props.hasBottomSheet && (
               <RequireCoupleAuthorizationButton className={fallbackWrapperClassName} callbackUrl={props.callbackUrl}>
                 {fallback ?? children}
               </RequireCoupleAuthorizationButton>
             )}
-            {!hasUserCouple(me) && !props.hasBottomSheet && (fallback ?? children)}
+            {(!me?.data || !hasUserCouple(me.data)) && !props.hasBottomSheet && (fallback ?? children)}
           </>
         )}
-      </FetchBoundary>
-    </Suspense>
+      </QueryBoundary>
+    </SSRSafeSuspense>
   );
 };
 

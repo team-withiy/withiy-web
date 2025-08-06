@@ -1,11 +1,17 @@
 "use client";
 
+import Link from "next/link";
+
 import { useSuspenseQuery } from "@tanstack/react-query";
 import Skeleton from "react-loading-skeleton";
 
+import RequireCoupleAuthorizationWrapper from "@/features/checkAuthorization/ui/RequireCoupleAuthorizationWrapper";
+
 import { userQueries } from "@/entities/user/api/user.queries";
+import { hasUserCoupleWithFirstMetDate } from "@/entities/user/models/hasCouple";
 
 import { DEFAULT_PROFILE_IMAGE_SRC } from "@/shared/constants/image";
+import { formatDate } from "@/shared/lib/date";
 import FallbackHandlerImage from "@/shared/ui/Image/FallbackHandlerImage";
 import SSRSafeSuspense from "@/shared/ui/Suspense/SSRSafeSuspense";
 
@@ -30,7 +36,7 @@ const Info: React.FC = () => {
         <span className={styles.name} aria-label="내 닉네임">
           {me.nickname}
         </span>
-        {/* <RequireCoupleAuthorizationWrapper
+        <RequireCoupleAuthorizationWrapper
           hasBottomSheet={false}
           fallback={
             <Link
@@ -48,9 +54,9 @@ const Info: React.FC = () => {
             위디 커플
             <IconChevronRight20 className={styles.chevronRight} />
           </button>
-        </RequireCoupleAuthorizationWrapper> */}
+        </RequireCoupleAuthorizationWrapper>
       </div>
-      {/* <RequireCoupleAuthorizationWrapper
+      <RequireCoupleAuthorizationWrapper
         fallback={
           <div key="catch-phrase" className={styles.catchPhrase}>
             커플 연동 후 둘만의 이야기를 기록해보세요!
@@ -70,7 +76,7 @@ const Info: React.FC = () => {
             </>
           )}
         </div>
-      </RequireCoupleAuthorizationWrapper> */}
+      </RequireCoupleAuthorizationWrapper>
     </section>
   );
 };

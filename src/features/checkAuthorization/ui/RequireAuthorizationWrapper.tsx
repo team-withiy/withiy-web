@@ -1,8 +1,11 @@
-import { ReactNode, Suspense } from "react";
+"use client";
 
-import { getMeApi } from "@/entities/user/api/user.server";
+import { ReactNode } from "react";
 
-import FetchBoundary from "@/shared/ui/Boundary/FetchBoundary";
+import { userQueries } from "@/entities/user/api/user.queries";
+
+import QueryBoundary from "@/shared/ui/Boundary/QueryBoundary";
+import SSRSafeSuspense from "@/shared/ui/Suspense/SSRSafeSuspense";
 
 import RequireAuthorizationButton from "./RequireAuthorizationButton";
 
@@ -25,20 +28,20 @@ type Props = BottomSheetProps & {
 
 export default function RequireAuthorizationWrapper({ fallback, children, fallbackWrapperClassName, ...props }: Props) {
   return (
-    <Suspense fallback={fallback ?? children}>
-      <FetchBoundary fetchFunctions={[getMeApi]}>
+    <SSRSafeSuspense fallback={fallback ?? children}>
+      <QueryBoundary queries={[userQueries.getMe]}>
         {([{ data: me }]) => (
           <>
-            {me && children}
-            {!me && props.hasBottomSheet && (
+            {me?.data && children}
+            {!me?.data && props.hasBottomSheet && (
               <RequireAuthorizationButton className={fallbackWrapperClassName} callbackUrl={props.callbackUrl}>
                 {fallback ?? children}
               </RequireAuthorizationButton>
             )}
-            {!me && !props.hasBottomSheet && (fallback ?? children)}
+            {!me?.data && !props.hasBottomSheet && (fallback ?? children)}
           </>
         )}
-      </FetchBoundary>
-    </Suspense>
+      </QueryBoundary>
+    </SSRSafeSuspense>
   );
 }
