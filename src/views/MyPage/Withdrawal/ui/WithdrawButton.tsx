@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 
 import useLogout from "@/entities/user/hooks/useLogout";
 
+import { isFetchHTTPError } from "@/shared/models/auth/fetchHTTPException";
 import useAlert from "@/shared/ui/Alert/useAlert";
 import BottomFloatingButtonWrapper from "@/shared/ui/BottomFloatingButtonWrapper";
 import Button from "@/shared/ui/Button/Button";
@@ -32,13 +33,13 @@ const WithdrawButton: React.FC = () => {
       onConfirm: () => {
         closeAlert();
         startTransition(async () => {
-          const errorMessage = await withdrawAction();
-          if (errorMessage) {
+          try {
+            await withdrawAction();
+            await logout();
+            replace("/");
+          } catch (error) {
+            const errorMessage = isFetchHTTPError(error) ? error.message : "알 수 없는 오류가 발생했습니다.";
             addToast({ message: errorMessage, state: "danger" });
-          } else {
-            logout().then(() => {
-              replace("/");
-            });
           }
         });
       },

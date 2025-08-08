@@ -1,3 +1,5 @@
+"use client";
+
 import Link from "next/link";
 
 import { josa } from "es-hangul";
@@ -6,11 +8,11 @@ import Header from "@/widgets/Layout/ui/Header";
 
 import { withAuthorizationRoute } from "@/features/handleAuthorizationRoute/ui";
 
-import { getMeApi } from "@/entities/user/api/user.server";
+import { userQueries } from "@/entities/user/api/user.queries";
 import { hasUserCouple } from "@/entities/user/models/hasCouple";
 
 import BottomFloatingButtonWrapper from "@/shared/ui/BottomFloatingButtonWrapper";
-import FetchBoundary from "@/shared/ui/Boundary/FetchBoundary";
+import SuspenseQueryBoundary from "@/shared/ui/Boundary/SuspenseQueryBoundary";
 import Button from "@/shared/ui/Button/Button";
 import DvhHeightLayout from "@/shared/ui/Layout/DvhHeightLayout";
 
@@ -27,15 +29,15 @@ const RestoreCoupleCompletePage: React.FC = () => {
         </Header>
         <section className={styles.content}>
           <IconHeart />
-          <FetchBoundary fetchFunctions={[getMeApi]}>
+          <SuspenseQueryBoundary queries={[userQueries.getMe]}>
             {([{ data: me }]) => (
               <p className={styles.description}>
-                {hasUserCouple(me) && josa(me.couple.partnerNickname, "와/과")} 다시 연결되었어요 🎉
+                {hasUserCouple(me.data) && josa(me.data.couple.partnerNickname, "와/과")} 다시 연결되었어요 🎉
                 <br />
                 <span className={styles.small}>다시 데이트 여정을 쌓아봐요</span>
               </p>
             )}
-          </FetchBoundary>
+          </SuspenseQueryBoundary>
         </section>
         <BottomFloatingButtonWrapper>
           <Link href="/" className={styles.link}>

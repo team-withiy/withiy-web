@@ -1,7 +1,8 @@
-import { cleanup, render, screen, waitFor } from "@testing-library/react";
+import { cleanup, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { afterEach, beforeEach, describe, expect, test, vi } from "vitest";
 
+import { renderWithProviders } from "@/shared/lib/test";
 import { isFetchHTTPError } from "@/shared/models/auth/fetchHTTPException";
 import { useToast } from "@/shared/ui/Toast";
 
@@ -24,16 +25,25 @@ vi.mock("@/shared/models/auth/fetchHTTPException", () => ({
   isFetchHTTPError: vi.fn(),
 }));
 
+vi.mock("@/entities/user/api/user.queries", () => ({
+  userQueries: {
+    getNotificationSettings: {
+      queryKey: ["notificationSettings"],
+      queryFn: vi.fn(() => ({
+        data: {
+          userId: "123",
+          dateNotificationEnabled: true,
+          eventNotificationEnabled: false,
+        },
+      })),
+    },
+  },
+}));
+
 describe("NotificationList", () => {
   const mockAddToast = vi.fn();
   const mockUpdateNotificationSettingsAction = vi.mocked(updateNotificationSettingsAction);
   const mockIsFetchHTTPError = vi.mocked(isFetchHTTPError);
-
-  const mockNotificationSettings = {
-    userId: 1,
-    dateNotificationEnabled: true,
-    eventNotificationEnabled: false,
-  };
 
   beforeEach(() => {
     vi.clearAllMocks();
@@ -49,12 +59,14 @@ describe("NotificationList", () => {
     cleanup();
   });
 
-  test("초기 알림 설정이 올바르게 렌더링된다", () => {
-    render(<NotificationList notificationSettings={mockNotificationSettings} />);
+  test("초기 알림 설정이 올바르게 렌더링된다", async () => {
+    renderWithProviders(<NotificationList />);
 
-    expect(screen.getByTestId("notification-list")).toBeInTheDocument();
-    expect(screen.getByText("데이트 알림")).toBeInTheDocument();
-    expect(screen.getByText("이벤트 알림")).toBeInTheDocument();
+    await waitFor(() => {
+      expect(screen.getByTestId("notification-list")).toBeInTheDocument();
+      expect(screen.getByText("데이트 알림")).toBeInTheDocument();
+      expect(screen.getByText("이벤트 알림")).toBeInTheDocument();
+    });
 
     const dateToggle = screen.getByTestId("date-notification-toggle");
     const eventToggle = screen.getByTestId("event-notification-toggle");
@@ -73,8 +85,11 @@ describe("NotificationList", () => {
     };
     mockUpdateNotificationSettingsAction.mockResolvedValue(mockApiResponse);
 
-    render(<NotificationList notificationSettings={mockNotificationSettings} />);
+    renderWithProviders(<NotificationList />);
 
+    await waitFor(() => {
+      expect(screen.getByTestId("notification-list")).toBeInTheDocument();
+    });
     const dateToggle = screen.getByTestId("date-notification-toggle");
 
     expect(dateToggle).toBeChecked();
@@ -99,8 +114,11 @@ describe("NotificationList", () => {
     };
     mockUpdateNotificationSettingsAction.mockResolvedValue(mockApiResponse);
 
-    render(<NotificationList notificationSettings={mockNotificationSettings} />);
+    renderWithProviders(<NotificationList />);
 
+    await waitFor(() => {
+      expect(screen.getByTestId("notification-list")).toBeInTheDocument();
+    });
     const eventToggle = screen.getByTestId("event-notification-toggle");
 
     expect(eventToggle).not.toBeChecked();
@@ -119,8 +137,11 @@ describe("NotificationList", () => {
     const user = userEvent.setup();
     mockUpdateNotificationSettingsAction.mockRejectedValue(new Error("Server error"));
 
-    render(<NotificationList notificationSettings={mockNotificationSettings} />);
+    renderWithProviders(<NotificationList />);
 
+    await waitFor(() => {
+      expect(screen.getByTestId("notification-list")).toBeInTheDocument();
+    });
     const dateToggle = screen.getByTestId("date-notification-toggle");
 
     await user.click(dateToggle);
@@ -143,8 +164,11 @@ describe("NotificationList", () => {
     mockUpdateNotificationSettingsAction.mockRejectedValue(httpError);
     mockIsFetchHTTPError.mockReturnValue(true);
 
-    render(<NotificationList notificationSettings={mockNotificationSettings} />);
+    renderWithProviders(<NotificationList />);
 
+    await waitFor(() => {
+      expect(screen.getByTestId("notification-list")).toBeInTheDocument();
+    });
     const eventToggle = screen.getByTestId("event-notification-toggle");
 
     await user.click(eventToggle);
@@ -164,7 +188,7 @@ describe("LoadingNotificationList", () => {
   });
 
   test("로딩 상태에서 토글이 비활성화된다", () => {
-    render(<LoadingNotificationList />);
+    renderWithProviders(<LoadingNotificationList />);
 
     expect(screen.getByTestId("loading-notification-list")).toBeInTheDocument();
     expect(screen.getByText("데이트 알림")).toBeInTheDocument();
@@ -180,7 +204,7 @@ describe("LoadingNotificationList", () => {
   });
 
   test("로딩 상태에서 토글이 읽기 전용으로 설정된다", () => {
-    render(<LoadingNotificationList />);
+    renderWithProviders(<LoadingNotificationList />);
 
     const dateToggle = screen.getByTestId("date-notification-toggle-loading");
     const eventToggle = screen.getByTestId("event-notification-toggle-loading");

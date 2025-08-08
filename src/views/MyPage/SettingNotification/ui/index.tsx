@@ -1,15 +1,10 @@
-import { Suspense } from "react";
-
 import Header from "@/widgets/Layout/ui/Header";
 
 import { withAuthorizationRoute } from "@/features/handleAuthorizationRoute/ui";
 
-import { getNotificationSettingsApi } from "@/entities/user/api/user.server";
-
 import BackButton from "@/shared/ui/BackButton";
-import FetchBoundary from "@/shared/ui/Boundary/FetchBoundary";
 
-import NotificationList, { LoadingNotificationList } from "./NotificationList";
+import NotificationList from "./NotificationList";
 import { IconArrowLeft24 } from "public/icons";
 
 import styles from "./SettingNotificationPage.module.scss";
@@ -25,11 +20,7 @@ const SettingNotificationPage: React.FC = () => {
           알림 설정
         </h1>
       </Header>
-      <Suspense fallback={<LoadingNotificationList />}>
-        <FetchBoundary fetchFunctions={[getNotificationSettingsApi]}>
-          {([{ data: notificationSettings }]) => <NotificationList notificationSettings={notificationSettings} />}
-        </FetchBoundary>
-      </Suspense>
+      <NotificationList />
     </main>
   );
 };

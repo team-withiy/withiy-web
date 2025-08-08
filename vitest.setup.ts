@@ -39,6 +39,18 @@ vi.mock("./src/features/handleAuthorizationRoute/ui");
 // MEMO: cookies
 vi.mock("./src/shared/lib/cookies");
 
+// MEMO: SSRSafeSuspense
+vi.mock("./src/shared/ui/Suspense/SSRSafeSuspense");
+
+// MEMO: suspense
+vi.mock("react", async () => {
+  const actual = await vi.importActual("react");
+  return {
+    ...actual,
+    Suspense: ({ children }: { children: React.ReactNode }) => children,
+  };
+});
+
 // MEMO: next/navigation
 vi.mock("next/navigation", async (importOriginal) => {
   const actual = await importOriginal<typeof import("next/navigation")>();

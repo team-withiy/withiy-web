@@ -1,6 +1,6 @@
 import { cleanup, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { afterEach, expect, test, vi } from "vitest";
+import { afterEach, beforeEach, describe, expect, test, vi } from "vitest";
 
 import { FormActionStatus } from "@/shared/api/common.interface";
 import { renderWithProviders } from "@/shared/lib/test";
@@ -42,94 +42,113 @@ afterEach(() => {
   vi.clearAllMocks();
 });
 
-test("firstMetDate가 null일 때 정상적으로 렌더링되어야 한다", () => {
-  renderWithProviders(<SetCoupleFirstMetDateForm firstMetDate={null} />);
-
-  expect(screen.getByTestId("set-couple-first-met-date-form")).toBeInTheDocument();
-  expect(screen.getByText("처음 사랑하게 된 날")).toBeInTheDocument();
-  expect(screen.getByTestId("set-couple-first-met-date-button")).toBeInTheDocument();
-});
-
-test("firstMetDate가 있을 때 초기값이 설정되어야 한다", () => {
-  const testDate = "2024-01-01";
-  renderWithProviders(<SetCoupleFirstMetDateForm firstMetDate={testDate} />);
-
-  expect(screen.getByTestId("set-couple-first-met-date-form")).toBeInTheDocument();
-});
-
-test("DatePicker가 정상적으로 작동해야 한다", async () => {
-  const user = userEvent.setup();
-  renderWithProviders(<SetCoupleFirstMetDateForm firstMetDate={null} />);
-
-  await user.click(screen.getByTestId("date-picker"));
-
-  await waitFor(() => {
-    expect(screen.getByTestId("date-picker-header")).toBeInTheDocument();
+describe("firstMetDate가 null일 때", () => {
+  beforeEach(() => {
+    vi.mock("@/entities/user/api/user.queries", () => ({
+      userQueries: {
+        getMe: {
+          queryKey: ["getMe"],
+          queryFn: vi.fn(() => ({
+            data: { data: { couple: { firstMetDate: null, hasCouple: true } } },
+            refetch: vi.fn(() => Promise.resolve({ data: { couple: { firstMetDate: null } } })),
+          })),
+        },
+      },
+    }));
   });
-});
 
-test("폼 제출 시 올바른 FormData가 전달되어야 한다", async () => {
-  const user = userEvent.setup();
-  renderWithProviders(<SetCoupleFirstMetDateForm firstMetDate={null} />);
+  test("firstMetDate가 null일 때 정상적으로 렌더링되어야 한다", async () => {
+    renderWithProviders(<SetCoupleFirstMetDateForm />);
 
-  const submitButton = screen.getByTestId("set-couple-first-met-date-button");
-  await user.click(submitButton);
-
-  await waitFor(() => {
-    expect(mockFormAction).toHaveBeenCalledWith(expect.any(FormData));
-  });
-});
-
-test("에러 상태일 때 토스트 메시지가 표시되어야 한다", async () => {
-  const errorMessage = "처음 만난 날 저장에 실패했습니다.";
-
-  const { useActionState } = await import("react");
-  vi.mocked(useActionState).mockReturnValue([
-    { status: FormActionStatus.Error, message: errorMessage },
-    mockFormAction,
-    true,
-  ]);
-
-  renderWithProviders(<SetCoupleFirstMetDateForm firstMetDate={null} />);
-
-  await waitFor(() => {
-    expect(mockAddToast).toHaveBeenCalledWith({
-      message: errorMessage,
-      state: "danger",
+    await waitFor(() => {
+      expect(screen.getByTestId("set-couple-first-met-date-form")).toBeInTheDocument();
+      expect(screen.getByText("처음 사랑하게 된 날")).toBeInTheDocument();
+      expect(screen.getByTestId("set-couple-first-met-date-button")).toBeInTheDocument();
     });
   });
-});
 
-test("성공 상태일 때 뒤로가기가 실행되어야 한다", async () => {
-  const { useActionState } = await import("react");
-  vi.mocked(useActionState).mockReturnValue([{ status: FormActionStatus.Success }, mockFormAction, true]);
+  test("DatePicker가 정상적으로 작동해야 한다", async () => {
+    const user = userEvent.setup();
+    renderWithProviders(<SetCoupleFirstMetDateForm />);
+    await waitFor(() => expect(screen.getByTestId("date-picker")).toBeInTheDocument());
+    await user.click(screen.getByTestId("date-picker"));
 
-  renderWithProviders(<SetCoupleFirstMetDateForm firstMetDate={null} />);
+    await waitFor(() => {
+      expect(screen.getByTestId("date-picker-header")).toBeInTheDocument();
+    });
+  });
 
-  await waitFor(() => {
-    expect(mockBack).toHaveBeenCalled();
+  test("폼 제출 시 올바른 FormData가 전달되어야 한다", async () => {
+    const user = userEvent.setup();
+    renderWithProviders(<SetCoupleFirstMetDateForm />);
+
+    await waitFor(() => expect(screen.getByTestId("set-couple-first-met-date-button")).toBeInTheDocument());
+    await user.click(screen.getByTestId("set-couple-first-met-date-button"));
+
+    await waitFor(() => {
+      expect(mockFormAction).toHaveBeenCalledWith(expect.any(FormData));
+    });
+  });
+
+  test("에러 상태일 때 토스트 메시지가 표시되어야 한다", async () => {
+    const errorMessage = "처음 만난 날 저장에 실패했습니다.";
+
+    const { useActionState } = await import("react");
+    vi.mocked(useActionState).mockReturnValue([
+      { status: FormActionStatus.Error, message: errorMessage },
+      mockFormAction,
+      true,
+    ]);
+
+    renderWithProviders(<SetCoupleFirstMetDateForm />);
+
+    await waitFor(() => {
+      expect(mockAddToast).toHaveBeenCalledWith({
+        message: errorMessage,
+        state: "danger",
+      });
+    });
+  });
+
+  test("성공 상태일 때 뒤로가기가 실행되어야 한다", async () => {
+    const { useActionState } = await import("react");
+    vi.mocked(useActionState).mockReturnValue([{ status: FormActionStatus.Success }, mockFormAction, true]);
+
+    renderWithProviders(<SetCoupleFirstMetDateForm />);
+
+    await waitFor(() => {
+      expect(mockBack).toHaveBeenCalled();
+    });
+  });
+
+  test("제출 버튼이 클릭 가능한 상태여야 한다", async () => {
+    renderWithProviders(<SetCoupleFirstMetDateForm />);
+
+    await waitFor(() => expect(screen.getByTestId("set-couple-first-met-date-button")).toBeInTheDocument());
+    expect(screen.getByTestId("set-couple-first-met-date-button")).toBeEnabled();
+    expect(screen.getByTestId("set-couple-first-met-date-button")).toHaveAttribute("type", "submit");
+    expect(screen.getByTestId("set-couple-first-met-date-button")).toHaveTextContent("커플 정보 저장하기");
   });
 });
 
-test("제출 버튼이 클릭 가능한 상태여야 한다", () => {
-  renderWithProviders(<SetCoupleFirstMetDateForm firstMetDate={null} />);
+describe("firstMetDate가 있을 때", () => {
+  beforeEach(() => {
+    vi.mock("@/entities/user/api/user.queries", () => ({
+      userQueries: {
+        getMe: {
+          queryKey: ["getMe"],
+          queryFn: vi.fn(() => ({
+            data: { data: { couple: { firstMetDate: "2024-01-01", hasCouple: true } } },
+            refetch: vi.fn(() => Promise.resolve({ data: { couple: { firstMetDate: null } } })),
+          })),
+        },
+      },
+    }));
+  });
 
-  const submitButton = screen.getByTestId("set-couple-first-met-date-button");
-  expect(submitButton).toBeEnabled();
-  expect(submitButton).toHaveAttribute("type", "submit");
-  expect(submitButton).toHaveTextContent("커플 정보 저장하기");
-});
+  test("firstMetDate가 있을 때 렌더링이 정상적으로 되어야한다.", async () => {
+    renderWithProviders(<SetCoupleFirstMetDateForm />);
 
-test("DatePicker에 full prop이 전달되어야 한다", () => {
-  renderWithProviders(<SetCoupleFirstMetDateForm firstMetDate={null} />);
-
-  const datePicker = screen.getByTestId("date-picker");
-  expect(datePicker).toBeInTheDocument();
-});
-
-test("기존 날짜가 있을 때 올바른 형식으로 파싱되어야 한다", () => {
-  const testDate = "2024-12-25";
-  renderWithProviders(<SetCoupleFirstMetDateForm firstMetDate={testDate} />);
-
-  expect(screen.getByTestId("set-couple-first-met-date-form")).toBeInTheDocument();
+    await waitFor(() => expect(screen.getByTestId("set-couple-first-met-date-form")).toBeInTheDocument());
+  });
 });

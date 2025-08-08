@@ -5,15 +5,18 @@ import { useTransition } from "react";
 import { useRouter } from "next/navigation";
 
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useSuspenseQuery } from "@tanstack/react-query";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { z } from "zod";
 
-import type { UserDTO } from "@/entities/user/api/user.interface";
+import { userQueries } from "@/entities/user/api/user.queries";
 import ThumbnailInput, { LoadingThumbnailInput } from "@/entities/user/ui/ThumbnailInput";
 
+import { isFetchHTTPError } from "@/shared/models/auth/fetchHTTPException";
 import BottomFloatingButtonWrapper from "@/shared/ui/BottomFloatingButtonWrapper";
 import Button from "@/shared/ui/Button/Button";
 import Input from "@/shared/ui/Input";
+import SSRSafeSuspense from "@/shared/ui/Suspense/SSRSafeSuspense";
 import { useToast } from "@/shared/ui/Toast";
 
 import { updateProfileAction } from "../api/actions";
@@ -33,11 +36,9 @@ const profileSchema = z.object({
 
 type ProfileSchema = z.infer<typeof profileSchema>;
 
-interface Props {
-  me: UserDTO;
-}
-
-const UpdateProfileForm: React.FC<Props> = ({ me }) => {
+const UpdateProfileForm: React.FC = () => {
+  const { data, refetch } = useSuspenseQuery(userQueries.getMe);
+  const me = data.data;
   const [isPending, startTransition] = useTransition();
   const { addToast } = useToast();
   const { replace } = useRouter();
@@ -58,10 +59,14 @@ const UpdateProfileForm: React.FC<Props> = ({ me }) => {
 
   const onSubmit: SubmitHandler<ProfileSchema> = (data) => {
     startTransition(async () => {
-      const errorMessage = await updateProfileAction(data);
-      if (errorMessage) {
+      try {
+        await updateProfileAction(data);
+        await refetch();
+        replace("/my-page");
+      } catch (error) {
+        const errorMessage = isFetchHTTPError(error) ? error.message : "프로필 업데이트에 실패했어요.";
         addToast({ message: errorMessage, state: "danger" });
-      } else replace("/my-page");
+      }
     });
   };
 
@@ -109,9 +114,7 @@ const UpdateProfileForm: React.FC<Props> = ({ me }) => {
   );
 };
 
-export default UpdateProfileForm;
-
-export const LoadingUpdateProfileForm = () => {
+const LoadingUpdateProfileForm = () => {
   return (
     <div className={styles.wrapper} data-testid="loading-update-profile-form">
       <LoadingThumbnailInput className={styles.thumbnailInput} />
@@ -128,3 +131,7 @@ export const LoadingUpdateProfileForm = () => {
     </div>
   );
 };
+
+export default SSRSafeSuspense.with(UpdateProfileForm, {
+  fallback: <LoadingUpdateProfileForm />,
+});

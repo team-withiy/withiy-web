@@ -2,6 +2,13 @@
 
 import { useTransition } from "react";
 
+import { useRouter } from "next/navigation";
+
+import { useQueryClient } from "@tanstack/react-query";
+
+import { userQueries } from "@/entities/user/api/user.queries";
+
+import { isFetchHTTPError } from "@/shared/models/auth/fetchHTTPException";
 import useAlert from "@/shared/ui/Alert/useAlert";
 import BottomFloatingButtonWrapper from "@/shared/ui/BottomFloatingButtonWrapper";
 import Button from "@/shared/ui/Button/Button";
@@ -10,6 +17,8 @@ import { useToast } from "@/shared/ui/Toast";
 import { cancelRestoreAction, restoreAction } from "../api/actions";
 
 const RestoreUserButton: React.FC = () => {
+  const queryClient = useQueryClient();
+  const router = useRouter();
   const { showAlert, closeAlert } = useAlert();
   const { addToast } = useToast();
 
@@ -25,15 +34,27 @@ const RestoreUserButton: React.FC = () => {
       onCancel: () => {
         closeAlert();
         startTransition(async () => {
-          const errorMessage = await cancelRestoreAction();
-          addToast({ message: errorMessage, state: "danger" });
+          try {
+            await cancelRestoreAction();
+            await queryClient.invalidateQueries(userQueries.getMe);
+            router.replace("/auth/register");
+          } catch (error) {
+            const errorMessage = isFetchHTTPError(error) ? error.message : "복구 취소 중 오류가 발생했어요.";
+            addToast({ message: errorMessage, state: "danger" });
+          }
         });
       },
       onConfirm: () => {
         closeAlert();
         startTransition(async () => {
-          const errorMessage = await restoreAction();
-          addToast({ message: errorMessage, state: "danger" });
+          try {
+            await restoreAction();
+            await queryClient.invalidateQueries(userQueries.getMe);
+            router.replace("/");
+          } catch (error) {
+            const errorMessage = isFetchHTTPError(error) ? error.message : "복구 중 오류가 발생했어요.";
+            addToast({ message: errorMessage, state: "danger" });
+          }
         });
       },
     });

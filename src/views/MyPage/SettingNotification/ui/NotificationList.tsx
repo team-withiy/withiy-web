@@ -2,9 +2,12 @@
 
 import { ChangeEventHandler, startTransition, useOptimistic } from "react";
 
-import type { UserNotificationSettingResponseDTO } from "@/entities/user/api/user.interface";
+import { useSuspenseQuery } from "@tanstack/react-query";
+
+import { userQueries } from "@/entities/user/api/user.queries";
 
 import { isFetchHTTPError } from "@/shared/models/auth/fetchHTTPException";
+import SSRSafeSuspense from "@/shared/ui/Suspense/SSRSafeSuspense";
 import { useToast } from "@/shared/ui/Toast";
 import Toggle from "@/shared/ui/Toggle";
 
@@ -13,13 +16,10 @@ import { NotificationTypeMapper } from "../models/notification";
 
 import styles from "./NotificationList.module.scss";
 
-interface Props {
-  notificationSettings: UserNotificationSettingResponseDTO;
-}
-
-const NotificationList: React.FC<Props> = ({ notificationSettings }) => {
+const NotificationList: React.FC = () => {
   const { addToast } = useToast();
-  const [optimisticSettings, setOptimisticSettings] = useOptimistic(notificationSettings);
+  const { data, refetch } = useSuspenseQuery(userQueries.getNotificationSettings);
+  const [optimisticSettings, setOptimisticSettings] = useOptimistic(data.data);
 
   const onChangeToggle: ChangeEventHandler<HTMLInputElement> = (e) => {
     const name = e.currentTarget.name;
@@ -31,12 +31,10 @@ const NotificationList: React.FC<Props> = ({ notificationSettings }) => {
 
       try {
         await updateNotificationSettingsAction({ ...requestBody, [name]: isChecked });
+        await refetch();
       } catch (error) {
-        if (isFetchHTTPError(error)) {
-          addToast({ message: error.message, state: "danger" });
-        } else {
-          addToast({ message: "알림 설정 업데이트에 실패했습니다.", state: "danger" });
-        }
+        const errorMessage = isFetchHTTPError(error) ? error.message : "알림 설정 업데이트에 실패했습니다.";
+        addToast({ message: errorMessage, state: "danger" });
       }
     });
   };
@@ -73,8 +71,6 @@ const NotificationList: React.FC<Props> = ({ notificationSettings }) => {
   );
 };
 
-export default NotificationList;
-
 export const LoadingNotificationList: React.FC = () => {
   return (
     <section className={styles.wrapper} data-testid="loading-notification-list">
@@ -107,3 +103,7 @@ export const LoadingNotificationList: React.FC = () => {
     </section>
   );
 };
+
+export default SSRSafeSuspense.with(NotificationList, {
+  fallback: <LoadingNotificationList />,
+});

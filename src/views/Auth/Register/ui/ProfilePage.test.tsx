@@ -75,7 +75,7 @@ const mockTermAgreements = {
 };
 const mockOnClickPrev = vi.fn();
 
-test("프로필 페이지가 올바르게 렌더링되어야 한다", () => {
+test("프로필 페이지가 올바르게 렌더링되어야 한다", async () => {
   render(<ProfilePage mePromise={mePromise} termAgreements={mockTermAgreements} onClickPrev={mockOnClickPrev} />);
 
   expect(screen.getByText("프로필 설정")).toBeInTheDocument();

@@ -1,15 +1,10 @@
-import { Suspense } from "react";
-
 import Link from "next/link";
 
 import Header from "@/widgets/Layout/ui/Header";
 
-import CopyCoupleLinkButton, { LoadingCopyCoupleLinkButton } from "@/features/copyCoupleLink/ui/CopyCoupleLinkButton";
+import CopyCoupleLinkButton from "@/features/copyCoupleLink/ui/CopyCoupleLinkButton";
 import { withAuthorizationRoute } from "@/features/handleAuthorizationRoute/ui";
 
-import { getMeApi } from "@/entities/user/api/user.server";
-
-import FetchBoundary from "@/shared/ui/Boundary/FetchBoundary";
 import DvhHeightLayout from "@/shared/ui/Layout/DvhHeightLayout";
 
 import { IconLetter } from "public/icons";
@@ -35,11 +30,7 @@ const InviteCouplePage: React.FC = () => {
           </p>
         </section>
       </main>
-      <Suspense fallback={<LoadingCopyCoupleLinkButton />}>
-        <FetchBoundary fetchFunctions={[getMeApi]}>
-          {([{ data: me }]) => <CopyCoupleLinkButton code={me.code} />}
-        </FetchBoundary>
-      </Suspense>
+      <CopyCoupleLinkButton />
     </DvhHeightLayout>
   );
 };

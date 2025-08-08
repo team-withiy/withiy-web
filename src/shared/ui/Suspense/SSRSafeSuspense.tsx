@@ -2,7 +2,7 @@
 
 import { type ComponentProps, Suspense, useEffect, useState } from "react";
 
-const SSRSafeSuspense: React.FC<ComponentProps<typeof Suspense>> = (props) => {
+export const SSRSafeSuspense: React.FC<ComponentProps<typeof Suspense>> = (props) => {
   const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {

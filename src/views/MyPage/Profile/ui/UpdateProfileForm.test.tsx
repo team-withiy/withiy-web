@@ -1,9 +1,10 @@
-import { cleanup, fireEvent, render, screen, waitFor } from "@testing-library/react";
+import { cleanup, fireEvent, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { beforeEach, expect, test, vi } from "vitest";
 
+import { renderWithProviders } from "@/shared/lib/test";
+
 import UpdateProfileForm from "./UpdateProfileForm";
-import { mockUserWithoutCouple } from "__mocks__/user.handler";
 
 vi.mock("@/shared/ui/Toast", () => ({
   useToast: () => ({
@@ -41,23 +42,40 @@ vi.mock("@/entities/user/ui/ThumbnailInput", () => ({
   ),
 }));
 
+vi.mock("@/entities/user/api/user.queries", () => ({
+  userQueries: {
+    getMe: {
+      queryKey: ["getMe"],
+      queryFn: vi.fn(() => ({
+        data: { data: { thumbnail: "default-thumbnail.jpg", nickname: "기존닉네임" } },
+        refetch: vi.fn(),
+      })),
+    },
+  },
+}));
+
 beforeEach(() => {
   cleanup();
 });
 
-test("컴포넌트가 올바르게 렌더링된다", () => {
-  render(<UpdateProfileForm me={mockUserWithoutCouple} />);
+test("컴포넌트가 올바르게 렌더링된다", async () => {
+  renderWithProviders(<UpdateProfileForm />);
 
-  expect(screen.getByTestId("thumbnail-input")).toBeInTheDocument();
-  expect(screen.getByTestId("nickname-input")).toBeInTheDocument();
-  expect(screen.getByTestId("submit-button")).toBeInTheDocument();
-  expect(screen.getByText("프로필 저장하기")).toBeInTheDocument();
+  await waitFor(() => {
+    expect(screen.getByTestId("thumbnail-input")).toBeInTheDocument();
+    expect(screen.getByTestId("nickname-input")).toBeInTheDocument();
+    expect(screen.getByTestId("submit-button")).toBeInTheDocument();
+    expect(screen.getByText("프로필 저장하기")).toBeInTheDocument();
+  });
 });
 
 test("닉네임 입력 시 유효성 검사가 작동한다", async () => {
   const user = userEvent.setup();
-  render(<UpdateProfileForm me={mockUserWithoutCouple} />);
+  renderWithProviders(<UpdateProfileForm />);
 
+  await waitFor(() => {
+    expect(screen.getByTestId("nickname-input")).toBeInTheDocument();
+  });
   const nicknameInput = screen.getByTestId("nickname-input");
 
   await user.clear(nicknameInput);
@@ -85,8 +103,11 @@ test("닉네임 입력 시 유효성 검사가 작동한다", async () => {
 
 test("유효한 닉네임 입력 시 성공 메시지가 표시된다", async () => {
   const user = userEvent.setup();
-  render(<UpdateProfileForm me={mockUserWithoutCouple} />);
+  renderWithProviders(<UpdateProfileForm />);
 
+  await waitFor(() => {
+    expect(screen.getByTestId("nickname-input")).toBeInTheDocument();
+  });
   const nicknameInput = screen.getByTestId("nickname-input");
 
   await user.clear(nicknameInput);
@@ -99,8 +120,11 @@ test("유효한 닉네임 입력 시 성공 메시지가 표시된다", async ()
 });
 
 test("파일 업로드가 작동한다", async () => {
-  render(<UpdateProfileForm me={mockUserWithoutCouple} />);
+  renderWithProviders(<UpdateProfileForm />);
 
+  await waitFor(() => {
+    expect(screen.getByTestId("thumbnail-input")).toBeInTheDocument();
+  });
   const fileInput = screen.getByTestId("thumbnail-input-file-input");
   const file = new File(["test"], "test.jpg", { type: "image/jpeg" });
 
@@ -111,8 +135,11 @@ test("파일 업로드가 작동한다", async () => {
 
 test("폼 제출 버튼이 비활성화 상태를 올바르게 관리한다", async () => {
   const user = userEvent.setup();
-  render(<UpdateProfileForm me={mockUserWithoutCouple} />);
+  renderWithProviders(<UpdateProfileForm />);
 
+  await waitFor(() => {
+    expect(screen.getByTestId("submit-button")).toBeInTheDocument();
+  });
   const submitButton = screen.getByTestId("submit-button");
   const nicknameInput = screen.getByTestId("nickname-input");
 
@@ -138,8 +165,11 @@ test("폼 제출 시 updateProfileAction이 호출된다", async () => {
   const { updateProfileAction } = await import("../api/actions");
   const mockUpdateProfileAction = vi.mocked(updateProfileAction);
 
-  render(<UpdateProfileForm me={mockUserWithoutCouple} />);
+  renderWithProviders(<UpdateProfileForm />);
 
+  await waitFor(() => {
+    expect(screen.getByTestId("nickname-input")).toBeInTheDocument();
+  });
   const nicknameInput = screen.getByTestId("nickname-input");
   const submitButton = screen.getByTestId("submit-button");
 
@@ -174,8 +204,11 @@ test("액션 성공 시 페이지가 리다이렉트된다", async () => {
 
   mockUpdateProfileAction.mockResolvedValue(undefined);
 
-  render(<UpdateProfileForm me={mockUserWithoutCouple} />);
+  renderWithProviders(<UpdateProfileForm />);
 
+  await waitFor(() => {
+    expect(screen.getByTestId("nickname-input")).toBeInTheDocument();
+  });
   const nicknameInput = screen.getByTestId("nickname-input");
   const submitButton = screen.getByTestId("submit-button");
 
@@ -188,9 +221,12 @@ test("액션 성공 시 페이지가 리다이렉트된다", async () => {
   });
 });
 
-test("접근성 요소들이 올바르게 설정된다", () => {
-  render(<UpdateProfileForm me={mockUserWithoutCouple} />);
+test("접근성 요소들이 올바르게 설정된다", async () => {
+  renderWithProviders(<UpdateProfileForm />);
 
+  await waitFor(() => {
+    expect(screen.getByTestId("update-profile-form")).toBeInTheDocument();
+  });
   expect(screen.getByText("닉네임")).toBeInTheDocument();
 
   const form = screen.getByTestId("update-profile-form");
