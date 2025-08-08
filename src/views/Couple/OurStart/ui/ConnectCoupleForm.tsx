@@ -2,7 +2,12 @@
 
 import { FormEventHandler, startTransition, useActionState, useEffect } from "react";
 
+import { useRouter } from "next/navigation";
+
+import { useQueryClient } from "@tanstack/react-query";
 import { Controller, useForm } from "react-hook-form";
+
+import { userQueries } from "@/entities/user/api/user.queries";
 
 import { FormActionState, FormActionStatus } from "@/shared/api/common.interface";
 import { dayjs, formatDate } from "@/shared/lib/date";
@@ -19,6 +24,8 @@ interface Props {
 
 const ConnectCoupleForm: React.FC<Props> = ({ partnerCode }) => {
   const { addToast } = useToast();
+  const router = useRouter();
+  const queryClient = useQueryClient();
 
   const [state, formAction] = useActionState<FormActionState, FormData>(connectCoupleAction, {
     status: FormActionStatus.Default,
@@ -44,10 +51,15 @@ const ConnectCoupleForm: React.FC<Props> = ({ partnerCode }) => {
   };
 
   useEffect(() => {
+    if (state.status === FormActionStatus.Success) {
+      queryClient.invalidateQueries(userQueries.getMe).then(() => {
+        router.replace("/");
+      });
+    }
     if (state.status === FormActionStatus.Error) {
       addToast({ message: state.message, state: "danger" });
     }
-  }, [addToast, state]);
+  }, [addToast, queryClient, router, state]);
 
   return (
     <form onSubmit={onSubmit} data-testid="connect-couple-form">

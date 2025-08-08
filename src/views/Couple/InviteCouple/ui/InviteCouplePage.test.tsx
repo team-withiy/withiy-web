@@ -7,9 +7,12 @@ import { renderWithProviders } from "@/shared/lib/test";
 
 import InviteCouplePage from ".";
 
-vi.mock("@/features/handleAuthorizationRoute/ui", () => ({
-  withAuthorizationRoute: vi.fn().mockImplementation((Component) => Component),
-}));
+vi.mock("@/features/copyCoupleLink/ui/CopyCoupleLinkButton", () => {
+  return {
+    __esModule: true,
+    default: () => <div>CopyCoupleLinkButton</div>,
+  };
+});
 
 afterEach(() => {
   cleanup();

@@ -4,11 +4,7 @@ import Header from "@/widgets/Layout/ui/Header";
 
 import { withAuthorizationRoute } from "@/features/handleAuthorizationRoute/ui";
 
-import { getMeApi } from "@/entities/user/api/user.server";
-import { hasUserCouple } from "@/entities/user/models/hasCouple";
-
 import BackButton from "@/shared/ui/BackButton";
-import FetchBoundary from "@/shared/ui/Boundary/FetchBoundary";
 import UnderlineButton from "@/shared/ui/Button/UnderlineButton";
 import DvhHeightLayout from "@/shared/ui/Layout/DvhHeightLayout";
 
@@ -27,11 +23,7 @@ const ConnectedCouplePage: React.FC = () => {
           </BackButton>
           <h2 className={styles.title}>커플 정보</h2>
         </Header>
-        <FetchBoundary fetchFunctions={[getMeApi]}>
-          {([{ data: me }]) => (
-            <SetCoupleFirstMetDateForm firstMetDate={hasUserCouple(me) ? me.couple.firstMetDate : null} />
-          )}
-        </FetchBoundary>
+        <SetCoupleFirstMetDateForm />
         <Link href="/my-page/couples/connected/breakup" className={styles.breakupLink} data-testid="breakup-link">
           <UnderlineButton type="button" size={20}>
             커플 연결 끊기

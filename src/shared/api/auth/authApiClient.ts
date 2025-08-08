@@ -11,7 +11,11 @@ const promiseHolder = new PromiseHolder();
 let cachedToken: string | null = null;
 let tokenExpiry = new Date(0);
 
-// TODO: test codes
+export const clearTokenCache = () => {
+  cachedToken = null;
+  tokenExpiry = new Date(0);
+};
+
 /**
  * If you use this authApiClient with `Suspense`, you need to wrap your components with `SSRSafeSuspense`
  * Because of using Route Handler, it will cause unexpected behavior in SSR.

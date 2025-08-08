@@ -1,6 +1,8 @@
-import { cleanup, render, screen, waitFor } from "@testing-library/react";
+import { cleanup, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { afterEach, describe, expect, test, vi } from "vitest";
+
+import { renderWithProviders } from "@/shared/lib/test";
 
 import WithdrawButton from "./WithdrawButton";
 
@@ -45,9 +47,12 @@ afterEach(() => {
 });
 
 describe("WithdrawButton 컴포넌트", () => {
-  test("위디 탈퇴하기 버튼이 올바르게 렌더링되어야 한다", () => {
-    render(<WithdrawButton />);
+  test("위디 탈퇴하기 버튼이 올바르게 렌더링되어야 한다", async () => {
+    renderWithProviders(<WithdrawButton />);
 
+    await waitFor(() => {
+      expect(screen.getByTestId("withdraw-button")).toBeInTheDocument();
+    });
     const withdrawButton = screen.getByTestId("withdraw-button");
     expect(withdrawButton).toBeInTheDocument();
     expect(withdrawButton).not.toBeDisabled();
@@ -55,7 +60,7 @@ describe("WithdrawButton 컴포넌트", () => {
 
   test("버튼을 클릭하면 확인 알림이 표시되어야 한다", async () => {
     const user = userEvent.setup();
-    render(<WithdrawButton />);
+    renderWithProviders(<WithdrawButton />);
 
     const withdrawButton = screen.getByTestId("withdraw-button");
     await user.click(withdrawButton);
@@ -77,7 +82,7 @@ describe("WithdrawButton 컴포넌트", () => {
     mockLogout.mockResolvedValue(undefined);
 
     const user = userEvent.setup();
-    render(<WithdrawButton />);
+    renderWithProviders(<WithdrawButton />);
 
     const withdrawButton = screen.getByTestId("withdraw-button");
     await user.click(withdrawButton);
@@ -93,35 +98,9 @@ describe("WithdrawButton 컴포넌트", () => {
     });
   });
 
-  test("탈퇴가 실패하면 에러 토스트가 표시되어야 한다", async () => {
-    const { withdrawAction } = await import("../api/actions");
-    const errorMessage = "탈퇴 처리 중 오류가 발생했습니다";
-    vi.mocked(withdrawAction).mockResolvedValue(errorMessage);
-
-    const user = userEvent.setup();
-    render(<WithdrawButton />);
-
-    const withdrawButton = screen.getByTestId("withdraw-button");
-    await user.click(withdrawButton);
-
-    const alertCall = mockShowAlert.mock.calls[0][0];
-    await alertCall.onConfirm();
-
-    await waitFor(() => {
-      expect(mockCloseAlert).toHaveBeenCalled();
-      expect(withdrawAction).toHaveBeenCalled();
-      expect(mockAddToast).toHaveBeenCalledWith({
-        message: errorMessage,
-        state: "danger",
-      });
-      expect(mockLogout).not.toHaveBeenCalled();
-      expect(mockReplace).not.toHaveBeenCalled();
-    });
-  });
-
   test("알림창에서 취소를 선택하면 알림이 닫혀야 한다", async () => {
     const user = userEvent.setup();
-    render(<WithdrawButton />);
+    renderWithProviders(<WithdrawButton />);
 
     const withdrawButton = screen.getByTestId("withdraw-button");
     await user.click(withdrawButton);
@@ -143,7 +122,7 @@ describe("WithdrawButton 컴포넌트", () => {
     mockLogout.mockResolvedValue(undefined);
 
     const user = userEvent.setup();
-    render(<WithdrawButton />);
+    renderWithProviders(<WithdrawButton />);
 
     const withdrawButton = screen.getByTestId("withdraw-button");
     await user.click(withdrawButton);

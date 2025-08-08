@@ -1,6 +1,8 @@
-import { cleanup, render, screen } from "@testing-library/react";
+import { cleanup, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { afterEach, beforeEach, describe, expect, test, vi } from "vitest";
+
+import { renderWithProviders } from "@/shared/lib/test";
 
 import CopyCoupleLinkButton, { LoadingCopyCoupleLinkButton } from "./CopyCoupleLinkButton";
 
@@ -10,6 +12,15 @@ const mocks = vi.hoisted(() => {
     addToast: vi.fn(),
   };
 });
+
+vi.mock("@/entities/user/api/user.queries", () => ({
+  userQueries: {
+    getMe: {
+      queryKey: ["getMe"],
+      queryFn: vi.fn(() => ({ data: { code: "test-code" } })),
+    },
+  },
+}));
 
 vi.mock("react-use", () => ({
   useCopyToClipboard: mocks.useCopyToClipboard,
@@ -33,14 +44,16 @@ afterEach(() => {
 describe("CopyCoupleLinkButton", () => {
   test("성공 시 커플 링크를 복사할 수 있어야 한다.", async () => {
     mocks.useCopyToClipboard.mockReturnValue([{ error: false }, vi.fn()]);
-    render(<CopyCoupleLinkButton code="123" />);
+    renderWithProviders(<CopyCoupleLinkButton />);
+    await waitFor(() => expect(screen.getByTestId("copy-couple-link-button")).toBeInTheDocument());
     await userEvent.click(screen.getByTestId("copy-couple-link-button"));
     expect(mocks.addToast).toHaveBeenCalledWith(expect.objectContaining({ state: "success" }));
   });
 
   test("실패 시 에러 메시지를 표시해야 한다.", async () => {
     mocks.useCopyToClipboard.mockReturnValue([{ error: "error" }, vi.fn()]);
-    render(<CopyCoupleLinkButton code="error" />);
+    renderWithProviders(<CopyCoupleLinkButton />);
+    await waitFor(() => expect(screen.getByTestId("copy-couple-link-button")).toBeInTheDocument());
     await userEvent.click(screen.getByTestId("copy-couple-link-button"));
     expect(mocks.addToast).toHaveBeenCalledWith(expect.objectContaining({ state: "danger" }));
   });
@@ -48,7 +61,7 @@ describe("CopyCoupleLinkButton", () => {
 
 describe("LoadingCopyCoupleLinkButton", () => {
   test("로딩 상태에서 버튼이 비활성화되어야 한다.", () => {
-    render(<LoadingCopyCoupleLinkButton />);
+    renderWithProviders(<LoadingCopyCoupleLinkButton />);
     expect(screen.getByTestId("loading-copy-couple-link-button")).toBeDisabled();
   });
 });

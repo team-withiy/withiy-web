@@ -14,4 +14,4 @@ const OAuthCallbackPage: React.FC = () => {
   );
 };
 
-export default withAuthorizationRoute(OAuthCallbackPage, { requiredAuth: false });
+export default withAuthorizationRoute(OAuthCallbackPage, {});

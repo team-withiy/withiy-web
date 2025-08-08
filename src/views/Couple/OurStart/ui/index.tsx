@@ -30,4 +30,4 @@ const OurStartPage: React.FC<Props> = async ({ params }) => {
   );
 };
 
-export default withAuthorizationRoute(OurStartPage, { requiredAuth: true, requiredCouple: false });
+export default withAuthorizationRoute(OurStartPage, { requiredAuth: true });

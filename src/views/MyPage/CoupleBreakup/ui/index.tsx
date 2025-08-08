@@ -37,4 +37,4 @@ const CoupleBreakupPage: React.FC = () => {
   );
 };
 
-export default withAuthorizationRoute(CoupleBreakupPage, { requiredAuth: true, requiredCouple: true });
+export default withAuthorizationRoute(CoupleBreakupPage, { requiredAuth: true });

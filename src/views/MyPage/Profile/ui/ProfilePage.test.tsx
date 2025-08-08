@@ -1,31 +1,13 @@
 import { cleanup, render, screen } from "@testing-library/react";
 import { afterEach, expect, test, vi } from "vitest";
 
-import type { UserDTO } from "@/entities/user/api/user.interface";
-
-import { mockUserWithoutCouple } from "__mocks__/user.handler";
-
 import ProfilePage from "./index";
 
-vi.mock("react", async () => {
-  const actual = await vi.importActual("react");
-  return {
-    ...actual,
-    Suspense: ({ children }: { children: React.ReactNode }) => children,
-  };
-});
-
-vi.mock("@/shared/ui/Boundary/FetchBoundary", () => ({
-  default: ({ children }: { children: (data: Array<{ data: UserDTO }>) => React.ReactNode }) => {
-    return children([{ data: mockUserWithoutCouple }]);
-  },
-}));
-
 vi.mock("./UpdateProfileForm", async () => ({
-  ...(await vi.importActual("./UpdateProfileForm")),
-  default: ({ me }: { me: UserDTO }) => (
+  __esModule: true,
+  default: () => (
     <div data-testid="update-profile-form">
-      <p data-testid="nickname">닉네임: {me.nickname}</p>
+      <input data-testid="nickname" />
     </div>
   ),
 }));

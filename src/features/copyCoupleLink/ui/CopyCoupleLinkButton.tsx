@@ -1,23 +1,24 @@
 "use client";
 
+import { useSuspenseQuery } from "@tanstack/react-query";
 import { useCopyToClipboard } from "react-use";
+
+import { userQueries } from "@/entities/user/api/user.queries";
 
 import BottomFloatingButtonWrapper from "@/shared/ui/BottomFloatingButtonWrapper";
 import Button from "@/shared/ui/Button/Button";
+import SSRSafeSuspense from "@/shared/ui/Suspense/SSRSafeSuspense";
 import { useToast } from "@/shared/ui/Toast";
 
 import { generateCoupleLink } from "../model/coupleLink";
 
-interface Props {
-  code: string;
-}
-
-const CopyCoupleLinkButton: React.FC<Props> = ({ code }) => {
+const CopyCoupleLinkButton: React.FC = () => {
   const { addToast } = useToast();
+  const { data } = useSuspenseQuery(userQueries.getMe);
   const [state, copyToClipboard] = useCopyToClipboard();
 
   const onClick = () => {
-    const coupleLink = generateCoupleLink(code);
+    const coupleLink = generateCoupleLink(data.data.code);
     copyToClipboard(coupleLink);
 
     if (state.error) addToast({ message: "앗, 복사에 실패했어요. 다시 한 번만 눌러주세요!", state: "danger" });
@@ -33,8 +34,6 @@ const CopyCoupleLinkButton: React.FC<Props> = ({ code }) => {
   );
 };
 
-export default CopyCoupleLinkButton;
-
 export const LoadingCopyCoupleLinkButton: React.FC = () => {
   return (
     <BottomFloatingButtonWrapper>
@@ -44,3 +43,7 @@ export const LoadingCopyCoupleLinkButton: React.FC = () => {
     </BottomFloatingButtonWrapper>
   );
 };
+
+export default SSRSafeSuspense.with(CopyCoupleLinkButton, {
+  fallback: <LoadingCopyCoupleLinkButton />,
+});

@@ -1,15 +1,10 @@
-import { Suspense } from "react";
-
 import Header from "@/widgets/Layout/ui/Header";
 
 import { withAuthorizationRoute } from "@/features/handleAuthorizationRoute/ui";
 
-import { getMeApi } from "@/entities/user/api/user.server";
-
 import BackButton from "@/shared/ui/BackButton";
-import FetchBoundary from "@/shared/ui/Boundary/FetchBoundary";
 
-import UpdateProfileForm, { LoadingUpdateProfileForm } from "./UpdateProfileForm";
+import UpdateProfileForm from "./UpdateProfileForm";
 import { IconArrowLeft24 } from "public/icons";
 
 import styles from "./ProfilePage.module.scss";
@@ -25,9 +20,7 @@ const ProfilePage: React.FC = () => {
           프로필 설정
         </h1>
       </Header>
-      <Suspense fallback={<LoadingUpdateProfileForm />}>
-        <FetchBoundary fetchFunctions={[getMeApi]}>{([{ data: me }]) => <UpdateProfileForm me={me} />}</FetchBoundary>
-      </Suspense>
+      <UpdateProfileForm />
     </main>
   );
 };

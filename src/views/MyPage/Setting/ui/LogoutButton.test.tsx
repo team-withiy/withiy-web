@@ -1,6 +1,8 @@
-import { cleanup, render, screen } from "@testing-library/react";
+import { cleanup, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { afterEach, expect, test, vi } from "vitest";
+
+import { renderWithProviders } from "@/shared/lib/test";
 
 import LogoutButton from "./LogoutButton";
 
@@ -21,7 +23,7 @@ afterEach(() => {
 });
 
 test("로그아웃 버튼이 정상적으로 렌더링되어야 한다.", () => {
-  render(<LogoutButton />);
+  renderWithProviders(<LogoutButton />);
 
   const logoutButton = screen.getByTestId("logout-button");
   expect(logoutButton).toBeInTheDocument();
@@ -29,7 +31,7 @@ test("로그아웃 버튼이 정상적으로 렌더링되어야 한다.", () => 
 });
 
 test("로그아웃 버튼 클릭 시 alert가 표시되어야 한다.", async () => {
-  render(<LogoutButton />);
+  renderWithProviders(<LogoutButton />);
 
   const logoutButton = screen.getByTestId("logout-button");
   await userEvent.click(logoutButton);

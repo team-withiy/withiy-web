@@ -1,11 +1,16 @@
 import { cleanup, render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import routerMock from "next-router-mock";
-import { afterEach, expect, test } from "vitest";
+import { afterEach, expect, test, vi } from "vitest";
 
 import { renderWithProviders } from "@/shared/lib/test";
 
 import SettingPage from ".";
+
+vi.mock("./LogoutButton", () => ({
+  __esModule: true,
+  default: () => <button data-testid="logout-button">Logout</button>,
+}));
 
 afterEach(() => {
   cleanup();
