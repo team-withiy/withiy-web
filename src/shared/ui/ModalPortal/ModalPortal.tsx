@@ -10,7 +10,13 @@ import Overlay from "../Overlay";
 
 import styles from "./ModalPortal.module.scss";
 
-const modalRoot = (document.querySelector("#modal") as HTMLDivElement) || document.createElement("div");
+let modalRoot = document.querySelector("#modal") as HTMLDivElement | null;
+
+if (!modalRoot) {
+  modalRoot = document.createElement("div");
+  modalRoot.id = "modal";
+  document.body.appendChild(modalRoot);
+}
 
 export interface ModalPortalProps {
   isShow: boolean;

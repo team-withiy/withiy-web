@@ -34,13 +34,13 @@ export default function RootLayout({
   return (
     <html lang="ko">
       <body className={cx(PretendardJP.variable, styles.body)}>
+        <div id="modal" />
+        <div id="toast" />
+        <div id="bottom-sheet" />
         <MSWProvider>
           <ReactQueryProvider>
             <MobileLayout>
               <CustomErrorBoundary>
-                <div id="modal" />
-                <div id="toast" />
-                <div id="bottom-sheet" />
                 <Alert />
                 <Toast />
                 {children}
