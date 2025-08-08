@@ -7,7 +7,7 @@ import type { FallbackRenderType } from "@/shared/ui/Boundary/ErrorBoundary";
 import Button from "@/shared/ui/Button/Button";
 import DvhHeightLayout from "@/shared/ui/Layout/DvhHeightLayout";
 
-import { IconCharacterLeave } from "public/icons";
+import { IconCharacterBear } from "public/icons";
 
 import styles from "./Error.module.scss";
 
@@ -17,7 +17,7 @@ const ServerError: FallbackRenderType = ({ resetErrorBoundary }) => {
       <main className={styles.main} data-testid="server-error">
         <section className={styles.content}>
           <section className={styles.content}>
-            <IconCharacterLeave />
+            <IconCharacterBear />
             <p className={styles.description}>
               문제가 발생했어요
               <br />

@@ -1,23 +1,24 @@
 "use client";
 
-import { use, useTransition } from "react";
+import { useTransition } from "react";
 
 import { useRouter } from "next/navigation";
 
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useSuspenseQuery } from "@tanstack/react-query";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { z } from "zod";
 
 import Header from "@/widgets/Layout/ui/Header";
 
 import type { TermAgreementDTO } from "@/entities/term/api/term.interface";
-import type { UserDTO } from "@/entities/user/api/user.interface";
+import { userQueries } from "@/entities/user/api/user.queries";
 import ThumbnailInput from "@/entities/user/ui/ThumbnailInput";
 
-import type { ApiResponseDTO } from "@/shared/api/common.interface";
 import BottomFloatingButtonWrapper from "@/shared/ui/BottomFloatingButtonWrapper";
 import Button from "@/shared/ui/Button/Button";
 import Input from "@/shared/ui/Input";
+import SSRSafeSuspense from "@/shared/ui/Suspense/SSRSafeSuspense";
 import { useToast } from "@/shared/ui/Toast";
 
 import { registerAction } from "../api/actions";
@@ -41,12 +42,12 @@ type ProfileSchema = z.infer<typeof profileSchema>;
 interface Props {
   termAgreements: TermAgreementDTO;
   onClickPrev: () => void;
-  mePromise: Promise<ApiResponseDTO<UserDTO>>;
 }
 
-const ProfilePage: React.FC<Props> = ({ termAgreements, onClickPrev, mePromise }) => {
+const ProfilePage: React.FC<Props> = ({ termAgreements, onClickPrev }) => {
   const [isPending, startTransition] = useTransition();
-  const { data: me } = use(mePromise);
+  const { data, refetch } = useSuspenseQuery(userQueries.getMe);
+  const me = data.data;
 
   const { addToast } = useToast();
   const { replace } = useRouter();
@@ -70,7 +71,10 @@ const ProfilePage: React.FC<Props> = ({ termAgreements, onClickPrev, mePromise }
       const errorMessage = await registerAction({ termAgreements, ...data });
       if (errorMessage) {
         addToast({ message: errorMessage, state: "danger" });
-      } else replace("/couples/invite");
+      } else {
+        await refetch();
+        replace("/couples/invite");
+      }
     });
   };
 
@@ -128,4 +132,4 @@ const ProfilePage: React.FC<Props> = ({ termAgreements, onClickPrev, mePromise }
   );
 };
 
-export default ProfilePage;
+export default SSRSafeSuspense.with(ProfilePage, {});

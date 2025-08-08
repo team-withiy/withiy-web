@@ -37,8 +37,6 @@ const AuthorizationRouteHandler: React.FC<Props> = ({
       if (requiredCouple === true && !data.data.hasCouple) throw new Error(FORBIDDEN_MESSAGE);
       if (requiredCouple === false && data.data.hasCouple) throw new Error(FORBIDDEN_MESSAGE);
       if (data.data.restoreEnabled && !isRestorePage) void replace(RESTORE_PAGE_ENDPOINT);
-      if (!data.data.restoreEnabled && isRestorePage) throw new Error(FORBIDDEN_MESSAGE);
-      if (data.data.isRegistered && isRegisterPage) throw new Error(FORBIDDEN_MESSAGE);
       if (!data.data.isRegistered && !isRegisterPage) void replace(REGISTER_PAGE_ENDPOINT);
     }
   }, [data, isFetched, isRegisterPage, isRestorePage, replace, requiredAuth, requiredCouple]);

@@ -10,7 +10,13 @@ import Overlay from "../Overlay";
 
 import styles from "./BottomSheetPortal.module.scss";
 
-const bottomSheetRoot = (document.querySelector("#bottom-sheet") as HTMLDivElement) || document.createElement("div");
+let bottomSheetRoot = document.querySelector("#bottom-sheet") as HTMLDivElement;
+
+if (!bottomSheetRoot) {
+  bottomSheetRoot = document.createElement("div");
+  bottomSheetRoot.id = "bottom-sheet";
+  document.body.appendChild(bottomSheetRoot);
+}
 
 export interface BottomSheetPortalProps {
   isShow: boolean;

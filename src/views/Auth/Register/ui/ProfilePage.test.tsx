@@ -1,17 +1,14 @@
-import { cleanup, render, screen, waitFor } from "@testing-library/react";
+import { cleanup, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { afterEach, expect, test, vi } from "vitest";
 
-import { UserDTO } from "@/entities/user/api/user.interface";
-
-import { ApiResponseDTO } from "@/shared/api/common.interface";
+import { renderWithProviders } from "@/shared/lib/test";
 
 import ProfilePage from "./ProfilePage";
 import { mockUserWithoutRegistered } from "__mocks__/user.handler";
 
 const mockAddToast = vi.fn();
 const mockReplace = vi.fn();
-const mePromise = Promise.resolve({ data: mockUserWithoutRegistered }) as unknown as Promise<ApiResponseDTO<UserDTO>>;
 
 vi.mock("react", async () => ({
   ...(await vi.importActual("react")),
@@ -75,37 +72,60 @@ const mockTermAgreements = {
 };
 const mockOnClickPrev = vi.fn();
 
-test("프로필 페이지가 올바르게 렌더링되어야 한다", async () => {
-  render(<ProfilePage mePromise={mePromise} termAgreements={mockTermAgreements} onClickPrev={mockOnClickPrev} />);
+vi.mock("@/entities/user/api/user.queries", () => ({
+  userQueries: {
+    getMe: {
+      queryKey: ["getMe"],
+      queryFn: vi.fn(() => ({
+        data: { data: mockUserWithoutRegistered },
+        refetch: vi.fn(() => Promise.resolve({ data: mockUserWithoutRegistered })),
+      })),
+    },
+  },
+}));
 
-  expect(screen.getByText("프로필 설정")).toBeInTheDocument();
-  expect(screen.getByTestId("nickname-input")).toBeInTheDocument();
-  expect(screen.getByTestId("thumbnail-input")).toBeInTheDocument();
-  expect(screen.getByTestId("profile-submit-button")).toBeInTheDocument();
-  expect(screen.getByTestId("profile-form")).toBeInTheDocument();
+test("프로필 페이지가 올바르게 렌더링되어야 한다", async () => {
+  renderWithProviders(<ProfilePage termAgreements={mockTermAgreements} onClickPrev={mockOnClickPrev} />);
+
+  await waitFor(() => {
+    expect(screen.getByText("프로필 설정")).toBeInTheDocument();
+    expect(screen.getByTestId("nickname-input")).toBeInTheDocument();
+    expect(screen.getByTestId("thumbnail-input")).toBeInTheDocument();
+    expect(screen.getByTestId("profile-submit-button")).toBeInTheDocument();
+    expect(screen.getByTestId("profile-form")).toBeInTheDocument();
+  });
 });
 
 test("뒤로가기 버튼을 클릭하면 onClickPrev가 호출되어야 한다", async () => {
   const user = userEvent.setup();
-  render(<ProfilePage mePromise={mePromise} termAgreements={mockTermAgreements} onClickPrev={mockOnClickPrev} />);
+  renderWithProviders(<ProfilePage termAgreements={mockTermAgreements} onClickPrev={mockOnClickPrev} />);
 
+  await waitFor(() => {
+    expect(screen.getByLabelText("뒤로가기")).toBeInTheDocument();
+  });
   const backButton = screen.getByLabelText("뒤로가기");
   await user.click(backButton);
 
   expect(mockOnClickPrev).toHaveBeenCalledTimes(1);
 });
 
-test("닉네임을 입력하지 않으면 버튼이 비활성화되어야 한다", () => {
-  render(<ProfilePage mePromise={mePromise} termAgreements={mockTermAgreements} onClickPrev={mockOnClickPrev} />);
+test("닉네임을 입력하지 않으면 버튼이 비활성화되어야 한다", async () => {
+  renderWithProviders(<ProfilePage termAgreements={mockTermAgreements} onClickPrev={mockOnClickPrev} />);
 
+  await waitFor(() => {
+    expect(screen.getByTestId("profile-submit-button")).toBeDisabled();
+  });
   const submitButton = screen.getByTestId("profile-submit-button");
   expect(submitButton).toBeDisabled();
 });
 
 test("유효하지 않은 닉네임을 입력하면 에러 메시지가 표시되어야 한다", async () => {
   const user = userEvent.setup();
-  render(<ProfilePage mePromise={mePromise} termAgreements={mockTermAgreements} onClickPrev={mockOnClickPrev} />);
+  renderWithProviders(<ProfilePage termAgreements={mockTermAgreements} onClickPrev={mockOnClickPrev} />);
 
+  await waitFor(() => {
+    expect(screen.getByTestId("nickname-input")).toBeInTheDocument();
+  });
   const nicknameInput = screen.getByTestId("nickname-input");
 
   await user.type(nicknameInput, "테스트!@#");
@@ -118,8 +138,11 @@ test("유효하지 않은 닉네임을 입력하면 에러 메시지가 표시�
 
 test("너무 긴 닉네임을 입력하면 에러 메시지가 표시되어야 한다", async () => {
   const user = userEvent.setup();
-  render(<ProfilePage mePromise={mePromise} termAgreements={mockTermAgreements} onClickPrev={mockOnClickPrev} />);
+  renderWithProviders(<ProfilePage termAgreements={mockTermAgreements} onClickPrev={mockOnClickPrev} />);
 
+  await waitFor(() => {
+    expect(screen.getByTestId("nickname-input")).toBeInTheDocument();
+  });
   const nicknameInput = screen.getByTestId("nickname-input");
   await user.type(nicknameInput, "열여섯글자가넘는매우긴닉네임입니다");
   await user.tab();
@@ -131,8 +154,11 @@ test("너무 긴 닉네임을 입력하면 에러 메시지가 표시되어야 �
 
 test("유효한 닉네임을 입력하면 성공 메시지가 표시되어야 한다", async () => {
   const user = userEvent.setup();
-  render(<ProfilePage mePromise={mePromise} termAgreements={mockTermAgreements} onClickPrev={mockOnClickPrev} />);
+  renderWithProviders(<ProfilePage termAgreements={mockTermAgreements} onClickPrev={mockOnClickPrev} />);
 
+  await waitFor(() => {
+    expect(screen.getByTestId("nickname-input")).toBeInTheDocument();
+  });
   const nicknameInput = screen.getByTestId("nickname-input");
   await user.type(nicknameInput, "테스트유저");
   await user.tab();
@@ -147,8 +173,11 @@ test("유효한 닉네임을 입력했을 때 폼을 제출할 수 있어야 한
   vi.mocked(registerAction).mockResolvedValue(undefined);
 
   const user = userEvent.setup();
-  render(<ProfilePage mePromise={mePromise} termAgreements={mockTermAgreements} onClickPrev={mockOnClickPrev} />);
+  renderWithProviders(<ProfilePage termAgreements={mockTermAgreements} onClickPrev={mockOnClickPrev} />);
 
+  await waitFor(() => {
+    expect(screen.getByTestId("nickname-input")).toBeInTheDocument();
+  });
   const nicknameInput = screen.getByTestId("nickname-input");
   await user.clear(nicknameInput);
   await user.type(nicknameInput, "테스트유저");
@@ -177,8 +206,11 @@ test("registerAction이 에러를 반환하면 토스트 메시지가 표시되�
   vi.mocked(registerAction).mockResolvedValue(errorMessage);
 
   const user = userEvent.setup();
-  render(<ProfilePage mePromise={mePromise} termAgreements={mockTermAgreements} onClickPrev={mockOnClickPrev} />);
+  renderWithProviders(<ProfilePage termAgreements={mockTermAgreements} onClickPrev={mockOnClickPrev} />);
 
+  await waitFor(() => {
+    expect(screen.getByTestId("nickname-input")).toBeInTheDocument();
+  });
   const nicknameInput = screen.getByTestId("nickname-input");
   await user.type(nicknameInput, "테스트유저");
 
@@ -199,8 +231,11 @@ test("썸네일 이미지와 함께 폼을 제출할 수 있어야 한다", asyn
   vi.mocked(registerAction).mockResolvedValue(undefined);
 
   const user = userEvent.setup();
-  render(<ProfilePage mePromise={mePromise} termAgreements={mockTermAgreements} onClickPrev={mockOnClickPrev} />);
+  renderWithProviders(<ProfilePage termAgreements={mockTermAgreements} onClickPrev={mockOnClickPrev} />);
 
+  await waitFor(() => {
+    expect(screen.getByTestId("nickname-input")).toBeInTheDocument();
+  });
   const nicknameInput = screen.getByTestId("nickname-input");
   await user.clear(nicknameInput);
   await user.type(nicknameInput, "테스트유저");
