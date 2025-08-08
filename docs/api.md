@@ -132,6 +132,7 @@ export class PromiseHolder {
 
 - [apiClient](#apiclient)
 - [apiRouteHandler](#apiroutehandler)
+- [authApiClient](#authapiclient)
 
 ### apiClient
 
@@ -140,6 +141,130 @@ export class PromiseHolder {
 ### apiRouteHandler
 
 apiClient와 동일하게 작동하되 routeHandler를 호출하기 위해 prefixUrl을 변형하여 사용합니다.
+
+### authApiClient
+
+클라이언트 사이드에서 인증이 필요한 API 요청을 처리하기 위한 특별한 HTTP 클라이언트입니다. 이 클라이언트는 토큰 자동 관리, 캐싱, race condition 방지 등의 기능을 제공합니다.
+
+주요 특징:
+
+1. **토큰 자동 관리**: 모든 요청에 자동으로 액세스 토큰을 포함
+2. **토큰 캐싱**: 메모리에 토큰을 캐싱하여 불필요한 토큰 조회 방지
+3. **Race condition 방지**: PromiseHolder를 사용한 동시 토큰 요청 관리
+4. **미들웨어 연동**: Route Handler 호출 시 자동으로 미들웨어 토큰 갱신 로직 활용
+
+```typescript
+// authApiClient 구현
+export const authApiClient = apiClient.extend({
+  hooks: {
+    beforeRequest: [
+      async (request) => {
+        // 이미 다른 요청이 토큰을 가져오는 중이라면 대기
+        if (promiseHolder.isLocked) await promiseHolder.promise;
+
+        // 캐시된 토큰이 있고 만료되지 않았다면 사용
+        if (cachedToken && new Date() < tokenExpiry) {
+          request.headers.set("Authorization", `Bearer ${cachedToken}`);
+          return request;
+        }
+
+        // 새로운 토큰 요청 시작 (race condition 방지)
+        promiseHolder.hold();
+
+        try {
+          // Route Handler를 통해 토큰 조회 (미들웨어 자동 실행)
+          const { accessToken } = await apiRouteHandler.get("auth/tokens").json<TokenDTO>();
+          if (!accessToken) throw new Error(UNAUTHORIZED_MESSAGE);
+
+          // 토큰 캐싱
+          cachedToken = accessToken;
+          tokenExpiry = getTokenExpirationDate(accessToken);
+
+          promiseHolder.successRelease();
+
+          request.headers.set("Authorization", `Bearer ${accessToken}`);
+          return request;
+        } catch (error) {
+          promiseHolder.successRelease();
+          cachedToken = null;
+          tokenExpiry = new Date(0);
+          throw error;
+        }
+      },
+    ],
+  },
+});
+```
+
+#### 토큰 캐싱 메커니즘
+
+`authApiClient`는 효율적인 토큰 관리를 위해 메모리 기반 캐싱을 구현합니다:
+
+```typescript
+let cachedToken: string | null = null;
+let tokenExpiry = new Date(0);
+
+// 토큰 캐시 수동 정리 (로그아웃 시 사용)
+export const clearTokenCache = () => {
+  cachedToken = null;
+  tokenExpiry = new Date(0);
+};
+```
+
+**캐싱 동작 과정:**
+
+1. **캐시 확인**: 요청 전 캐시된 토큰이 있고 만료되지 않았는지 확인
+2. **캐시 히트**: 유효한 토큰이 있으면 즉시 사용하여 API 호출 수 최소화
+3. **캐시 미스**: 토큰이 없거나 만료된 경우 새로운 토큰 요청
+4. **캐시 갱신**: 새로 받은 토큰과 만료 시간을 메모리에 저장
+5. **캐시 정리**: 에러 발생 시 또는 로그아웃 시 캐시 초기화
+
+이 방식의 장점:
+
+- **성능 향상**: 동일한 토큰을 여러 번 요청하지 않음
+- **네트워크 최적화**: 불필요한 Route Handler 호출 방지
+- **사용자 경험**: 빠른 API 응답으로 부드러운 인터페이스
+
+#### 미들웨어 연동 및 토큰 갱신
+
+`authApiClient`는 토큰 갱신을 위해 직접적인 refresh 로직을 구현하지 않습니다. 대신 Route Handler API 호출을 통해 기존 미들웨어의 토큰 갱신 메커니즘을 활용합니다.
+
+**토큰 갱신이 필요 없는 이유:**
+
+1. **Route Handler 호출**: `apiRouteHandler.get("auth/tokens")`를 호출할 때 자동으로 미들웨어가 실행됩니다
+2. **미들웨어 자동 처리**: 미들웨어에서 토큰 유효성 검사 및 필요 시 자동 갱신을 수행합니다
+3. **최신 토큰 반환**: Route Handler는 항상 유효한 최신 토큰을 반환합니다
+4. **중복 로직 방지**: 클라이언트와 서버에서 동일한 토큰 갱신 로직을 중복 구현할 필요가 없습니다
+
+> [!NOTE]
+>
+> authApiClient에서 토큰 요청 시 자동으로 발생하는 플로우:
+>
+> 1. apiRouteHandler.get("auth/tokens") 호출
+> 2. → 미들웨어 실행 (토큰 유효성 검사)
+> 3. → 필요 시 자동 토큰 갱신 (PromiseHolder로 race condition 방지)
+> 4. → Route Handler에서 최신 토큰 반환
+> 5. → authApiClient에서 토큰 캐싱 및 요청 헤더 설정
+
+이 설계의 장점:
+
+- **일관성**: 서버와 클라이언트에서 동일한 토큰 갱신 로직 사용
+- **신뢰성**: 검증된 미들웨어 로직 재사용으로 안정성 확보
+- **유지보수성**: 토큰 갱신 로직이 한 곳(미들웨어)에만 존재
+- **확장성**: 미들웨어 개선 시 클라이언트도 자동으로 혜택 획득
+
+#### SSR 주의사항
+
+`authApiClient`를 Suspense와 함께 사용할 때는 반드시 `SSRSafeSuspense`로 래핑해야 합니다:
+
+```typescript
+// Route Handler 사용으로 인한 SSR 환경에서의 예상치 못한 동작 방지
+export default SSRSafeSuspense.with(YourComponent, {
+  fallback: <LoadingComponent />,
+});
+```
+
+이는 Route Handler가 서버 사이드 렌더링 환경에서 예상과 다르게 동작할 수 있기 때문입니다.
 
 ## Server
 
