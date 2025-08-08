@@ -40,7 +40,7 @@ const BreakupCoupleButton: React.FC = () => {
             await queryClient.invalidateQueries(userQueries.getMe);
             router.replace("/");
           } catch (error) {
-            const errorMessage = isFetchHTTPError(error) ? error.message : "복구 중 오류가 발생했어요.";
+            const errorMessage = isFetchHTTPError(error) ? error.message : "커플 연결 해제 중 오류가 발생했어요.";
             addToast({ message: errorMessage, state: "danger" });
           }
         });
