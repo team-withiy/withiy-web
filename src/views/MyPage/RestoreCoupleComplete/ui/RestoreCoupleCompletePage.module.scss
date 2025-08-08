@@ -18,22 +18,6 @@
       }
     }
 
-    .content {
-      @include m.flex(center, center, column);
-      gap: 56px;
-
-      .description {
-        @include m.fontTitle5(medium);
-        color: var(--c-text-main);
-        text-align: center;
-
-        .small {
-          @include m.fontBody1(regular);
-          color: var(--c-text-sub);
-        }
-      }
-    }
-
     .link {
       display: inline-block;
       width: 100%;
