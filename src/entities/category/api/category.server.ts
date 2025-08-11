@@ -7,6 +7,6 @@ import type { CategoryDTO } from "./category.interface";
 
 export const getCategoriesApi = async () =>
   getServer("/api/categories", {
-    tags: ["category", "/api/categories"],
+    tags: ["category"],
     cache: "force-cache",
   }).then((res) => res.json<ApiResponseDTO<CategoryDTO[]>>());
