@@ -1,0 +1,17 @@
+@use "@/shared/ui/styles/constants" as c;
+@use "@/shared/ui/styles/mixins" as m;
+
+.wrapper {
+  @include m.flex(space-between);
+  background-color: transparent;
+  border-bottom: 0;
+
+  .backButton {
+    cursor: pointer;
+  }
+
+  .reportButton {
+    @include m.fontTitle5(medium);
+    color: var(--c-text-main);
+  }
+}

@@ -1,0 +1,34 @@
+@use "@/shared/ui/styles/constants" as c;
+@use "@/shared/ui/styles/mixins" as m;
+@use "@/shared/ui/styles/libraries" as l;
+
+$CAROUSEL_HEIGHT: 500px;
+
+.wrapper {
+  @include l.applyReactSlick;
+  width: 100%;
+
+  .photoLink {
+    position: relative;
+    display: block;
+    width: 100%;
+    height: $CAROUSEL_HEIGHT;
+
+    .image {
+      object-fit: cover;
+    }
+
+    .uploader {
+      @include m.flex;
+      @include m.absolute(auto auto 24px 20px);
+      @include m.fontBody1(regular);
+      gap: 12px;
+      color: var(--c-text-main);
+
+      .uploaderThumbnail {
+        object-fit: cover;
+        border-radius: 50%;
+      }
+    }
+  }
+}

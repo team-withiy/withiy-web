@@ -71,6 +71,11 @@ const nextConfig: NextConfig = {
         hostname: "d1de06vlwroep2.cloudfront.net",
         pathname: "**",
       },
+      {
+        protocol: "https",
+        hostname: "search.pstatic.net",
+        pathname: "**",
+      },
     ],
   },
 };
