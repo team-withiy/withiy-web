@@ -12,6 +12,10 @@ export { default as IconLetter } from "./letter.svg";
 
 // MEMO: HEART
 export { default as IconHeart } from "./heart.svg";
+export { default as IconHeart16 } from "./heart16.svg";
+
+// MEMO: SMILE
+export { default as IconSmile16 } from "./smile16.svg";
 
 // MEMO: BELL
 export { default as IconBell20 } from "./bell20.svg";
@@ -57,3 +61,6 @@ export { default as IconCamera24 } from "./camera24.svg";
 
 // MEMO: SETTINGS
 export { default as IconSettings24 } from "./settings24.svg";
+
+// MEMO: CORNER
+export { default as IconCornerUpRight16 } from "./corner-up-right16.svg";
