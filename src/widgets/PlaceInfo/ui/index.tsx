@@ -1,8 +1,13 @@
 import cx from "clsx";
 
+import FavoritePlaceButton from "@/features/toggleFavorite/ui/FavoritePlaceButton";
+
 import type { PlaceDetailDTO } from "@/entities/place/api/place.interface";
 
+import IconButton from "@/shared/ui/IconButton";
 import BlurImage from "@/shared/ui/Image/BlurImage";
+
+import { IconCornerUpRight16, IconSmile16 } from "public/icons";
 
 import styles from "./PlaceInfo.module.scss";
 
@@ -26,6 +31,15 @@ const PlaceInfo: React.FC<Props> = ({ place, className }) => {
         </span>
       </div>
       <address className={styles.address}>{place.address}</address>
+      <div className={styles.buttonWrapper}>
+        <FavoritePlaceButton placeId={place.placeId} />
+        <IconButton type="button" variant="outline" icon={<IconCornerUpRight16 />}>
+          길찾기
+        </IconButton>
+        <IconButton type="button" variant="outline" icon={<IconSmile16 />}>
+          {place.score}도
+        </IconButton>
+      </div>
     </section>
   );
 };

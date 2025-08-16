@@ -28,6 +28,12 @@
 
   .address {
     @include m.fontCaption1(medium);
+    margin-bottom: 16px;
     color: var(--c-text-sub);
+  }
+
+  .buttonWrapper {
+    @include m.flex(flex-start);
+    gap: 8px;
   }
 }

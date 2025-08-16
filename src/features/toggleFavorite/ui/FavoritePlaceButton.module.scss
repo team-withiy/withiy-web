@@ -1,0 +1,11 @@
+@use "@/shared/ui/styles/constants" as c;
+@use "@/shared/ui/styles/mixins" as m;
+
+.wrapper {
+  .icon.active {
+    path {
+      fill: var(--c-brand-primary);
+      stroke: var(--c-brand-primary);
+    }
+  }
+}
