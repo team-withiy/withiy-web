@@ -2,7 +2,7 @@ import type { ActiveCoupleDTO, RestorableCoupleDTO } from "@/entities/couple/api
 import type { TermAgreementDTO } from "@/entities/term/api/@x/user";
 
 export interface SimpleUserDTO {
-  id: number;
+  userId: number;
   nickname: string;
   thumbnail: string;
 }

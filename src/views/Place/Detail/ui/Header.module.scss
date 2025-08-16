@@ -3,15 +3,27 @@
 
 .wrapper {
   @include m.flex(space-between);
-  background-color: transparent;
+  background-color: rgba(0, 0, 0, 20%);
   border-bottom: 0;
 
   .backButton {
     cursor: pointer;
+
+    svg path {
+      stroke: var(--c-grayscale-gray-50);
+    }
+  }
+
+  .title {
+    @include m.fontTitle4(semibold);
+    @include m.makeEllipsis;
+    padding: 0 12px;
+    color: var(--c-grayscale-gray-50);
   }
 
   .reportButton {
     @include m.fontTitle5(medium);
-    color: var(--c-text-main);
+    color: var(--c-grayscale-gray-200);
+    white-space: nowrap;
   }
 }

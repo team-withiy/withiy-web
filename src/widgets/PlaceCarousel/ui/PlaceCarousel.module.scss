@@ -21,9 +21,9 @@ $CAROUSEL_HEIGHT: 500px;
     .uploader {
       @include m.flex;
       @include m.absolute(auto auto 24px 20px);
-      @include m.fontBody1(regular);
+      @include m.fontBody2(regular);
       gap: 12px;
-      color: var(--c-text-main);
+      color: var(--c-grayscale-white);
 
       .uploaderThumbnail {
         object-fit: cover;
