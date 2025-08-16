@@ -1,0 +1,73 @@
+@use "@/shared/ui/styles/constants" as c;
+@use "@/shared/ui/styles/mixins" as m;
+
+.wrapper {
+  @include m.flex(flex-start, flex-start, column);
+  gap: 20px;
+  width: 100%;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  background-color: var(--c-grayscale-gray-50);
+  border-radius: 8px;
+
+  .info {
+    @include m.flex(flex-start, flex-start, column);
+    gap: 8px;
+    padding-left: 20px;
+
+    .nickname {
+      @include m.flex(flex-start);
+      @include m.fontButton3(regular);
+      gap: 4px;
+      color: var(--c-text-sub);
+
+      .thumbnail {
+        width: 16px;
+        height: 16px;
+        border-radius: 100%;
+      }
+    }
+
+    .address {
+      @include m.fontBody2(regular);
+      color: var(--c-text-sub);
+    }
+
+    .contents {
+      @include m.fontBody2(regular);
+      color: var(--c-text-main-sub);
+    }
+  }
+
+  .images {
+    @include m.flex(flex-start);
+    gap: 8px;
+    width: 100%;
+
+    .image {
+      width: 75px;
+      height: 100px;
+      object-fit: cover;
+      border-radius: 4px;
+
+      &:first-of-type {
+        margin-left: 20px;
+      }
+    }
+  }
+
+  .score {
+    @include m.fontButton3(medium);
+    @include m.flex;
+    gap: 4px;
+    padding: 2px 12px;
+    margin-left: 20px;
+    color: var(--c-text-sub);
+    background-color: var(--c-grayscale-gray-200);
+    border-radius: 100px;
+
+    svg path {
+      stroke: var(--c-text-sub);
+    }
+  }
+}
