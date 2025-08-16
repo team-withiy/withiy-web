@@ -42,6 +42,9 @@ vi.mock("./src/shared/lib/cookies");
 // MEMO: SSRSafeSuspense
 vi.mock("./src/shared/ui/Suspense/SSRSafeSuspense");
 
+// MEMO: BlurImage
+vi.mock("./src/shared/ui/Image/BlurImage");
+
 // MEMO: suspense
 vi.mock("react", async () => {
   const actual = await vi.importActual("react");

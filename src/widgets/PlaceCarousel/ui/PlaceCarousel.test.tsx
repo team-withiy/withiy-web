@@ -1,4 +1,55 @@
-import { test } from "vitest";
+import { cleanup, render, screen } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
+import mockRouter from "next-router-mock";
+import { afterEach, expect, test, vi } from "vitest";
 
-test("사진들이 정상적으로 렌더링되어야 한다.");
-test("스크롤 할 때에는 링크가 작동하지 않아야 한다.");
+import { renderWithProviders } from "@/shared/lib/test";
+
+import PlaceCarouselImage from "./PlaceCarouselImage";
+import { mockPlaceDetail } from "__mocks__/place.handler";
+
+import PlaceCarousel from ".";
+
+afterEach(() => {
+  cleanup();
+});
+
+vi.mock("react-slick");
+
+test("사진들이 정상적으로 렌더링되어야 한다.", async () => {
+  const photos = mockPlaceDetail.photos;
+
+  render(
+    <PlaceCarousel totalPhotos={photos.length}>
+      {photos.map((photo) => (
+        <PlaceCarouselImage key={photo.imageUrl} photo={photo} />
+      ))}
+    </PlaceCarousel>,
+  );
+
+  expect(screen.getByTestId("place-carousel")).toBeInTheDocument();
+  expect(screen.getByTestId("slider")).toBeInTheDocument();
+  expect(screen.getByTestId("place-carousel-pages")).toHaveTextContent(`1 / ${photos.length}`);
+  photos.forEach((photo) => {
+    expect(screen.getByTestId(`${photo.photoId}-place-carousel-image`)).toBeInTheDocument();
+  });
+});
+
+test("캐러셀을 클릭하면 이동해야 한다.", async () => {
+  const user = userEvent.setup();
+  const photos = mockPlaceDetail.photos;
+  mockRouter.setCurrentUrl("/places/10");
+
+  renderWithProviders(
+    <PlaceCarousel totalPhotos={photos.length}>
+      {photos.map((photo) => (
+        <PlaceCarouselImage key={photo.imageUrl} photo={photo} />
+      ))}
+    </PlaceCarousel>,
+  );
+
+  const carousel = screen.getByTestId("place-carousel");
+  await user.click(carousel);
+
+  expect(mockRouter.asPath).toBe("/");
+});
