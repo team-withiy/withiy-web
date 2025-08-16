@@ -40,11 +40,9 @@ export default function RootLayout({
         <MSWProvider>
           <ReactQueryProvider>
             <MobileLayout>
-              <CustomErrorBoundary>
-                <Alert />
-                <Toast />
-                {children}
-              </CustomErrorBoundary>
+              <CustomErrorBoundary>{children}</CustomErrorBoundary>
+              <Alert />
+              <Toast />
             </MobileLayout>
           </ReactQueryProvider>
         </MSWProvider>
