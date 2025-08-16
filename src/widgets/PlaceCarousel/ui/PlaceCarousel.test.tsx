@@ -1,3 +1,5 @@
+import type { ComponentProps } from "react";
+
 import { cleanup, render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import mockRouter from "next-router-mock";
@@ -15,6 +17,12 @@ afterEach(() => {
 });
 
 vi.mock("react-slick");
+vi.mock("next/dynamic", () => ({
+  __esModule: true,
+  default: () => {
+    return (props: ComponentProps<"div">) => <div {...props} />;
+  },
+}));
 
 test("사진들이 정상적으로 렌더링되어야 한다.", async () => {
   const photos = mockPlaceDetail.photos;
@@ -28,7 +36,6 @@ test("사진들이 정상적으로 렌더링되어야 한다.", async () => {
   );
 
   expect(screen.getByTestId("place-carousel")).toBeInTheDocument();
-  expect(screen.getByTestId("slider")).toBeInTheDocument();
   expect(screen.getByTestId("place-carousel-pages")).toHaveTextContent(`1 / ${photos.length}`);
   photos.forEach((photo) => {
     expect(screen.getByTestId(`${photo.photoId}-place-carousel-image`)).toBeInTheDocument();

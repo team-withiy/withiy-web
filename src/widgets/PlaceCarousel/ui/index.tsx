@@ -2,11 +2,17 @@
 
 import { KeyboardEventHandler, ReactNode, useRef, useState } from "react";
 
+import dynamic from "next/dynamic";
 import { useRouter } from "next/navigation";
 
-import Slider, { type Settings } from "react-slick";
+import Skeleton from "react-loading-skeleton";
+import { type Settings } from "react-slick";
+
+import Suspense from "@/shared/ui/Suspense";
 
 import styles from "./PlaceCarousel.module.scss";
+
+const Slider = dynamic(() => import("react-slick"));
 
 interface Props {
   children: ReactNode;
@@ -69,4 +75,10 @@ const PlaceCarousel: React.FC<Props> = ({ children, totalPhotos, clickPath }) =>
   );
 };
 
-export default PlaceCarousel;
+export default Suspense.with(PlaceCarousel, {
+  fallback: (
+    <div className={styles.wrapper}>
+      <Skeleton containerClassName={styles.loading} height={styles.carouselHeight} />
+    </div>
+  ),
+});

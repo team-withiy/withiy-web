@@ -1,0 +1,33 @@
+@use "@/shared/ui/styles/constants" as c;
+@use "@/shared/ui/styles/mixins" as m;
+
+.wrapper {
+  width: 100%;
+  padding: 32px c.$S_PAGE_HORIZONTAL_PADDING;
+
+  .titleSection {
+    @include m.flex(space-between);
+    width: 100%;
+    margin-bottom: 8px;
+
+    .title {
+      @include m.fontTitle4(semibold);
+      @include m.makeEllipsis;
+      flex: 1;
+      color: var(--c-text-main);
+    }
+
+    .category {
+      @include m.flex;
+      @include m.fontCaption1(medium);
+      gap: 4px;
+      color: var(--c-text-sub);
+      white-space: nowrap;
+    }
+  }
+
+  .address {
+    @include m.fontCaption1(medium);
+    color: var(--c-text-sub);
+  }
+}
