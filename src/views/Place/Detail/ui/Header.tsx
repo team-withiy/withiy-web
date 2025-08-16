@@ -6,13 +6,20 @@ import { IconArrowLeft24 } from "public/icons";
 
 import styles from "./Header.module.scss";
 
-const Header: React.FC = () => {
+interface Props {
+  title: string;
+}
+
+const Header: React.FC<Props> = ({ title }) => {
   return (
     <LayoutHeader className={styles.wrapper}>
       <BackButton className={styles.backButton}>
         <IconArrowLeft24 />
       </BackButton>
-      <button type="button" className={styles.reportButton}>
+      <h2 className={styles.title} data-testid="header-title">
+        {title}
+      </h2>
+      <button type="button" className={styles.reportButton} data-testid="header-report-button">
         신고
       </button>
     </LayoutHeader>

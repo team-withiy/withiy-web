@@ -16,7 +16,7 @@ const PlaceDetailPage: React.FC<Props> = async ({ params }) => {
 
   return (
     <main className={styles.wrapper}>
-      <Header />
+      <Header title={data.placeName} />
       <PlaceCarousel photos={data.photos} />
     </main>
   );

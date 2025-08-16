@@ -11,6 +11,12 @@ import type { ApiResponseDTO } from "@/shared/api/common.interface";
 faker.seed(1);
 faker.setDefaultRefDate(new Date("2023-01-01T00:00:00Z"));
 
+export const mockCategory: CategoryDTO = {
+  id: faker.number.int(),
+  name: faker.commerce.department(),
+  icon: faker.image.url({ width: 32, height: 32 }),
+};
+
 export const mockCategories: CategoryDTO[] = range(5).map(() => ({
   id: faker.number.int(),
   name: faker.commerce.department(),

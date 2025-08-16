@@ -19,5 +19,5 @@ export interface PlaceDetailDTO {
   /** 장소 사진 목록 */
   photos: PhotoDTO[];
   /** 장소 리뷰 목록 */
-  reviews: ReviewDTO;
+  reviews: ReviewDTO[];
 }
