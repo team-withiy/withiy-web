@@ -1,8 +1,11 @@
+import cx from "clsx";
+
 import PlaceCarousel from "@/widgets/PlaceCarousel/ui";
 import PlaceCarouselImage from "@/widgets/PlaceCarousel/ui/PlaceCarouselImage";
 import PlaceInfo from "@/widgets/PlaceInfo/ui";
 
 import { getPlaceDetailApi } from "@/entities/place/api/place.server";
+import ReviewItem from "@/entities/review/ui/ReviewItem";
 
 import Header from "./Header";
 
@@ -24,7 +27,13 @@ const PlaceDetailPage: React.FC<Props> = async ({ params }) => {
           <PlaceCarouselImage key={photo.photoId} photo={photo} />
         ))}
       </PlaceCarousel>
-      <PlaceInfo place={data} />
+      <PlaceInfo place={data} className={styles.section} />
+      <section className={cx(styles.section, styles.reviewSection)}>
+        <h2 className={styles.title}>리뷰</h2>
+        {data.reviews.map((review) => (
+          <ReviewItem className={styles.review} key={review.reviewId} review={review} />
+        ))}
+      </section>
     </main>
   );
 };

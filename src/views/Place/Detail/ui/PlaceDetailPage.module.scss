@@ -3,4 +3,26 @@
 
 .wrapper {
   width: 100%;
+
+  .section {
+    & + .section {
+      border-top: 4px solid #f5f5f5;
+    }
+  }
+
+  .reviewSection {
+    padding: 20px;
+
+    .title {
+      @include m.fontTitle5(semibold);
+      margin-bottom: 16px;
+      color: var(--c-text-main);
+    }
+
+    .review {
+      & + .review {
+        margin-top: 12px;
+      }
+    }
+  }
 }

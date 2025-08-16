@@ -17,7 +17,10 @@ const PlaceCarouselImage: React.FC<Props> = ({ photo }) => {
         className={styles.image}
         fallbackProps={{
           src: "/images/fallback.png",
-          alt: "Loading...",
+          alt: "존재하지 않는 이미지입니다.",
+          className: styles.image,
+          width: 1000,
+          height: 600,
         }}
       />
       <div className={styles.uploader}>
@@ -27,7 +30,9 @@ const PlaceCarouselImage: React.FC<Props> = ({ photo }) => {
           className={styles.uploaderThumbnail}
           fallbackProps={{
             src: "/images/default-profile.png",
-            alt: "Loading...",
+            alt: "기본 프로필 이미지",
+            width: 20,
+            height: 20,
           }}
         />
         {photo.uploader.nickname}
