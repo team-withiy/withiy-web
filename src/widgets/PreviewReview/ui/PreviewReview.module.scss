@@ -1,0 +1,40 @@
+@use "@/shared/ui/styles/constants" as c;
+@use "@/shared/ui/styles/mixins" as m;
+
+$MORE_BUTTON_HEIGHT: 88px;
+
+.wrapper {
+  width: 100%;
+
+  &.dimmed {
+    position: relative;
+
+    .dimmedOverlay {
+      @include m.absolute(auto auto $MORE_BUTTON_HEIGHT 50%);
+      width: 100%;
+      height: 200px;
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0%) 0%, #ffffff 100%);
+      transform: translateX(-50%);
+    }
+
+    .moreButtonWrapper {
+      @include m.absolute(auto auto 0 50%);
+      width: 100%;
+      height: $MORE_BUTTON_HEIGHT;
+      padding: 16px 20px 20px;
+      background-color: var(--c-grayscale-white);
+      transform: translateX(-50%);
+
+      .moreButtonLink {
+        display: block;
+        width: 100%;
+      }
+    }
+  }
+
+  .reviewItem {
+    & + .reviewItem {
+      margin-top: 12px;
+    }
+  }
+}
