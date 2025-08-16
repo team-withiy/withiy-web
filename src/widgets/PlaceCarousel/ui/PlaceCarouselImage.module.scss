@@ -1,7 +1,6 @@
 @use "@/shared/ui/styles/constants" as c;
 @use "@/shared/ui/styles/mixins" as m;
-
-$CAROUSEL_HEIGHT: 500px;
+@use "./PlaceCarousel.module";
 
 .wrapper {
   position: relative;
@@ -10,7 +9,7 @@ $CAROUSEL_HEIGHT: 500px;
 
   .image {
     width: 100%;
-    height: $CAROUSEL_HEIGHT;
+    height: PlaceCarousel.$CAROUSEL_HEIGHT;
     cursor: pointer;
     object-fit: cover;
   }

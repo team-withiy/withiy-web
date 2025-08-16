@@ -1,5 +1,6 @@
 import PlaceCarousel from "@/widgets/PlaceCarousel/ui";
 import PlaceCarouselImage from "@/widgets/PlaceCarousel/ui/PlaceCarouselImage";
+import PlaceInfo from "@/widgets/PlaceInfo/ui";
 
 import { getPlaceDetailApi } from "@/entities/place/api/place.server";
 
@@ -23,6 +24,7 @@ const PlaceDetailPage: React.FC<Props> = async ({ params }) => {
           <PlaceCarouselImage key={photo.photoId} photo={photo} />
         ))}
       </PlaceCarousel>
+      <PlaceInfo place={data} />
     </main>
   );
 };

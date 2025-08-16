@@ -3,8 +3,14 @@
 
 .wrapper {
   @include m.flex(space-between);
+  @include m.fixed(0 auto auto 50%);
+  z-index: c.$Z_GNB;
+  width: 100%;
+  max-width: c.$S_MAX_WIDTH;
+  height: c.$S_HEADER_HEIGHT;
+  padding: 12px 20px;
   background-color: rgba(0, 0, 0, 20%);
-  border-bottom: 0;
+  transform: translateX(-50%);
 
   .backButton {
     cursor: pointer;

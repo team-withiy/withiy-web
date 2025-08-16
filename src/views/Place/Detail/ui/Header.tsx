@@ -1,5 +1,3 @@
-import LayoutHeader from "@/widgets/Layout/ui/Header";
-
 import BackButton from "@/shared/ui/BackButton";
 
 import { IconArrowLeft24 } from "public/icons";
@@ -12,7 +10,7 @@ interface Props {
 
 const Header: React.FC<Props> = ({ title }) => {
   return (
-    <LayoutHeader className={styles.wrapper}>
+    <header className={styles.wrapper} data-testid="header">
       <BackButton className={styles.backButton}>
         <IconArrowLeft24 />
       </BackButton>
@@ -22,7 +20,7 @@ const Header: React.FC<Props> = ({ title }) => {
       <button type="button" className={styles.reportButton} data-testid="header-report-button">
         신고
       </button>
-    </LayoutHeader>
+    </header>
   );
 };
 

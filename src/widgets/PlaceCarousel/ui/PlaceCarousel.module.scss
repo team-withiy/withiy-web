@@ -2,10 +2,17 @@
 @use "@/shared/ui/styles/mixins" as m;
 @use "@/shared/ui/styles/libraries" as l;
 
+$CAROUSEL_HEIGHT: 500px;
+
 .wrapper {
   @include l.applyReactSlick;
   position: relative;
   width: 100%;
+
+  .loading {
+    display: block;
+    width: 100%;
+  }
 
   .pages {
     @include m.fontButton3(regular);
@@ -20,4 +27,8 @@
       color: var(--c-grayscale-gray-50);
     }
   }
+}
+
+:export {
+  carouselHeight: $CAROUSEL_HEIGHT;
 }
