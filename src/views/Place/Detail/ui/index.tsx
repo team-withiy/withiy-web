@@ -18,9 +18,9 @@ const PlaceDetailPage: React.FC<Props> = async ({ params }) => {
   return (
     <main className={styles.wrapper}>
       <Header title={data.placeName} />
-      <PlaceCarousel totalPhotos={data.photos.length}>
+      <PlaceCarousel totalPhotos={data.photos.length} clickPath={`/places/${placeId}/images`}>
         {data.photos.map((photo) => (
-          <PlaceCarouselImage key={photo.imageUrl} photo={photo} />
+          <PlaceCarouselImage key={photo.photoId} photo={photo} />
         ))}
       </PlaceCarousel>
     </main>

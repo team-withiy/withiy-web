@@ -20,7 +20,7 @@ test("사진들이 정상적으로 렌더링되어야 한다.", async () => {
   const photos = mockPlaceDetail.photos;
 
   render(
-    <PlaceCarousel totalPhotos={photos.length}>
+    <PlaceCarousel totalPhotos={photos.length} clickPath={`/places/${mockPlaceDetail.placeId}/images`}>
       {photos.map((photo) => (
         <PlaceCarouselImage key={photo.imageUrl} photo={photo} />
       ))}
@@ -38,10 +38,10 @@ test("사진들이 정상적으로 렌더링되어야 한다.", async () => {
 test("캐러셀을 클릭하면 이동해야 한다.", async () => {
   const user = userEvent.setup();
   const photos = mockPlaceDetail.photos;
-  mockRouter.setCurrentUrl("/places/10");
+  mockRouter.setCurrentUrl(`/places/${mockPlaceDetail.placeId}`);
 
   renderWithProviders(
-    <PlaceCarousel totalPhotos={photos.length}>
+    <PlaceCarousel totalPhotos={photos.length} clickPath={`/places/${mockPlaceDetail.placeId}/images`}>
       {photos.map((photo) => (
         <PlaceCarouselImage key={photo.imageUrl} photo={photo} />
       ))}
@@ -51,5 +51,5 @@ test("캐러셀을 클릭하면 이동해야 한다.", async () => {
   const carousel = screen.getByTestId("place-carousel");
   await user.click(carousel);
 
-  expect(mockRouter.asPath).toBe("/");
+  expect(mockRouter.asPath).toBe(`/places/${mockPlaceDetail.placeId}/images`);
 });
