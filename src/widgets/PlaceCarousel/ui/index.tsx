@@ -1,24 +1,17 @@
 "use client";
 
-import { useRef } from "react";
+import { ReactNode, useRef, useState } from "react";
 
-import dynamic from "next/dynamic";
-import Image from "next/image";
 import { useRouter } from "next/navigation";
 
-import type { PhotoDTO } from "@/entities/photo/api/photo.interface";
-
-import FallbackHandlerImage from "@/shared/ui/Image/FallbackHandlerImage";
-
-import type { Settings } from "react-slick";
+import Slider, { type Settings } from "react-slick";
 
 import styles from "./PlaceCarousel.module.scss";
 
 interface Props {
-  photos: PhotoDTO[];
+  children: ReactNode;
+  totalPhotos: number;
 }
-
-const Slider = dynamic(() => import("react-slick"));
 
 const settings: Settings = {
   accessibility: true,
@@ -29,8 +22,9 @@ const settings: Settings = {
   slidesToScroll: 1,
 };
 
-const PlaceCarousel: React.FC<Props> = ({ photos }) => {
+const PlaceCarousel: React.FC<Props> = ({ children, totalPhotos }) => {
   const { push } = useRouter();
+  const [currentSlide, setCurrentSlide] = useState(1);
   const isDragging = useRef(false);
 
   const onClickButton = () => {
@@ -38,36 +32,29 @@ const PlaceCarousel: React.FC<Props> = ({ photos }) => {
     push("/");
   };
 
+  const beforeChange = () => {
+    isDragging.current = true;
+  };
+
+  const afterChange = (newIndex: number) => {
+    setCurrentSlide(newIndex + 1);
+    isDragging.current = false;
+  };
+
   return (
-    <section className={styles.wrapper} aria-label="Place Photos">
-      <Slider
-        {...settings}
-        beforeChange={() => (isDragging.current = true)}
-        afterChange={() => (isDragging.current = false)}
-      >
-        {photos.map((photo) => (
-          <button key={photo.imageUrl} className={styles.photoLink} onClick={onClickButton}>
-            <Image
-              src={photo.imageUrl}
-              alt={`${photo.uploader.nickname}님이 업로드하신 장소 이미지`}
-              fill
-              sizes="(max-width: 768px) 100vw, 768px"
-              className={styles.image}
-            />
-            <div className={styles.uploader}>
-              <FallbackHandlerImage
-                src={photo.uploader.thumbnail}
-                alt={`${photo.uploader.nickname}님의 썸네일`}
-                width={20}
-                height={20}
-                className={styles.uploaderThumbnail}
-                fallbackSrc="/images/default-profile.png"
-              />
-              {photo.uploader.nickname}
-            </div>
-          </button>
-        ))}
+    <section
+      role="button"
+      className={styles.wrapper}
+      data-testid="place-carousel"
+      aria-label="Place Photos"
+      onClick={onClickButton}
+    >
+      <Slider {...settings} beforeChange={beforeChange} afterChange={afterChange}>
+        {children}
       </Slider>
+      <span className={styles.pages} data-testid="place-carousel-pages">
+        <strong className={styles.currentPage}>{currentSlide}</strong> / {totalPhotos}
+      </span>
     </section>
   );
 };

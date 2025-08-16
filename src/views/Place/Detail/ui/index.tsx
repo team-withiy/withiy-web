@@ -1,4 +1,5 @@
 import PlaceCarousel from "@/widgets/PlaceCarousel/ui";
+import PlaceCarouselImage from "@/widgets/PlaceCarousel/ui/PlaceCarouselImage";
 
 import { getPlaceDetailApi } from "@/entities/place/api/place.server";
 
@@ -17,7 +18,11 @@ const PlaceDetailPage: React.FC<Props> = async ({ params }) => {
   return (
     <main className={styles.wrapper}>
       <Header title={data.placeName} />
-      <PlaceCarousel photos={data.photos} />
+      <PlaceCarousel totalPhotos={data.photos.length}>
+        {data.photos.map((photo) => (
+          <PlaceCarouselImage key={photo.imageUrl} photo={photo} />
+        ))}
+      </PlaceCarousel>
     </main>
   );
 };

@@ -2,33 +2,22 @@
 @use "@/shared/ui/styles/mixins" as m;
 @use "@/shared/ui/styles/libraries" as l;
 
-$CAROUSEL_HEIGHT: 500px;
-
 .wrapper {
   @include l.applyReactSlick;
+  position: relative;
   width: 100%;
 
-  .photoLink {
-    position: relative;
-    display: block;
-    width: 100%;
-    height: $CAROUSEL_HEIGHT;
+  .pages {
+    @include m.fontButton3(regular);
+    @include m.absolute(auto 20px 16px auto);
+    padding: 4px 12px;
+    color: var(--c-grayscale-gray-500);
+    background-color: var(--c-black-opacity-dim);
+    border-radius: 100px;
 
-    .image {
-      object-fit: cover;
-    }
-
-    .uploader {
-      @include m.flex;
-      @include m.absolute(auto auto 24px 20px);
-      @include m.fontBody2(regular);
-      gap: 12px;
-      color: var(--c-grayscale-white);
-
-      .uploaderThumbnail {
-        object-fit: cover;
-        border-radius: 50%;
-      }
+    .currentPage {
+      @include m.fontButton3(semibold);
+      color: var(--c-grayscale-gray-50);
     }
   }
 }
