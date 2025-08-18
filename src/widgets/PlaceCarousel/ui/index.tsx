@@ -20,6 +20,8 @@ interface Props {
   clickPath: string;
 }
 
+export const PLACE_CAROUSEL_ID = "place-carousel";
+
 const settings: Settings = {
   accessibility: true,
   arrows: false,
@@ -60,6 +62,7 @@ const PlaceCarousel: React.FC<Props> = ({ children, totalPhotos, clickPath }) =>
       role="button"
       tabIndex={0}
       className={styles.wrapper}
+      id={PLACE_CAROUSEL_ID}
       data-testid="place-carousel"
       aria-label="Place Photos"
       onClick={onClickButton}
@@ -77,7 +80,7 @@ const PlaceCarousel: React.FC<Props> = ({ children, totalPhotos, clickPath }) =>
 
 export default Suspense.with(PlaceCarousel, {
   fallback: (
-    <div className={styles.wrapper}>
+    <div className={styles.wrapper} id={PLACE_CAROUSEL_ID}>
       <Skeleton containerClassName={styles.loading} height={styles.carouselHeight} />
     </div>
   ),
