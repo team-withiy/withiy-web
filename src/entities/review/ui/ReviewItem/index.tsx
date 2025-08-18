@@ -17,11 +17,12 @@ const ReviewItem: React.FC<Props> = ({ review, className }) => {
   return (
     <article className={cx(styles.wrapper, className)} data-testid={`${review.reviewId}-review-item`}>
       <div className={styles.info}>
-        <span className={styles.nickname}>
+        <span className={styles.nickname} data-testid="review-nickname">
           <BlurImage
             src={review.reviewer.thumbnail}
             className={styles.thumbnail}
             alt={`${review.reviewer.nickname} 님의 프로필이미지`}
+            data-testid="reviewer-thumbnail"
             fallbackProps={{
               src: "/images/default-profile.png",
               alt: "기본 프로필 이미지",
@@ -30,18 +31,23 @@ const ReviewItem: React.FC<Props> = ({ review, className }) => {
               className: styles.thumbnail,
             }}
           />
-          {review.reviewer.nickname}
+          <span data-testid="reviewer-nickname">{review.reviewer.nickname}</span>
         </span>
-        <address className={styles.address}>장소 이름</address>
-        <p className={styles.contents}>{review.contents}</p>
+        <address className={styles.address} data-testid="review-address">
+          장소 이름
+        </address>
+        <p className={styles.contents} data-testid="review-contents">
+          {review.contents}
+        </p>
       </div>
-      <div className={styles.images}>
-        {review.imageUrls.slice(0, 4).map((image) => (
+      <div className={styles.images} data-testid="review-images">
+        {review.imageUrls.slice(0, 4).map((image, index) => (
           <BlurImage
             key={image}
             src={image}
             className={styles.image}
             alt="장소 이미지"
+            data-testid={`review-image-${index}`}
             fallbackProps={{
               src: "/images/fallback.png",
               alt: "기본 장소 이미지",
@@ -52,9 +58,9 @@ const ReviewItem: React.FC<Props> = ({ review, className }) => {
           />
         ))}
       </div>
-      <span className={styles.score}>
+      <span className={styles.score} data-testid="review-score">
         <IconSmile16 />
-        {review.score}도
+        <span data-testid="review-score-value">{review.score}도</span>
       </span>
     </article>
   );

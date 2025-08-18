@@ -21,7 +21,7 @@ interface Props {
 const PreviewReview: React.FC<Props> = ({ reviews, className, reviewItemClassName, moreHref }) => {
   if (reviews.length <= MAX_REVIEWS)
     return (
-      <div className={cx(styles.wrapper, className)}>
+      <div className={cx(styles.wrapper, className)} data-testid="preview-review">
         {reviews.map((review) => (
           <ReviewItem className={cx(styles.reviewItem, reviewItemClassName)} key={review.reviewId} review={review} />
         ))}
@@ -29,12 +29,12 @@ const PreviewReview: React.FC<Props> = ({ reviews, className, reviewItemClassNam
     );
 
   return (
-    <div className={cx(styles.wrapper, styles.dimmed, className)}>
+    <div className={cx(styles.wrapper, styles.dimmed, className)} data-testid="dimmed-preview-review">
       {reviews.slice(0, MAX_REVIEWS).map((review) => (
         <ReviewItem className={cx(styles.reviewItem, reviewItemClassName)} key={review.reviewId} review={review} />
       ))}
-      <div className={styles.dimmedOverlay} />
-      <div className={styles.moreButtonWrapper}>
+      <div className={styles.dimmedOverlay} data-testid="dimmed-preview-review-overlay" />
+      <div className={styles.moreButtonWrapper} data-testid="dimmed-preview-review-button-wrapper">
         <Link href={moreHref} className={styles.moreButtonLink}>
           <Button size={52} variant="outline" type="button" full>
             더보기
