@@ -1,6 +1,18 @@
 @use "@/shared/ui/styles/constants" as c;
 @use "@/shared/ui/styles/mixins" as m;
 
+@function get-background-color() {
+  @return color-mix(
+    in srgb,
+    rgba(0, 0, 0, 20%) calc(100% - var(--scroll-level)),
+    var(--c-grayscale-white) var(--scroll-level)
+  );
+}
+
+@function get-content-color($fromColor) {
+  @return color-mix(in srgb, $fromColor calc(100% - var(--scroll-level)), var(--c-text-main) var(--scroll-level));
+}
+
 .wrapper {
   @include m.flex(space-between);
   @include m.fixed(0 auto auto 50%);
@@ -9,14 +21,14 @@
   max-width: c.$S_MAX_WIDTH;
   height: c.$S_HEADER_HEIGHT;
   padding: 12px 20px;
-  background-color: rgba(0, 0, 0, 20%);
+  background-color: get-background-color();
   transform: translateX(-50%);
 
   .backButton {
     cursor: pointer;
 
     svg path {
-      stroke: var(--c-grayscale-gray-50);
+      stroke: get-content-color(var(--c-grayscale-gray-50));
     }
   }
 
@@ -24,12 +36,12 @@
     @include m.fontTitle4(semibold);
     @include m.makeEllipsis;
     padding: 0 12px;
-    color: var(--c-grayscale-gray-50);
+    color: get-content-color(var(--c-grayscale-gray-50));
   }
 
   .reportButton {
     @include m.fontTitle5(medium);
-    color: var(--c-grayscale-gray-200);
+    color: get-content-color(var(--c-grayscale-gray-200));
     white-space: nowrap;
   }
 }

@@ -1,3 +1,10 @@
+"use client";
+
+import { type CSSProperties, useRef } from "react";
+
+import { PLACE_CAROUSEL_ID } from "@/widgets/PlaceCarousel/ui";
+
+import useScrollLevelByAnchor from "@/shared/hooks/useScrollLevelByAnchor";
 import BackButton from "@/shared/ui/BackButton";
 
 import { IconArrowLeft24 } from "public/icons";
@@ -9,8 +16,12 @@ interface Props {
 }
 
 const Header: React.FC<Props> = ({ title }) => {
+  const headerRef = useRef<HTMLDivElement>(null);
+  const scrollLevel = useScrollLevelByAnchor({ anchor: PLACE_CAROUSEL_ID, element: headerRef });
+  const style = { "--scroll-level": `${scrollLevel}%` } as CSSProperties;
+
   return (
-    <header className={styles.wrapper} data-testid="header">
+    <header className={styles.wrapper} data-testid="header" ref={headerRef} style={style}>
       <BackButton className={styles.backButton}>
         <IconArrowLeft24 />
       </BackButton>
