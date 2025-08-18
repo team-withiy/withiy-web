@@ -9,13 +9,13 @@ import IconButton from "@/shared/ui/IconButton";
 
 import { IconHeart16 } from "public/icons";
 
-import styles from "./FavoritePlaceButton.module.scss";
+import styles from "./BookmarkPlaceButton.module.scss";
 
 interface Props {
   placeId: number;
 }
 
-const FavoritePlaceButton: React.FC<Props> = ({ placeId }) => {
+const BookmarkPlaceButton: React.FC<Props> = ({ placeId }) => {
   const { data } = useQuery({ ...placeQueries.getPlaceBookmark(placeId), throwOnError: false });
 
   return (
@@ -30,4 +30,4 @@ const FavoritePlaceButton: React.FC<Props> = ({ placeId }) => {
   );
 };
 
-export default FavoritePlaceButton;
+export default BookmarkPlaceButton;
