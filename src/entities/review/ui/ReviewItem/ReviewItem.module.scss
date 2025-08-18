@@ -43,6 +43,7 @@
     @include m.flex(flex-start);
     gap: 8px;
     width: 100%;
+    overflow: scroll;
 
     .image {
       width: 75px;
@@ -52,6 +53,10 @@
 
       &:first-of-type {
         margin-left: 20px;
+      }
+
+      &:last-of-type {
+        margin-right: 20px;
       }
     }
   }
