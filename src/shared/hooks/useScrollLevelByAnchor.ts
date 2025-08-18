@@ -57,6 +57,7 @@ const useScrollLevelByAnchor = ({ element, anchor, container }: Props): number =
 
     const isIntersected = anchorBottom <= elementBottom;
     if (!isIntersected) return 0;
+    if (elementRect.height === 0) return 100;
 
     const level = Math.min(100, ((elementBottom - anchorBottom) / elementRect.height) * 100);
     return level;
