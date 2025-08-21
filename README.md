@@ -22,3 +22,7 @@
 ### API
 
 - [API](./docs/api.md)
+
+### Developments
+
+- [Authorization System](./docs/authorization-system.md)
