@@ -1,6 +1,6 @@
 "use client";
 
-import { type PropsWithChildren, useState } from "react";
+import { MouseEventHandler, type PropsWithChildren, useState } from "react";
 
 import RequireCoupleAuthorizationBottomSheet from "./RequireCoupleAuthorizationBottomSheet";
 
@@ -12,12 +12,18 @@ interface Props {
 const RequireCoupleAuthorizationButton: React.FC<PropsWithChildren<Props>> = ({ children, className, callbackUrl }) => {
   const [isShow, setIsShow] = useState(false);
 
+  const onClickCapture: MouseEventHandler<HTMLDivElement> = (e) => {
+    e.stopPropagation();
+    setIsShow(true);
+  };
+
   return (
     <>
       <div
         role="button"
+        tabIndex={0}
         className={className}
-        onClick={() => setIsShow(true)}
+        onClickCapture={onClickCapture}
         aria-label="커플 연결이 필요한 기능입니다."
         data-testid="require-couple-authorization-button"
       >

@@ -1,0 +1,34 @@
+@use "@/shared/ui/styles/constants" as c;
+@use "@/shared/ui/styles/mixins" as m;
+
+.wrapper {
+  width: 100%;
+  padding-top: 25px;
+
+  .header {
+    @include m.flex;
+    position: relative;
+
+    .title {
+      @include m.fontTitle4(semibold);
+      color: var(--c-text-main);
+    }
+
+    .plusButton {
+      @include m.absolute(50% 20px auto auto);
+      @include m.flex;
+      width: 24px;
+      height: 24px;
+      transform: translateY(-50%);
+    }
+  }
+
+  .form {
+    width: 100%;
+    padding: 20px 20px 0;
+
+    .buttonWrapper {
+      padding: 8px 0;
+    }
+  }
+}

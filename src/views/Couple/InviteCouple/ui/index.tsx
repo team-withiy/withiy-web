@@ -35,4 +35,4 @@ const InviteCouplePage: React.FC = () => {
   );
 };
 
-export default withAuthorizationRoute(InviteCouplePage, { requiredAuth: true, requiredCouple: false });
+export default withAuthorizationRoute(InviteCouplePage, {});
