@@ -5,7 +5,7 @@ import type { PlaceDetailDTO } from "@/entities/place/api/place.interface";
 
 import PlaceInfo from ".";
 
-vi.mock("@/features/toggleBookmark/ui/BookmarkPlaceButton", () => ({
+vi.mock("@/features/toggleBookmark/ui/Place", () => ({
   default: ({ placeId }: { placeId: number }) => <button data-testid={`favorite-button-${placeId}`}>저장</button>,
 }));
 

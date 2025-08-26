@@ -1,6 +1,6 @@
 import cx from "clsx";
 
-import BookmarkPlaceButton from "@/features/toggleBookmark/ui/BookmarkPlaceButton";
+import BookmarkPlaceButton from "@/features/toggleBookmark/ui/Place";
 
 import type { PlaceDetailDTO } from "@/entities/place/api/place.interface";
 

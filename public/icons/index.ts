@@ -64,3 +64,6 @@ export { default as IconSettings24 } from "./settings24.svg";
 
 // MEMO: CORNER
 export { default as IconCornerUpRight16 } from "./corner-up-right16.svg";
+
+// MEMO: PLUS
+export { default as IconPlus24 } from "./plus24.svg";
