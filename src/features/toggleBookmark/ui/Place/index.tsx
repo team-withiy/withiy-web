@@ -20,9 +20,10 @@ import styles from "./BookmarkPlaceButton.module.scss";
 
 interface Props {
   placeId: number;
+  placeName: string;
 }
 
-const BookmarkPlaceButton: React.FC<Props> = ({ placeId }) => {
+const BookmarkPlaceButton: React.FC<Props> = ({ placeId, placeName }) => {
   const pathname = usePathname();
   const { data } = useQuery({ ...placeQueries.getPlaceBookmark(placeId), throwOnError: false });
 
@@ -44,6 +45,7 @@ const BookmarkPlaceButton: React.FC<Props> = ({ placeId }) => {
       <BookmarkPlaceFolderBottomSheet
         isShow={isShowBottomSheet}
         onClose={() => setIsShowBottomSheet(false)}
+        placeName={placeName}
         placeId={placeId}
       />
     </>

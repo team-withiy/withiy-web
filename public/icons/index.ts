@@ -13,6 +13,7 @@ export { default as IconLetter } from "./letter.svg";
 // MEMO: HEART
 export { default as IconHeart } from "./heart.svg";
 export { default as IconHeart16 } from "./heart16.svg";
+export { default as IconHeart24 } from "./heart24.svg";
 
 // MEMO: SMILE
 export { default as IconSmile16 } from "./smile16.svg";

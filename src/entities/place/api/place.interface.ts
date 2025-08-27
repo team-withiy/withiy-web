@@ -21,3 +21,8 @@ export interface PlaceDetailDTO {
   /** 장소 리뷰 목록 */
   reviews: ReviewDTO[];
 }
+
+export interface UpdatePlaceBookmarkDTO {
+  placeId: number;
+  folderIds: number[];
+}
