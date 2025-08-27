@@ -35,7 +35,7 @@ const PlaceInfo: React.FC<Props> = ({ place, className }) => {
       </div>
       <address className={styles.address}>{place.address}</address>
       <div className={styles.buttonWrapper}>
-        <BookmarkPlaceButton placeId={place.placeId} />
+        <BookmarkPlaceButton placeId={place.placeId} placeName={place.placeName} />
         <IconButton type="button" variant="outline" icon={<IconCornerUpRight16 />} data-testid="find-road-button">
           길찾기
         </IconButton>
