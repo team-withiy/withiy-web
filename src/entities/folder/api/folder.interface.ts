@@ -1,5 +1,3 @@
-export type FolderColor = "PINK" | "RED" | "ORANGE" | "YELLOW" | "GREEN" | "SKY_BLUE" | "BLUE" | "GRAY";
-
 export interface FolderOptionDTO {
   id: number;
   name: string;
@@ -20,6 +18,5 @@ export interface FolderSummaryDTO {
 
 export interface CreateFolderDTO {
   name: string;
-  color: FolderColor;
-  normalizedName: string;
+  color: string;
 }

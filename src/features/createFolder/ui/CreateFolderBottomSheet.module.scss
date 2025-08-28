@@ -5,14 +5,18 @@
   width: 100%;
   padding-top: 25px;
 
-  &.hide {
-    display: none;
-  }
-
   .header {
     @include m.flex;
     position: relative;
     padding: 0 60px;
+
+    .backButton {
+      @include m.absolute(50% auto auto 20px);
+      @include m.flex;
+      width: 24px;
+      height: 24px;
+      transform: translateY(-50%);
+    }
 
     .title {
       @include m.fontTitle4(semibold);
@@ -20,14 +24,6 @@
       flex: 1;
       color: var(--c-text-main);
       text-align: center;
-    }
-
-    .plusButton {
-      @include m.absolute(50% 20px auto auto);
-      @include m.flex;
-      width: 24px;
-      height: 24px;
-      transform: translateY(-50%);
     }
   }
 }
