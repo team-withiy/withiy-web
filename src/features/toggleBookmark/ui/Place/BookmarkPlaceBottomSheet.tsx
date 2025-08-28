@@ -1,5 +1,11 @@
 "use client";
 
+import { useState } from "react";
+
+import cx from "clsx";
+
+import { CreateFolderBottomSheet } from "@/features/createFolder/ui";
+
 import BaseBottomSheet from "@/shared/ui/BaseBottomSheet";
 
 import Form from "./Form";
@@ -15,16 +21,30 @@ interface Props {
 }
 
 const BookmarkPlaceBottomSheet: React.FC<Props> = ({ isShow, placeId, placeName, onClose }) => {
+  const [isShowCreateFolder, setIsShowCreateFolder] = useState(false);
+
   return (
-    <BaseBottomSheet isShow={isShow} blockCloseWhenClickOverlay className={styles.wrapper}>
-      <header className={styles.header}>
-        <h2 className={styles.title}>{placeName}</h2>
-        <button type="button" className={styles.plusButton}>
-          <IconPlus24 />
-        </button>
-      </header>
-      <Form placeId={placeId} onClose={onClose} />
-    </BaseBottomSheet>
+    <>
+      <BaseBottomSheet
+        isShow={isShow}
+        blockCloseWhenClickOverlay
+        className={cx(styles.wrapper, { [styles.hide]: isShowCreateFolder })}
+      >
+        <header className={styles.header}>
+          <h2 className={styles.title}>{placeName}</h2>
+          <button type="button" className={styles.plusButton} onClick={() => setIsShowCreateFolder(true)}>
+            <IconPlus24 />
+          </button>
+        </header>
+        <Form placeId={placeId} onClose={onClose} />
+      </BaseBottomSheet>
+      <CreateFolderBottomSheet
+        isShow={isShowCreateFolder}
+        onClose={() => setIsShowCreateFolder(false)}
+        hideOverlay
+        preventTransition
+      />
+    </>
   );
 };
 

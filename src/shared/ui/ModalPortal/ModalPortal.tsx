@@ -10,13 +10,7 @@ import Overlay from "../Overlay";
 
 import styles from "./ModalPortal.module.scss";
 
-let modalRoot = document.querySelector("#modal") as HTMLDivElement | null;
-
-if (!modalRoot) {
-  modalRoot = document.createElement("div");
-  modalRoot.id = "modal";
-  document.body.appendChild(modalRoot);
-}
+const modalRoot = document.querySelector("#modal") as HTMLDivElement;
 
 export interface ModalPortalProps {
   isShow: boolean;
@@ -24,7 +18,9 @@ export interface ModalPortalProps {
   className?: string;
   wrapperClassName?: string;
   overlayClassName?: string;
+  hideOverlay?: boolean;
   blockCloseWhenClickOverlay?: boolean;
+  preventTransition?: boolean;
   children: ReactNode;
 }
 
@@ -32,17 +28,19 @@ const ModalPortal: React.FC<ModalPortalProps> = ({
   isShow,
   onClose,
   wrapperClassName,
+  hideOverlay,
   className,
   children,
   overlayClassName,
   blockCloseWhenClickOverlay = false,
+  preventTransition = false,
 }) => {
   const nodeRef = useRef(null);
 
   return createPortal(
     <CSSTransition
       in={isShow}
-      timeout={200}
+      timeout={preventTransition ? 0 : 200}
       classNames={{
         enter: styles.enter,
         enterDone: styles.enterDone,
@@ -51,15 +49,27 @@ const ModalPortal: React.FC<ModalPortalProps> = ({
       }}
       nodeRef={nodeRef}
       unmountOnExit
+      {...(!preventTransition && {
+        classNames: {
+          enter: styles.enter,
+          enterDone: styles.enterDone,
+          exitActive: styles.exitActive,
+          exit: styles.exit,
+        },
+      })}
     >
       <div className={cx(styles.wrapper, wrapperClassName)} ref={nodeRef} data-testid="modal-wrapper">
         <Overlay
           className={cx(styles.overlay, overlayClassName, {
             [styles.blockCloseOverlay]: blockCloseWhenClickOverlay,
           })}
+          hidden={hideOverlay}
           onClose={blockCloseWhenClickOverlay ? undefined : onClose}
         />
-        <aside className={cx(styles.modal, className)} data-testid="modal">
+        <aside
+          className={cx(styles.modal, className, { [styles.preventTransition]: preventTransition })}
+          data-testid="modal"
+        >
           {children}
         </aside>
       </div>

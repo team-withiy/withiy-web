@@ -27,9 +27,6 @@ export { default as IconCheckbox20 } from "./checkbox20.svg";
 export { default as IconCheck20 } from "./check20.svg";
 export { default as IconCheck16 } from "./check16.svg";
 
-// MEMO: CHEVRON
-export { default as IconChevronDown20 } from "./chevron-down20.svg";
-
 // MEMO: SEARCH
 export { default as IconSearch24 } from "./search24.svg";
 
@@ -53,7 +50,9 @@ export { default as IconX24 } from "./x24.svg";
 export { default as IconArrowLeft24 } from "./arrow-left24.svg";
 
 // MEMO: CHEVRON
+export { default as IconChevronDown20 } from "./chevron-down20.svg";
 export { default as IconChevronLeft20 } from "./chevron-left20.svg";
+export { default as IconChevronLeft24 } from "./chevron-left24.svg";
 export { default as IconChevronRight20 } from "./chevron-right20.svg";
 export { default as IconChevronRight24 } from "./chevron-right24.svg";
 

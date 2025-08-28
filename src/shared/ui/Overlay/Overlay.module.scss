@@ -4,4 +4,8 @@
 .wrapper {
   @include m.absoluteZero;
   background-color: rgba(17, 17, 17, 60%);
+
+  &.hidden {
+    background-color: transparent;
+  }
 }
