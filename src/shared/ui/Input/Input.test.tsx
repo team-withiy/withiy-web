@@ -2,7 +2,7 @@ import { cleanup, render, screen } from "@testing-library/react";
 import { afterEach, expect, test } from "vitest";
 import { mockConsole } from "vitest-console";
 
-import Input from ".";
+import Input from "./Input";
 
 import styles from "./Input.module.scss";
 

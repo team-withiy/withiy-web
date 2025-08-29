@@ -15,7 +15,7 @@ import ThumbnailInput, { LoadingThumbnailInput } from "@/entities/user/ui/Thumbn
 import { isFetchHTTPError } from "@/shared/models/auth/fetchHTTPException";
 import BottomFloatingButtonWrapper from "@/shared/ui/BottomFloatingButtonWrapper";
 import Button from "@/shared/ui/Button/Button";
-import Input from "@/shared/ui/Input";
+import Input from "@/shared/ui/Input/Input";
 import SSRSafeSuspense from "@/shared/ui/Suspense/SSRSafeSuspense";
 import { useToast } from "@/shared/ui/Toast";
 
