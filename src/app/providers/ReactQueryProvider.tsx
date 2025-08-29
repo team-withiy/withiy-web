@@ -2,7 +2,7 @@
 
 import { PropsWithChildren } from "react";
 
-import { isServer, QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { isServer, keepPreviousData, QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 function makeQueryClient() {
   return new QueryClient({
@@ -10,6 +10,7 @@ function makeQueryClient() {
       queries: {
         staleTime: 60 * 1000,
         retry: 0,
+        placeholderData: keepPreviousData,
       },
     },
   });

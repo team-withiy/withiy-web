@@ -6,7 +6,7 @@ import { fn } from "@storybook/test";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
-import Input from "./Input";
+import UnderlineInput from "./UnderlineInput";
 
 const schema = z.object({
   value: z.string().min(3, { message: "3글자 이상 입력하세요." }),
@@ -14,7 +14,7 @@ const schema = z.object({
 
 type Schema = z.infer<typeof schema>;
 
-const Template = ({ ...props }: ComponentProps<typeof Input>) => {
+const Template = ({ ...props }: ComponentProps<typeof UnderlineInput>) => {
   const {
     register,
     formState: { errors, touchedFields },
@@ -24,7 +24,7 @@ const Template = ({ ...props }: ComponentProps<typeof Input>) => {
   });
 
   return (
-    <Input
+    <UnderlineInput
       errorMessage={errors.value?.message}
       successMessage={!!touchedFields.value && !errors.value && "3글자 이상 입력하셨습니다!"}
       {...register("value")}
@@ -33,17 +33,17 @@ const Template = ({ ...props }: ComponentProps<typeof Input>) => {
   );
 };
 
-const meta: Meta<typeof Input> = {
-  title: "Components/Input/Input",
+const meta: Meta<typeof UnderlineInput> = {
+  title: "Components/Input/UnderlineInput",
   parameters: {
     docs: {
       description: {
         component:
-          "Input 컴포넌트 입니다.<br/>해당 컴포넌트는 3글자 이상 입력으로 요구하며, 사용자가 입력한 값이 유효하지 않을 경우 에러 메시지를 표시합니다.",
+          "UnderlineInput 컴포넌트 입니다.<br/>해당 컴포넌트는 3글자 이상 입력으로 요구하며, 사용자가 입력한 값이 유효하지 않을 경우 에러 메시지를 표시합니다.",
       },
     },
   },
-  component: Input,
+  component: UnderlineInput,
   argTypes: {
     type: {
       table: {
@@ -56,13 +56,13 @@ const meta: Meta<typeof Input> = {
       },
     },
     placeholder: {
-      description: "Input내 입력값이 없을 때 보여지는 텍스트",
+      description: "UnderlineInput내 입력값이 없을 때 보여지는 텍스트",
       control: {
         type: "text",
       },
     },
     disabled: {
-      description: "Input 비활성화 여부",
+      description: "UnderlineInput 비활성화 여부",
       table: {
         type: {
           summary: "boolean",
@@ -73,32 +73,8 @@ const meta: Meta<typeof Input> = {
         type: "boolean",
       },
     },
-    size: {
-      description: "Input 크기",
-      type: {
-        required: true,
-        name: "enum",
-        value: [52],
-      },
-      control: {
-        type: "select",
-      },
-    },
-    labelSize: {
-      description: "라벨 텍스트 크기",
-      table: {
-        defaultValue: { summary: "14" },
-      },
-      type: {
-        name: "enum",
-        value: [16, 14],
-      },
-      control: {
-        type: "select",
-      },
-    },
     label: {
-      description: "Input 상단 라벨",
+      description: "UnderlineInput 상단 라벨",
       control: {
         type: "text",
       },
@@ -111,14 +87,12 @@ const meta: Meta<typeof Input> = {
     type: "text",
     label: "Label",
     disabled: false,
-    size: 52,
-    labelSize: 14,
     onChange: fn(),
   },
 };
 
 export default meta;
-type Story = StoryObj<typeof Input>;
+type Story = StoryObj<typeof UnderlineInput>;
 
 export const Default: Story = {
   args: {},
