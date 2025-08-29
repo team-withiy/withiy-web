@@ -1,1 +1,1 @@
-export { default as BottomSheetPortal, type BottomSheetProps } from "../BottomSheetPortal";
+export { default as BottomSheetPortal, type BottomSheetPortalProps } from "../BottomSheetPortal";

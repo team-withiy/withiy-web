@@ -10,28 +10,28 @@ afterEach(() => {
 
 test("type을 명시하지 않으면 console.assert가 발생한다.", () => {
   const { restoreConsole } = mockConsole(["assert"]);
-  render(<UnderlineInput size={52} />);
+  render(<UnderlineInput />);
   expect(console.assert).toHaveBeenCalledWith(false, "Input type is required");
   restoreConsole();
 });
 
 test("type을 명시하면 console.assert가 발생하지 않는다.", () => {
   const { restoreConsole } = mockConsole(["assert"]);
-  render(<UnderlineInput type="text" size={52} />);
+  render(<UnderlineInput type="text" />);
   expect(console.assert).toHaveBeenCalledWith(true, "Input type is required");
   restoreConsole();
 });
 
-test("size를 명시하지 않으면 console.assert가 발생한다.", () => {
+test("inputMode를 명시하지 않으면 console.assert가 발생한다.", () => {
   const { restoreConsole } = mockConsole(["assert"]);
   render(<UnderlineInput type="text" />);
   expect(console.assert).toHaveBeenCalledWith(false, "InputMode is required");
   restoreConsole();
 });
 
-test("size를 명시하면 console.assert가 발생하지 않는다.", () => {
+test("inputMode를 명시하면 console.assert가 발생하지 않는다.", () => {
   const { restoreConsole } = mockConsole(["assert"]);
-  render(<UnderlineInput type="text" size={52} />);
+  render(<UnderlineInput type="text" inputMode="text" />);
   expect(console.assert).toHaveBeenCalledWith(true, "InputMode is required");
   restoreConsole();
 });
