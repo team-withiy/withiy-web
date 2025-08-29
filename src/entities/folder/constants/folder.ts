@@ -5,6 +5,6 @@ export const FOLDER_COLORS = [
   "#ffea41",
   "#7cf982",
   "#bfd3fe",
-  "#eb82f6",
+  "#3b82f6",
   "#e8e8e8",
 ] as const;

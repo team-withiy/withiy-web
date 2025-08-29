@@ -17,7 +17,6 @@ const UnderlineInput: React.FC<Props> = ({
   label,
   type,
   inputMode,
-  size,
   className,
   errorMessage,
   successMessage,
@@ -25,7 +24,7 @@ const UnderlineInput: React.FC<Props> = ({
   ...props
 }) => {
   console.assert(!!type, "Input type is required");
-  console.assert(!!size, "InputMode is required");
+  console.assert(!!inputMode, "InputMode is required");
 
   return (
     <label

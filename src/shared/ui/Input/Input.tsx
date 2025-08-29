@@ -41,7 +41,7 @@ const Input: React.FC<Props> = ({
   ...props
 }) => {
   console.assert(!!type, "Input type is required");
-  console.assert(!!size, "InputMode is required");
+  console.assert(!!inputMode, "InputMode is required");
 
   return (
     <label

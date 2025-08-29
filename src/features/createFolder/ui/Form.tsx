@@ -7,6 +7,7 @@ import { z } from "zod";
 import { FOLDER_COLORS } from "@/entities/folder/constants/folder";
 
 import Button from "@/shared/ui/Button/Button";
+import UnderlineInput from "@/shared/ui/Input/UnderlineInput";
 
 import { useCreateFolderMutation } from "../api/createFolder.mutations";
 
@@ -27,13 +28,15 @@ const Form: React.FC<Props> = ({ onClose }) => {
   const { mutateAsync } = useCreateFolderMutation();
 
   const {
+    register,
     handleSubmit,
-    formState: { isValid },
+    formState: { isValid, errors, isSubmitting },
   } = useForm<Schema>({
     defaultValues: {
       name: "",
       color: FOLDER_COLORS[0],
     },
+    mode: "onTouched",
     resolver: zodResolver(schema),
   });
 
@@ -44,9 +47,30 @@ const Form: React.FC<Props> = ({ onClose }) => {
 
   return (
     <form className={styles.wrapper} onSubmit={handleSubmit(onSubmit)}>
-      <div className={styles.content}></div>
+      <div className={styles.content}>
+        <UnderlineInput
+          className={styles.input}
+          label="폴더 이름 (최대 12자)"
+          placeholder="폴더명을 작성해주세요."
+          type="text"
+          inputMode="text"
+          errorMessage={errors.name?.message}
+          {...register("name")}
+        />
+        <fieldset className={styles.colors}>
+          <legend className={styles.legend}>폴더 색상</legend>
+          <div className={styles.colorOptions}>
+            {FOLDER_COLORS.map((color) => (
+              <label key={color} className={styles.colorOption}>
+                <input type="radio" value={color} {...register("color")} hidden />
+                <div className={styles.colorIndicator} style={{ backgroundColor: color }} />
+              </label>
+            ))}
+          </div>
+        </fieldset>
+      </div>
       <div className={styles.buttonWrapper}>
-        <Button type="submit" size={52} variant="default" full disabled={!isValid}>
+        <Button type="submit" size={52} variant="default" full disabled={!isValid || isSubmitting}>
           폴더 생성하기
         </Button>
       </div>

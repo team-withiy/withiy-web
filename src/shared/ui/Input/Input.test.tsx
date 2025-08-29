@@ -24,6 +24,20 @@ test("type을 명시하면 console.assert가 발생하지 않는다.", () => {
   restoreConsole();
 });
 
+test("inputMode를 명시하지 않으면 console.assert가 발생한다.", () => {
+  const { restoreConsole } = mockConsole(["assert"]);
+  render(<Input type="text" size={52} />);
+  expect(console.assert).toHaveBeenCalledWith(false, "InputMode is required");
+  restoreConsole();
+});
+
+test("inputMode를 명시하면 console.assert가 발생하지 않는다.", () => {
+  const { restoreConsole } = mockConsole(["assert"]);
+  render(<Input type="text" size={52} inputMode="text" />);
+  expect(console.assert).toHaveBeenCalledWith(true, "InputMode is required");
+  restoreConsole();
+});
+
 test("errorMessage가 있으면 에러 메시지가 표시된다.", () => {
   render(<Input type="text" size={52} errorMessage="에러 메시지" />);
   expect(screen.getByText("에러 메시지")).toBeInTheDocument();
