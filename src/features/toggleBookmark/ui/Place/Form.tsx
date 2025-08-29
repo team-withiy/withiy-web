@@ -1,5 +1,7 @@
 "use client";
 
+import { useCallback, useEffect } from "react";
+
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import Skeleton from "react-loading-skeleton";
@@ -28,20 +30,23 @@ const Form: React.FC<Props> = ({ placeId, onClose }) => {
   const { data } = useSuspenseQuery(folderQueries.getPlaceFolders(placeId));
   const { mutate } = useUpdatePlaceBookmarkMutation();
 
-  const defaultValues = data.data.reduce<FormValues>((acc, folder) => {
-    acc[folder.id] = {
-      bookmarked: folder.bookmarked,
-      bookmarkCount: folder.bookmarkCount,
-    };
-    return acc;
-  }, {});
+  const getFormValues = useCallback((folders: FolderOptionDTO[]) => {
+    return folders.reduce<FormValues>((acc, folder) => {
+      acc[folder.id] = {
+        bookmarked: folder.bookmarked,
+        bookmarkCount: folder.bookmarkCount,
+      };
+      return acc;
+    }, {});
+  }, []);
 
   const {
     control,
     handleSubmit,
+    reset,
     formState: { isSubmitting, isDirty },
   } = useForm<FormValues>({
-    defaultValues,
+    defaultValues: getFormValues(data.data),
   });
 
   const onSubmit: SubmitHandler<FormValues> = (data) => {
@@ -56,6 +61,10 @@ const Form: React.FC<Props> = ({ placeId, onClose }) => {
     onClose();
   };
 
+  useEffect(() => {
+    reset(getFormValues(data.data));
+  }, [data, getFormValues, reset]);
+
   return (
     <form className={styles.wrapper} onSubmit={handleSubmit(onSubmit)}>
       <ul className={styles.list}>
@@ -64,29 +73,36 @@ const Form: React.FC<Props> = ({ placeId, onClose }) => {
             key={folder.id}
             control={control}
             name={folder.id.toString()}
-            render={({ field }) => (
-              <li className={styles.item} key={folder.id}>
-                <div className={styles.info}>
-                  <div className={styles.color} style={{ backgroundColor: folder.color }} />
-                  <span className={styles.name}>{folder.name}</span>
-                  <span className={styles.count}>{field.value.bookmarkCount}</span>
-                </div>
-                <label className={styles.bookmarkButton}>
-                  <IconHeart24 className={styles.icon} />
-                  <input
-                    type="checkbox"
-                    hidden
-                    checked={field.value.bookmarked}
-                    onChange={() =>
-                      field.onChange({
-                        bookmarked: !field.value.bookmarked,
-                        bookmarkCount: field.value.bookmarkCount + (field.value.bookmarked ? -1 : 1),
-                      })
-                    }
-                  />
-                </label>
-              </li>
-            )}
+            render={({ field }) => {
+              const fieldValue = field.value ?? {
+                bookmarked: folder.bookmarked,
+                bookmarkCount: folder.bookmarkCount,
+              };
+
+              return (
+                <li className={styles.item} key={folder.id}>
+                  <div className={styles.info}>
+                    <div className={styles.color} style={{ backgroundColor: folder.color }} />
+                    <span className={styles.name}>{folder.name}</span>
+                    <span className={styles.count}>{fieldValue.bookmarkCount}</span>
+                  </div>
+                  <label className={styles.bookmarkButton}>
+                    <IconHeart24 className={styles.icon} />
+                    <input
+                      type="checkbox"
+                      hidden
+                      checked={fieldValue.bookmarked}
+                      onChange={() =>
+                        field.onChange({
+                          bookmarked: !fieldValue.bookmarked,
+                          bookmarkCount: fieldValue.bookmarkCount + (fieldValue.bookmarked ? -1 : 1),
+                        })
+                      }
+                    />
+                  </label>
+                </li>
+              );
+            }}
           />
         ))}
       </ul>
