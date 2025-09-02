@@ -41,7 +41,6 @@ const Form: React.FC<Props> = ({ onClose }) => {
   });
 
   const onSubmit: SubmitHandler<Schema> = async (data) => {
-    if (!isValid) return;
     await mutateAsync(data);
     onClose();
   };
