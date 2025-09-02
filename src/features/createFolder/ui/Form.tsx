@@ -41,12 +41,13 @@ const Form: React.FC<Props> = ({ onClose }) => {
   });
 
   const onSubmit: SubmitHandler<Schema> = async (data) => {
+    if (!isValid) return;
     await mutateAsync(data);
     onClose();
   };
 
   return (
-    <form className={styles.wrapper} onSubmit={handleSubmit(onSubmit)}>
+    <form className={styles.wrapper} onSubmit={handleSubmit(onSubmit)} data-testid="create-folder-form">
       <div className={styles.content}>
         <UnderlineInput
           className={styles.input}
@@ -56,13 +57,20 @@ const Form: React.FC<Props> = ({ onClose }) => {
           inputMode="text"
           errorMessage={errors.name?.message}
           {...register("name")}
+          data-testid="create-folder-input"
         />
         <fieldset className={styles.colors}>
           <legend className={styles.legend}>폴더 색상</legend>
           <div className={styles.colorOptions}>
             {FOLDER_COLORS.map((color) => (
               <label key={color} className={styles.colorOption}>
-                <input type="radio" value={color} {...register("color")} hidden />
+                <input
+                  type="radio"
+                  value={color}
+                  {...register("color")}
+                  hidden
+                  data-testid={`create-folder-color-${color}`}
+                />
                 <div className={styles.colorIndicator} style={{ backgroundColor: color }} />
               </label>
             ))}
@@ -70,7 +78,14 @@ const Form: React.FC<Props> = ({ onClose }) => {
         </fieldset>
       </div>
       <div className={styles.buttonWrapper}>
-        <Button type="submit" size={52} variant="default" full disabled={!isValid || isSubmitting}>
+        <Button
+          type="submit"
+          size={52}
+          variant="default"
+          full
+          disabled={!isValid || isSubmitting}
+          data-testid="create-folder-submit-button"
+        >
           폴더 생성하기
         </Button>
       </div>
