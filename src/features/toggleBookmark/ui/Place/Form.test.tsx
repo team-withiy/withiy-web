@@ -34,24 +34,21 @@ test("북마크가 정상적으로 업데이트되어야 한다.", async () => {
   renderWithProviders(<Form placeId={1} onClose={onClose} />);
   await waitFor(() => expect(screen.getByTestId("place-bookmark-submit-button")).toBeInTheDocument());
 
-  const tests = mockFolderOptions.map(async (folder) => {
+  const toggledOnFolderIds: number[] = [];
+  for (const folder of mockFolderOptions) {
     const checkbox = screen.getByTestId(`folder-${folder.id}-checkbox`);
     const count = screen.getByTestId(`folder-${folder.id}-count`);
     await userEvent.click(checkbox);
-
     if (folder.bookmarked) {
       expect(checkbox).not.toBeChecked();
       expect(count).toHaveTextContent((folder.bookmarkCount - 1).toString());
     } else {
       expect(checkbox).toBeChecked();
       expect(count).toHaveTextContent((folder.bookmarkCount + 1).toString());
+      toggledOnFolderIds.push(folder.id);
     }
-
-    if (!folder.bookmarked) return folder.id;
-  });
-
-  const resolvedTests = (await Promise.all(tests)).filter(Boolean);
+  }
 
   await userEvent.click(screen.getByTestId("place-bookmark-submit-button"));
-  expect(mutate).toHaveBeenCalledWith(expect.objectContaining({ folderIds: resolvedTests }));
+  expect(mutate).toHaveBeenCalledWith(expect.objectContaining({ folderIds: toggledOnFolderIds }));
 });

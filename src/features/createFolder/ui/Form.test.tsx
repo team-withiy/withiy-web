@@ -19,6 +19,7 @@ vi.mock("../api/createFolder.mutations", () => {
 
 afterEach(() => {
   cleanup();
+  vi.clearAllMocks();
 });
 
 test("Form의 구성 요소가 정상적으로 렌더링 되어야 한다.", () => {
