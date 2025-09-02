@@ -54,6 +54,9 @@ vi.mock("react", async () => {
   };
 });
 
+// MEMO: auth
+vi.mock("./src/shared/api/auth/authApiClient");
+
 // MEMO: next/navigation
 vi.mock("next/navigation", async (importOriginal) => {
   const actual = await importOriginal<typeof import("next/navigation")>();

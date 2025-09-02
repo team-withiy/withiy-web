@@ -80,17 +80,22 @@ const Form: React.FC<Props> = ({ placeId, onClose }) => {
               };
 
               return (
-                <li className={styles.item} key={folder.id}>
+                <li className={styles.item} key={folder.id} data-testid={`folder-${folder.id}`}>
                   <div className={styles.info}>
                     <div className={styles.color} style={{ backgroundColor: folder.color }} />
-                    <span className={styles.name}>{folder.name}</span>
-                    <span className={styles.count}>{fieldValue.bookmarkCount}</span>
+                    <span className={styles.name} data-testid={`folder-${folder.id}-name`}>
+                      {folder.name}
+                    </span>
+                    <span className={styles.count} data-testid={`folder-${folder.id}-count`}>
+                      {fieldValue.bookmarkCount}
+                    </span>
                   </div>
                   <label className={styles.bookmarkButton}>
                     <IconHeart24 className={styles.icon} />
                     <input
                       type="checkbox"
                       hidden
+                      data-testid={`folder-${folder.id}-checkbox`}
                       checked={fieldValue.bookmarked}
                       onChange={() =>
                         field.onChange({
@@ -107,7 +112,14 @@ const Form: React.FC<Props> = ({ placeId, onClose }) => {
         ))}
       </ul>
       <div className={styles.buttonWrapper}>
-        <Button type="submit" size={52} variant="default" full disabled={isSubmitting}>
+        <Button
+          type="submit"
+          size={52}
+          variant="default"
+          full
+          disabled={isSubmitting}
+          data-testid="place-bookmark-submit-button"
+        >
           장소 저장하기
         </Button>
       </div>
