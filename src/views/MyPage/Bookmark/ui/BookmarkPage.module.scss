@@ -3,32 +3,25 @@
 
 .wrapper {
   width: 100%;
-  padding-top: 25px;
-
-  &.hide {
-    display: none;
-  }
 
   .header {
     @include m.flex;
     position: relative;
     padding: 0 60px;
 
-    .title {
-      @include m.fontTitle4(semibold);
-      @include m.makeEllipsis;
-      flex: 1;
-      color: var(--c-text-main);
-      text-align: center;
-    }
-
-    .plusButton {
-      @include m.absolute(50% 20px auto auto);
+    .backButton {
+      @include m.absolute(50% auto auto 20px);
       @include m.flex;
       width: 32px;
       height: 32px;
       cursor: pointer;
       transform: translateY(-50%);
+    }
+
+    .title {
+      @include m.fontTitle4(semibold);
+      @include m.makeEllipsis;
+      color: var(--c-text-main);
     }
   }
 }
