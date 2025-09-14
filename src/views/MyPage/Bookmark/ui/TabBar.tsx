@@ -18,20 +18,28 @@ const TabBar: React.FC = () => {
 
   return (
     <nav className={styles.wrapper} data-testid="bookmark-page-tab-bar">
-      <Link
-        href={`${pathname}${getSearchParamsString({ tab: BookmarkTab.PLACES })}`}
-        className={cx(styles.item, { [styles.active]: isPlaceActive(tab) })}
-        replace
-      >
-        장소
-      </Link>
-      <Link
-        href={`${pathname}${getSearchParamsString({ tab: BookmarkTab.COURSES })}`}
-        className={cx(styles.item, { [styles.active]: isCourseActive(tab) })}
-        replace
-      >
-        코스
-      </Link>
+      <ul>
+        <li>
+          <Link
+            href={`${pathname}${getSearchParamsString({ tab: BookmarkTab.PLACES })}`}
+            className={cx(styles.item, { [styles.active]: isPlaceActive(tab) })}
+            data-testid="bookmark-page-tab-bar-places-tab"
+            replace
+          >
+            장소
+          </Link>
+        </li>
+        <li>
+          <Link
+            href={`${pathname}${getSearchParamsString({ tab: BookmarkTab.COURSES })}`}
+            className={cx(styles.item, { [styles.active]: isCourseActive(tab) })}
+            data-testid="bookmark-page-tab-bar-courses-tab"
+            replace
+          >
+            코스
+          </Link>
+        </li>
+      </ul>
     </nav>
   );
 };
