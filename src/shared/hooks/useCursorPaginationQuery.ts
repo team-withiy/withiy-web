@@ -10,7 +10,12 @@ import {
 
 import { INITIAL_INFINITE_DATA_META } from "../constants/api";
 
-import type { CursorPageParam, CursorPaginationResponseDTO, InfiniteDataWithMeta } from "../api/common.interface";
+import type {
+  CursorPageParam,
+  CursorPaginationResponseDTO,
+  InfiniteDataMeta,
+  InfiniteDataWithMeta,
+} from "../api/common.interface";
 
 type UseCursorPaginationQueryOptions<T, QueryKey extends readonly unknown[]> = Omit<
   UndefinedInitialDataInfiniteOptions<
@@ -31,7 +36,7 @@ const useCursorPaginationQuery = <T, QueryKey extends readonly unknown[]>(
   queryClient?: QueryClient,
 ) => {
   const memoizedPageParams = useRef<CursorPageParam[]>([]);
-  const memoizedMeta = useRef<{ total: number; message: string; status: number }>(INITIAL_INFINITE_DATA_META);
+  const memoizedMeta = useRef<InfiniteDataMeta>(INITIAL_INFINITE_DATA_META);
 
   const queryFn: QueryFunction<CursorPaginationResponseDTO<T>, QueryKey, CursorPageParam> = useCallback(
     (ctx) => options.queryFn({ ...ctx, queryKey: options.queryKey }),
