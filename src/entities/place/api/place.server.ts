@@ -10,7 +10,7 @@ import { isFetchHTTPError } from "@/shared/models/auth/fetchHTTPException";
 import type { PlaceDetailDTO } from "./place.interface";
 
 export const getPlaceDetailApi = async (placeId: number) =>
-  getServer(`/api/places/detail/${placeId}`, {
+  getServer(`/api/places/${placeId}/detail`, {
     cache: "force-cache",
     tags: ["place", `places/${placeId}`],
   })
