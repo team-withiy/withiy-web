@@ -1,7 +1,10 @@
+import { Suspense } from "react";
+
 import Header from "@/widgets/Layout/ui/Header";
 
 import BackButton from "@/shared/ui/BackButton";
 
+import TabBar from "./TabBar";
 import { IconArrowLeft24 } from "public/icons";
 
 import styles from "./BookmarkPage.module.scss";
@@ -15,6 +18,9 @@ const BookmarkPage: React.FC = () => {
         </BackButton>
         <h2 className={styles.title}>저장한 장소/코스</h2>
       </Header>
+      <Suspense fallback={null}>
+        <TabBar />
+      </Suspense>
     </main>
   );
 };
