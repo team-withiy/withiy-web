@@ -23,6 +23,12 @@
       gap: 4px;
       color: var(--c-text-sub);
       white-space: nowrap;
+
+      .categoryIcon {
+        width: 16px;
+        height: 16px;
+        object-fit: contain;
+      }
     }
   }
 

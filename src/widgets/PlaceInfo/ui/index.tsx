@@ -26,6 +26,7 @@ const PlaceInfo: React.FC<Props> = ({ place, className }) => {
         <span className={styles.category}>
           <BlurImage
             src={place.category.icon}
+            className={styles.categoryIcon}
             alt={place.category.name}
             data-testid="category-icon"
             fallbackProps={{ src: "/images/fallback.png", alt: "카테고리 아이콘", width: 16, height: 16 }}
