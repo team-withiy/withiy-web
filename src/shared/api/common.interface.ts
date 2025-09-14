@@ -5,6 +5,41 @@ export interface ApiResponseDTO<T> {
   timestamp: Date;
 }
 
+export interface CursorPaginationRequestDTO {
+  cursor?: number;
+  limit: number;
+  prev?: boolean;
+}
+
+export interface MockCursorPaginationRequestParams {
+  cursor: string | undefined;
+  limit: string;
+  prev: string | undefined;
+}
+
+export interface CursorPageParam {
+  cursor: number | null | undefined;
+  prev: boolean;
+}
+
+export interface CursorPaginationResponseDTO<T> {
+  status: number;
+  message: string;
+  data: T[];
+  hasPrev: boolean;
+  hasNext: boolean;
+  total: number;
+  prevCursor: number | null;
+  nextCursor: number | null;
+}
+
+export interface InfiniteDataMeta extends Pick<CursorPaginationResponseDTO<unknown>, "status" | "message" | "total"> {}
+
+export interface InfiniteDataWithMeta<T> {
+  data: T[];
+  meta: InfiniteDataMeta;
+}
+
 export interface ErrorDTO {
   timestamp: Date;
   status: number;

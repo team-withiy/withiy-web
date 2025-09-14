@@ -2,12 +2,19 @@ import { faker } from "@faker-js/faker";
 import { range } from "lodash-es";
 import { HttpResponse } from "msw";
 
-import { serverHttpHandler } from "@/app/mocks/httpHandler";
+import { createCursorPaginationResponse, serverHttpHandler } from "@/app/mocks/httpHandler";
 
 import { FolderOptionDTO } from "@/entities/folder/api/folder.interface";
 import { FOLDER_COLORS } from "@/entities/folder/constants/folder";
+import { PlaceSummaryDTO } from "@/entities/place/api/place.interface";
 
-import type { ApiResponseDTO } from "@/shared/api/common.interface";
+import type {
+  ApiResponseDTO,
+  CursorPaginationResponseDTO,
+  MockCursorPaginationRequestParams,
+} from "@/shared/api/common.interface";
+
+import { mockCategories } from "./category.handler";
 
 faker.seed(1);
 faker.setDefaultRefDate(new Date("2023-01-01T00:00:00Z"));
@@ -36,4 +43,28 @@ const getFolderOptions = serverHttpHandler.get<{ placeId: string }, undefined, A
   },
 );
 
-export const folderHandlers = [getFolderOptions];
+export const mockFolderAll: PlaceSummaryDTO[] = range(10).map((value) => ({
+  placeId: value,
+  address: faker.location.streetAddress({ useFullAddress: true }),
+  category: mockCategories[value % mockCategories.length],
+  imageUrls: range(faker.number.int({ min: 1, max: 3 })).map(() => faker.image.url({ width: 640, height: 480 })),
+  placeName: faker.company.name(),
+  score: faker.number.int({ min: 1, max: 100 }),
+}));
+
+const getFolderAll = serverHttpHandler.get<
+  MockCursorPaginationRequestParams,
+  undefined,
+  CursorPaginationResponseDTO<PlaceSummaryDTO>
+>("/api/folders/all", ({ params }) => {
+  const { limit: limitParam, cursor: cursorParam, prev } = params;
+  const limit = Number(limitParam);
+  const cursor = cursorParam ? Number(cursorParam) : null;
+  const isPrev = prev === "true";
+
+  const response = createCursorPaginationResponse(mockFolderAll, cursor, limit, isPrev, "placeId", "desc");
+
+  return HttpResponse.json(response, { status: 200 });
+});
+
+export const folderHandlers = [getFolderOptions, getFolderAll];

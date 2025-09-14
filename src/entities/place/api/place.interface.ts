@@ -22,6 +22,11 @@ export interface PlaceDetailDTO {
   reviews: ReviewDTO[];
 }
 
+export interface PlaceSummaryDTO
+  extends Pick<PlaceDetailDTO, "placeId" | "placeName" | "address" | "score" | "category"> {
+  imageUrls: string[];
+}
+
 export interface UpdatePlaceBookmarkDTO {
   placeId: number;
   folderIds: number[];
