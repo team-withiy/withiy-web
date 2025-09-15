@@ -2,7 +2,7 @@ import { faker } from "@faker-js/faker";
 import { range } from "lodash-es";
 import { HttpResponse } from "msw";
 
-import { createCursorPaginationResponse, serverHttpHandler } from "@/app/mocks/httpHandler";
+import { serverHttpHandler } from "@/app/mocks/httpHandler";
 
 import { FolderOptionDTO } from "@/entities/folder/api/folder.interface";
 import { FOLDER_COLORS } from "@/entities/folder/constants/folder";
@@ -13,6 +13,7 @@ import type {
   CursorPaginationResponseDTO,
   MockCursorPaginationRequestParams,
 } from "@/shared/api/common.interface";
+import { createCursorPaginationResponse } from "@/shared/models/mocks/pagination";
 
 import { mockCategories } from "./category.handler";
 
