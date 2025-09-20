@@ -1,14 +1,18 @@
 import { createQueryKeys } from "@lukemorales/query-key-factory";
 
-import { PlaceSummaryDTO } from "@/entities/place/api/place.interface";
+import type { PlaceSummaryDTO } from "@/entities/place/api/@x/folder";
 
 import { authApiClient } from "@/shared/api/auth/authApiClient";
 import type { ApiResponseDTO, CursorPageParam, CursorPaginationResponseDTO } from "@/shared/api/common.interface";
 import { getSearchParams } from "@/shared/lib/searchParams";
 
-import type { FolderOptionDTO } from "./folder.interface";
+import type { FolderOptionDTO, FolderSummaryDTO } from "./folder.interface";
 
 export const folderQueries = createQueryKeys("folder", {
+  getFolders: {
+    queryKey: ["getFolders"],
+    queryFn: () => authApiClient.get("api/folders").json<ApiResponseDTO<FolderSummaryDTO[]>>(),
+  },
   getPlaceFolders: (placeId: number) => ({
     queryKey: ["getPlaceFolders", placeId],
     queryFn: () =>

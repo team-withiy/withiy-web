@@ -2,8 +2,12 @@
 @use "@/shared/ui/styles/mixins" as m;
 
 .wrapper {
+  position: sticky;
+  top: c.$S_HEADER_HEIGHT;
+  z-index: c.$Z_MY_BOOKMARK_PAGE_TAB_BAR;
   width: 100%;
   padding-top: 12px;
+  background-color: var(--c-grayscale-white);
   border-bottom: 1px solid var(--c-divider-main-sub);
 
   ul {
