@@ -1,0 +1,108 @@
+@use "@/shared/ui/styles/constants" as c;
+@use "@/shared/ui/styles/mixins" as m;
+
+.wrapper {
+  display: grid;
+  border-radius: inherit;
+
+  .imageWrapper {
+    position: relative;
+    overflow: hidden;
+    border-radius: inherit;
+
+    .image {
+      object-fit: cover;
+    }
+  }
+
+  &[style*="--count: 0"] {
+    background-color: var(--c-grayscale-gray-400);
+
+    .imageWrapper {
+      display: none;
+    }
+  }
+
+  &[style*="--count: 1"] {
+    .imageWrapper {
+      width: 100%;
+      height: 100%;
+    }
+  }
+
+  &[style*="--count: 2"] {
+    grid-template-areas: "top" "bottom";
+
+    .imageWrapper:first-of-type {
+      grid-area: top;
+      border-bottom-right-radius: 0;
+      border-bottom-left-radius: 0;
+    }
+
+    .imageWrapper:last-of-type {
+      grid-area: bottom;
+      border-top-left-radius: 0;
+      border-top-right-radius: 0;
+    }
+  }
+
+  &[style*="--count: 3"] {
+    grid-template-areas:
+      "left right"
+      "bottom bottom";
+
+    .imageWrapper:first-of-type {
+      grid-area: left;
+      border-top-right-radius: 0;
+      border-bottom-right-radius: 0;
+      border-bottom-left-radius: 0;
+    }
+
+    .imageWrapper:nth-of-type(2) {
+      grid-area: right;
+      border-top-left-radius: 0;
+      border-bottom-right-radius: 0;
+      border-bottom-left-radius: 0;
+    }
+
+    .imageWrapper:last-of-type {
+      grid-area: bottom;
+      border-top-left-radius: 0;
+      border-top-right-radius: 0;
+    }
+  }
+
+  &[style*="--count: 4"] {
+    grid-template-areas:
+      "top-left top-right"
+      "bottom-left bottom-right";
+
+    .imageWrapper:first-of-type {
+      grid-area: top-left;
+      border-top-right-radius: 0;
+      border-bottom-right-radius: 0;
+      border-bottom-left-radius: 0;
+    }
+
+    .imageWrapper:nth-of-type(2) {
+      grid-area: top-right;
+      border-top-left-radius: 0;
+      border-bottom-right-radius: 0;
+      border-bottom-left-radius: 0;
+    }
+
+    .imageWrapper:nth-of-type(3) {
+      grid-area: bottom-left;
+      border-top-left-radius: 0;
+      border-top-right-radius: 0;
+      border-bottom-right-radius: 0;
+    }
+
+    .imageWrapper:last-of-type {
+      grid-area: bottom-right;
+      border-top-left-radius: 0;
+      border-top-right-radius: 0;
+      border-bottom-left-radius: 0;
+    }
+  }
+}

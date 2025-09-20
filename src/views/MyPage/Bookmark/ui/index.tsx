@@ -4,6 +4,7 @@ import Header from "@/widgets/Layout/ui/Header";
 
 import BackButton from "@/shared/ui/BackButton";
 
+import Content from "./Content";
 import TabBar from "./TabBar";
 import { IconArrowLeft24 } from "public/icons";
 
@@ -20,6 +21,9 @@ const BookmarkPage: React.FC = () => {
       </Header>
       <Suspense fallback={null}>
         <TabBar />
+      </Suspense>
+      <Suspense fallback={null}>
+        <Content />
       </Suspense>
     </main>
   );

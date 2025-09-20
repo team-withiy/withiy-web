@@ -1,0 +1,59 @@
+@use "@/shared/ui/styles/constants" as c;
+@use "@/shared/ui/styles/mixins" as m;
+
+.wrapper {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px 8px;
+  width: 100%;
+  padding: 24px 20px;
+
+  .createFolderButton {
+    @include m.flex($flexDirection: column);
+    width: 100%;
+    aspect-ratio: 3/4;
+    background-color: var(--c-grayscale-gray-50);
+
+    .plusIconWrapper {
+      @include m.flex;
+      width: 60px;
+      height: 60px;
+      margin-bottom: 4px;
+
+      .plusIcon {
+        transform: scale(2.5);
+
+        path {
+          stroke: var(--c-text-disabled);
+        }
+      }
+    }
+
+    .text {
+      @include m.fontCaption1(medium);
+      color: var(--c-text-disabled);
+    }
+  }
+
+  .item {
+    width: 100%;
+
+    .thumbnail {
+      width: 100%;
+      aspect-ratio: 3 / 4;
+      margin-bottom: 8px;
+      border-radius: 8px;
+    }
+
+    .name {
+      @include m.fontBody2(semibold);
+      color: var(--c-text-main);
+
+      .count {
+        @include m.fontBody2(regular);
+        margin-left: 4px;
+        color: var(--c-text-sub);
+      }
+    }
+  }
+}
