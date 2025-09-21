@@ -1,3 +1,4 @@
+/** DEFAULT: 내 장소 폴더 | CUSTOM: 추가로 생성한 폴더 | VIRTUAL: 저장한 모든 장소 폴더 */
 export type FolderType = "DEFAULT" | "CUSTOM" | "VIRTUAL";
 
 export interface FolderOptionDTO {

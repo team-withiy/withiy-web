@@ -25,7 +25,7 @@ const FolderList: React.FC = () => {
         <CreateFolderButton />
         {data.data.map((folder) => (
           <li key={folder.id} className={styles.item} data-testid={`folder-item-${folder.id}`}>
-            <Link href={getFolderDetailPath(folder.id)} data-testid={`folder-link-${folder.id}`}>
+            <Link href={getFolderDetailPath(folder)} data-testid={`folder-link-${folder.id}`}>
               <PartitionedThumbnail imageUrls={folder.thumbnails} className={styles.thumbnail} />
               <span className={styles.name}>
                 {folder.name}

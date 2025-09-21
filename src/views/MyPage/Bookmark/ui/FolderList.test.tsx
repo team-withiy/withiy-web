@@ -32,5 +32,5 @@ test("Folder를 클릭하면 해당 Folder로 이동한다.", async () => {
 
   const firstFolder = result.current.data!.data[0];
   await userEvent.click(screen.getByTestId(`folder-link-${firstFolder.id}`));
-  expect(routerMock.asPath).toBe(getFolderDetailPath(firstFolder.id));
+  expect(routerMock.asPath).toBe(getFolderDetailPath(firstFolder));
 });
