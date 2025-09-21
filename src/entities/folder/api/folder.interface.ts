@@ -1,3 +1,5 @@
+export type FolderType = "DEFAULT" | "CUSTOM" | "VIRTUAL";
+
 export interface FolderOptionDTO {
   id: number;
   name: string;
@@ -13,6 +15,7 @@ export interface FolderSummaryDTO {
   color: string;
   bookmarkCount: number;
   thumbnails: string[];
+  type: FolderType;
   createdAt: Date;
 }
 
