@@ -1,0 +1,37 @@
+@use "@/shared/ui/styles/constants" as c;
+@use "@/shared/ui/styles/mixins" as m;
+
+.wrapper {
+  width: 100%;
+  padding: calc(c.$S_HEADER_HEIGHT + c.$S_PAGE_VERTICAL_PADDING) c.$S_PAGE_HORIZONTAL_PADDING c.$S_PAGE_VERTICAL_PADDING;
+
+  .header {
+    @include m.flex(flex-start);
+
+    .backButton {
+      width: 24px;
+      height: 24px;
+      cursor: pointer;
+    }
+  }
+
+  .title {
+    @include m.flex(flex-start);
+    @include m.fontTitle3(semibold);
+    gap: 8px;
+    color: var(--c-text-main);
+
+    &::before {
+      display: inline-block;
+      width: 3px;
+      height: 28px;
+      content: "";
+      background-color: var(--c-system-success);
+      border-radius: 2px;
+    }
+  }
+
+  .createDatePlanButton {
+    margin: 20px 0 24px;
+  }
+}

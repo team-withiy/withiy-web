@@ -4,6 +4,7 @@ import type { PlaceSummaryDTO } from "@/entities/place/api/@x/folder";
 
 import { authApiClient } from "@/shared/api/auth/authApiClient";
 import type { ApiResponseDTO, CursorPageParam, CursorPaginationResponseDTO } from "@/shared/api/common.interface";
+import { DEFAULT_PAGINATE_LIMIT } from "@/shared/constants/api";
 import { getSearchParams } from "@/shared/lib/searchParams";
 
 import type { FolderOptionDTO, FolderSummaryDTO } from "./folder.interface";
@@ -18,11 +19,13 @@ export const folderQueries = createQueryKeys("folder", {
     queryFn: () =>
       authApiClient.get("api/folders/select", { searchParams: { placeId } }).json<ApiResponseDTO<FolderOptionDTO[]>>(),
   }),
-  paginateFolders: {
-    queryKey: ["paginateFolders"],
+  paginateBookmarkedPlaces: {
+    queryKey: ["paginateBookmarkedPlaces"],
     queryFn: ({ pageParam }) =>
       authApiClient
-        .get("api/folders/all", { searchParams: getSearchParams({ ...(pageParam as CursorPageParam), limit: 10 }) })
+        .get("api/folders/all", {
+          searchParams: getSearchParams({ ...(pageParam as CursorPageParam), limit: DEFAULT_PAGINATE_LIMIT }),
+        })
         .json<CursorPaginationResponseDTO<PlaceSummaryDTO>>(),
   },
 });
