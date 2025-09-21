@@ -6,6 +6,7 @@ import {
   type QueryFunction,
   type UndefinedInitialDataInfiniteOptions,
   useSuspenseInfiniteQuery,
+  type UseSuspenseInfiniteQueryResult,
 } from "@tanstack/react-query";
 
 import { INITIAL_INFINITE_DATA_META } from "../constants/api";
@@ -17,7 +18,7 @@ import type {
   InfiniteDataWithMeta,
 } from "../api/common.interface";
 
-type UseSuspenseCursorPaginationQueryOptions<T, QueryKey extends readonly unknown[]> = Omit<
+export type UseSuspenseCursorPaginationQueryOptions<T, QueryKey extends readonly unknown[]> = Omit<
   UndefinedInitialDataInfiniteOptions<
     CursorPaginationResponseDTO<T>,
     DefaultError,
@@ -31,10 +32,15 @@ type UseSuspenseCursorPaginationQueryOptions<T, QueryKey extends readonly unknow
   initialPageParam?: CursorPageParam;
 };
 
+export type UseSuspenseCursorPaginationQueryResult<T> = UseSuspenseInfiniteQueryResult<
+  InfiniteDataWithMeta<T>,
+  DefaultError
+>;
+
 const useSuspenseCursorPaginationQuery = <T, QueryKey extends readonly unknown[]>(
   options: UseSuspenseCursorPaginationQueryOptions<T, QueryKey>,
   queryClient?: QueryClient,
-) => {
+): UseSuspenseCursorPaginationQueryResult<T> => {
   const memoizedPageParams = useRef<CursorPageParam[]>([]);
   const memoizedMeta = useRef<InfiniteDataMeta>(INITIAL_INFINITE_DATA_META);
 
