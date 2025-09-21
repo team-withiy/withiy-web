@@ -8,3 +8,5 @@ export const FOLDER_COLORS = [
   "#3b82f6",
   "#e8e8e8",
 ] as const;
+
+export const SAVED_ALL_PLACES_FOLDER_ID = -1 as const;

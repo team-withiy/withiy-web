@@ -4,7 +4,7 @@ import { HttpResponse } from "msw";
 
 import { serverHttpHandler } from "@/app/mocks/httpHandler";
 
-import { FolderOptionDTO } from "@/entities/folder/api/folder.interface";
+import { FolderOptionDTO, FolderSummaryDTO, FolderType } from "@/entities/folder/api/folder.interface";
 import { FOLDER_COLORS } from "@/entities/folder/constants/folder";
 import { PlaceSummaryDTO } from "@/entities/place/api/place.interface";
 
@@ -68,4 +68,21 @@ const getFolderAll = serverHttpHandler.get<
   return HttpResponse.json(response, { status: 200 });
 });
 
-export const folderHandlers = [getFolderOptions, getFolderAll];
+export const mockFolders: FolderSummaryDTO[] = range(5).map(() => ({
+  id: faker.number.int(),
+  name: faker.lorem.words(2),
+  color: faker.helpers.arrayElement(FOLDER_COLORS),
+  bookmarkCount: faker.number.int(),
+  thumbnails: range(faker.number.int({ min: 1, max: 3 })).map(() => faker.image.url({ width: 640, height: 480 })),
+  type: faker.helpers.arrayElement<FolderType>(["DEFAULT", "CUSTOM", "VIRTUAL"]),
+  createdAt: faker.date.past(),
+}));
+
+const getFolders = serverHttpHandler.get<{}, undefined, ApiResponseDTO<FolderSummaryDTO[]>>("/api/folders", () => {
+  return HttpResponse.json(
+    { data: mockFolders, message: "success", status: 200, timestamp: faker.date.past() },
+    { status: 200 },
+  );
+});
+
+export const folderHandlers = [getFolderOptions, getFolderAll, getFolders];

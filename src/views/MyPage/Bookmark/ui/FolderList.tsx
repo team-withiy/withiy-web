@@ -1,46 +1,31 @@
 "use client";
 
-import { useState } from "react";
-
 import Link from "next/link";
 
 import { useSuspenseQuery } from "@tanstack/react-query";
-
-import { CreateFolderBottomSheet } from "@/features/createFolder/ui";
+import { range } from "lodash-es";
+import Skeleton from "react-loading-skeleton";
 
 import { folderQueries } from "@/entities/folder/api/folder.queries";
+import { getFolderDetailPath } from "@/entities/folder/model/folder";
 
 import PartitionedThumbnail from "@/shared/ui/PartitionedThumbnail";
 import SSRSafeSuspense from "@/shared/ui/Suspense/SSRSafeSuspense";
 
-import { IconPlus24 } from "public/icons";
+import CreateFolderButton from "./CreateFolderButton";
 
 import styles from "./FolderList.module.scss";
 
 const FolderList: React.FC = () => {
   const { data } = useSuspenseQuery(folderQueries.getFolders);
 
-  const [isShowCreateFolderModal, setIsShowCreateFolderModal] = useState(false);
-
   return (
     <>
-      <ul className={styles.wrapper}>
-        <li className={styles.item}>
-          <button
-            type="button"
-            data-testid="create-folder-button"
-            className={styles.createFolderButton}
-            onClick={() => setIsShowCreateFolderModal(true)}
-          >
-            <div className={styles.plusIconWrapper}>
-              <IconPlus24 className={styles.plusIcon} />
-            </div>
-            <span className={styles.text}>새로운 폴더</span>
-          </button>
-        </li>
+      <ul className={styles.wrapper} data-testid="folder-list">
+        <CreateFolderButton />
         {data.data.map((folder) => (
-          <li key={folder.id} className={styles.item}>
-            <Link href={`/folder/${folder.id}`}>
+          <li key={folder.id} className={styles.item} data-testid={`folder-item-${folder.id}`}>
+            <Link href={getFolderDetailPath(folder.id)} data-testid={`folder-link-${folder.id}`}>
               <PartitionedThumbnail imageUrls={folder.thumbnails} className={styles.thumbnail} />
               <span className={styles.name}>
                 {folder.name}
@@ -50,11 +35,22 @@ const FolderList: React.FC = () => {
           </li>
         ))}
       </ul>
-      <CreateFolderBottomSheet isShow={isShowCreateFolderModal} onClose={() => setIsShowCreateFolderModal(false)} />
     </>
   );
 };
 
 export default SSRSafeSuspense.with(FolderList, {
-  fallback: <>LOADING</>,
+  fallback: (
+    <ul className={styles.wrapper}>
+      <CreateFolderButton />
+      {range(5).map((value) => (
+        <li key={value} className={styles.item}>
+          <div className={styles.thumbnail}>
+            <Skeleton width="100%" height="100%" />
+          </div>
+          <Skeleton width={80} height={16} />
+        </li>
+      ))}
+    </ul>
+  ),
 });
