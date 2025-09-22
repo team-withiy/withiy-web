@@ -21,14 +21,12 @@ export const folderQueries = createQueryKeys("folder", {
   }),
   paginateBookmarkedPlaces: {
     queryKey: ["paginateBookmarkedPlaces"],
-    queryFn: async ({ pageParam }) => {
-      await sleep(1000);
-      return authApiClient
+    queryFn: ({ pageParam }) =>
+      authApiClient
         .get("api/folders/all", {
           searchParams: getSearchParams({ ...(pageParam as CursorPageParam), limit: DEFAULT_PAGINATE_LIMIT }),
         })
-        .json<CursorPaginationResponseDTO<PlaceSummaryDTO>>();
-    },
+        .json<CursorPaginationResponseDTO<PlaceSummaryDTO>>(),
   },
   paginateFolderPlaces: (folderId: number) => ({
     queryKey: ["paginateFolderPlaces", folderId],
@@ -40,5 +38,3 @@ export const folderQueries = createQueryKeys("folder", {
         .json<CursorPaginationResponseDTO<PlaceSummaryDTO>>(),
   }),
 });
-
-const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
