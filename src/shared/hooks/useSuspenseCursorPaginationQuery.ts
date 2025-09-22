@@ -40,7 +40,7 @@ export type UseSuspenseCursorPaginationQueryResult<T> = UseSuspenseInfiniteQuery
 const useSuspenseCursorPaginationQuery = <T, QueryKey extends readonly unknown[]>(
   options: UseSuspenseCursorPaginationQueryOptions<T, QueryKey>,
   queryClient?: QueryClient,
-): UseSuspenseCursorPaginationQueryResult<T> => {
+) => {
   const memoizedPageParams = useRef<CursorPageParam[]>([]);
   const memoizedMeta = useRef<InfiniteDataMeta>(INITIAL_INFINITE_DATA_META);
 
