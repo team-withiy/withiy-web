@@ -1,15 +1,15 @@
 import { cleanup, render, screen } from "@testing-library/react";
 import { afterEach, expect, test, vi } from "vitest";
 
-import type { PlaceDetailDTO } from "@/entities/place/api/place.interface";
+import type { PlaceSummaryDTO } from "@/entities/place/api/place.interface";
 
-import PlaceInfo from ".";
+import PlaceInfo from "./PlaceInfo.client";
 
 vi.mock("@/features/toggleBookmark/ui/Place", () => ({
   default: ({ placeId }: { placeId: number }) => <button data-testid={`favorite-button-${placeId}`}>저장</button>,
 }));
 
-const mockPlace: PlaceDetailDTO = {
+const mockPlace: PlaceSummaryDTO = {
   placeId: 1,
   placeName: "테스트 카페",
   category: {
@@ -18,19 +18,11 @@ const mockPlace: PlaceDetailDTO = {
     icon: "https://example.com/cafe-icon.png",
   },
   address: "서울특별시 강남구 테헤란로 123",
-  location: {
-    latitude: "37.5665",
-    longitude: "126.9780",
-    region1depth: "서울특별시",
-    region2depth: "강남구",
-    region3depth: "역삼동",
-  },
   score: 4.5,
-  photos: [],
-  reviews: [],
+  imageUrls: [],
 };
 
-const mockPlaceWithHighScore: PlaceDetailDTO = {
+const mockPlaceWithHighScore: PlaceSummaryDTO = {
   ...mockPlace,
   placeId: 2,
   placeName: "인기 맛집",
@@ -42,7 +34,7 @@ const mockPlaceWithHighScore: PlaceDetailDTO = {
   },
 };
 
-const mockPlaceWithLowScore: PlaceDetailDTO = {
+const mockPlaceWithLowScore: PlaceSummaryDTO = {
   ...mockPlace,
   placeId: 3,
   placeName: "새로운 장소",
@@ -72,7 +64,7 @@ test("카테고리 아이콘이 올바르게 표시되어야 한다.", () => {
 
   const categoryIcon = screen.getByTestId("category-icon");
   expect(categoryIcon).toBeInTheDocument();
-  expect(categoryIcon).toHaveAttribute("src", mockPlace.category.icon);
+  expect(categoryIcon.getAttribute("src")).toContain(encodeURIComponent(mockPlace.category.icon));
   expect(categoryIcon).toHaveAttribute("alt", mockPlace.category.name);
 });
 
@@ -134,7 +126,7 @@ test("address 태그가 semantic하게 렌더링되어야 한다.", () => {
 });
 
 test("긴 장소명도 올바르게 표시되어야 한다.", () => {
-  const placeWithLongName: PlaceDetailDTO = {
+  const placeWithLongName: PlaceSummaryDTO = {
     ...mockPlace,
     placeName: "아주 긴 이름을 가진 장소입니다 정말로 매우 긴 이름이에요",
   };
@@ -145,7 +137,7 @@ test("긴 장소명도 올바르게 표시되어야 한다.", () => {
 });
 
 test("긴 주소도 올바르게 표시되어야 한다.", () => {
-  const placeWithLongAddress: PlaceDetailDTO = {
+  const placeWithLongAddress: PlaceSummaryDTO = {
     ...mockPlace,
     address: "서울특별시 강남구 테헤란로 123번길 45 ABC빌딩 지하 1층 101호 매우 긴 주소입니다",
   };

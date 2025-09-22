@@ -10,7 +10,7 @@ import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { z } from "zod";
 
 import { userQueries } from "@/entities/user/api/user.queries";
-import ThumbnailInput, { LoadingThumbnailInput } from "@/entities/user/ui/ThumbnailInput";
+import ThumbnailInput from "@/entities/user/ui/ThumbnailInput";
 
 import { isFetchHTTPError } from "@/shared/models/auth/fetchHTTPException";
 import BottomFloatingButtonWrapper from "@/shared/ui/BottomFloatingButtonWrapper";
@@ -117,7 +117,7 @@ const UpdateProfileForm: React.FC = () => {
 const LoadingUpdateProfileForm = () => {
   return (
     <div className={styles.wrapper} data-testid="loading-update-profile-form">
-      <LoadingThumbnailInput className={styles.thumbnailInput} />
+      <ThumbnailInput.Loading className={styles.thumbnailInput} />
       <Input
         label="닉네임"
         type="text"

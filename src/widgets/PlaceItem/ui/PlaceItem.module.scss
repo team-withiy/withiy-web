@@ -1,0 +1,33 @@
+@use "@/shared/ui/styles/constants" as c;
+@use "@/shared/ui/styles/mixins" as m;
+
+.wrapper {
+  width: 100%;
+  padding: 24px 0;
+
+  .info {
+    padding: 0 20px 16px;
+  }
+
+  .images {
+    @include m.flex(flex-start);
+    gap: 8px;
+    width: 100%;
+    overflow: scroll;
+
+    .image {
+      width: 120px;
+      height: 160px;
+      object-fit: cover;
+      border-radius: 6.4px;
+
+      &:first-of-type {
+        margin-left: 20px;
+      }
+
+      &:last-of-type {
+        margin-right: 20px;
+      }
+    }
+  }
+}

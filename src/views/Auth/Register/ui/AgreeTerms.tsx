@@ -118,9 +118,7 @@ const AgreeTerms: React.FC<Props> = ({ terms, defaultTermAgreements, onClickNext
   );
 };
 
-export default AgreeTerms;
-
-export const LoadingAgreeTerms: React.FC = () => {
+const LoadingAgreeTerms: React.FC = () => {
   return (
     <div className={styles.wrapper}>
       <div className={styles.totalAgree}>
@@ -134,3 +132,7 @@ export const LoadingAgreeTerms: React.FC = () => {
     </div>
   );
 };
+
+export default Object.assign(AgreeTerms, {
+  Loading: LoadingAgreeTerms,
+});

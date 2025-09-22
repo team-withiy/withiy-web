@@ -2,7 +2,7 @@ import cx from "clsx";
 
 import BookmarkPlaceButton from "@/features/toggleBookmark/ui/Place";
 
-import type { PlaceDetailDTO } from "@/entities/place/api/place.interface";
+import type { PlaceSummaryDTO } from "@/entities/place/api/place.interface";
 
 import IconButton from "@/shared/ui/IconButton";
 import BlurImage from "@/shared/ui/Image/BlurImage";
@@ -12,7 +12,7 @@ import { IconCornerUpRight16, IconSmile16 } from "public/icons";
 import styles from "./PlaceInfo.module.scss";
 
 interface Props {
-  place: PlaceDetailDTO;
+  place: PlaceSummaryDTO;
   className?: string;
 }
 

@@ -3,6 +3,7 @@ import Header from "@/widgets/Layout/ui/Header";
 import BackButton from "@/shared/ui/BackButton";
 import Button from "@/shared/ui/Button/Button";
 
+import PlaceList from "./PlaceList";
 import PlaceTotalCount from "./PlaceTotalCount";
 import { IconArrowLeft24 } from "public/icons";
 
@@ -24,6 +25,7 @@ const AllPlacesFolderDetailPage: React.FC = () => {
       <Button type="button" size={36} full variant="outline" className={styles.createDatePlanButton}>
         데이트 일정 만들기
       </Button>
+      <PlaceList />
     </main>
   );
 };

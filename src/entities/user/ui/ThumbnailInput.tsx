@@ -60,8 +60,6 @@ const ThumbnailInput: React.FC<Props> = ({ className, onDrop, defaultValue, file
   );
 };
 
-export default ThumbnailInput;
-
 interface LoadingThumbnailInputProps {
   className?: string;
   "data-testid"?: string;
@@ -77,3 +75,7 @@ export const LoadingThumbnailInput = ({ className, "data-testid": testId }: Load
     </div>
   );
 };
+
+export default Object.assign(ThumbnailInput, {
+  Loading: LoadingThumbnailInput,
+});
