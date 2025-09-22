@@ -8,7 +8,7 @@ import type { TermAgreementDTO, TermDTO } from "@/entities/term/api/term.interfa
 
 import type { ApiResponseDTO } from "@/shared/api/common.interface";
 
-import AgreeTerms, { LoadingAgreeTerms } from "./AgreeTerms";
+import AgreeTerms from "./AgreeTerms";
 
 import styles from "./TermPage.module.scss";
 
@@ -31,15 +31,15 @@ const TermPage: React.FC<Props> = ({ termPromise, defaultTermAgreements, onClick
   );
 };
 
-export default TermPage;
-
 export const LoadingTermPage: React.FC = () => {
   return (
     <main className={styles.wrapper}>
       <Header className={styles.header}>
         <h1 className={styles.title}>이용약관 동의</h1>
       </Header>
-      <LoadingAgreeTerms />
+      <AgreeTerms.Loading />
     </main>
   );
 };
+
+export default TermPage;

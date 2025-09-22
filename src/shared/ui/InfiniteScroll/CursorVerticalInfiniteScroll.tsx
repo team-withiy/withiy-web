@@ -16,6 +16,8 @@ interface Props<T, QueryKey extends readonly unknown[]> {
   children: (props: UseCursorPaginationQueryResult<T>) => React.ReactNode;
   className?: string;
   elementType: ElementType;
+  rootMargin?: string;
+  loadingElements?: React.ReactNode;
   isElementRoot?: boolean;
   blockObservePrevIntersect?: boolean;
   blockObserveNextIntersect?: boolean;
@@ -27,6 +29,8 @@ const CursorVerticalInfiniteScroll = <T, QueryKey extends readonly unknown[]>({
   elementType: Element,
   throwOnEmpty = false,
   isElementRoot = false,
+  rootMargin = "20px",
+  loadingElements,
   className,
   blockObserveNextIntersect,
   blockObservePrevIntersect,
@@ -37,15 +41,15 @@ const CursorVerticalInfiniteScroll = <T, QueryKey extends readonly unknown[]>({
   const { ref: topRef, isIntersecting: isTopIntersecting } = useIntersectionObserver<HTMLDivElement>({
     disabled: blockObservePrevIntersect,
     threshold: 0,
-    rootMargin: "0px",
-    root: isElementRoot ? containerRef : undefined,
+    rootMargin: `${rootMargin} 0px 0px 0px`,
+    root: isElementRoot ? undefined : containerRef,
   });
 
   const { ref: bottomRef, isIntersecting: isBottomIntersecting } = useIntersectionObserver<HTMLDivElement>({
     disabled: blockObserveNextIntersect,
     threshold: 0,
-    rootMargin: "0px",
-    root: isElementRoot ? containerRef : undefined,
+    rootMargin: `0px 0px ${rootMargin} 0px`,
+    root: isElementRoot ? undefined : containerRef,
   });
 
   useEffect(() => {
@@ -67,7 +71,9 @@ const CursorVerticalInfiniteScroll = <T, QueryKey extends readonly unknown[]>({
   return (
     <Element className={className} ref={containerRef}>
       {!blockObservePrevIntersect && <div ref={topRef} />}
+      {queryInfo.isFetchingPreviousPage && loadingElements}
       {children(queryInfo)}
+      {queryInfo.isFetchingNextPage && loadingElements}
       {!blockObserveNextIntersect && <div ref={bottomRef} />}
     </Element>
   );

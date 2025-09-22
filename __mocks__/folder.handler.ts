@@ -6,7 +6,7 @@ import { serverHttpHandler } from "@/app/mocks/httpHandler";
 
 import { FolderOptionDTO, FolderSummaryDTO, FolderType } from "@/entities/folder/api/folder.interface";
 import { FOLDER_COLORS } from "@/entities/folder/constants/folder";
-import { PlaceSummaryDTO } from "@/entities/place/api/place.interface";
+import type { PlaceSummaryDTO } from "@/entities/place/api/@x/folder";
 
 import type {
   ApiResponseDTO,

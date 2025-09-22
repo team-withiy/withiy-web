@@ -137,9 +137,29 @@ interface Props<T, QueryKey extends readonly unknown[]> {
 
 Suspense를 지원하는 무한 스크롤 컴포넌트입니다.
 
+#### Suspense Props 정의
+
+```typescript
+interface Props<T, QueryKey extends readonly unknown[]> {
+  query: UseSuspenseCursorPaginationQueryOptions<T, QueryKey>;
+  throwOnEmpty?: boolean;
+  children: (props: UseSuspenseCursorPaginationQueryResult<T>) => React.ReactNode;
+  className?: string;
+  elementType: ElementType;
+  rootMargin?: string;
+  loadingElements?: React.ReactNode;
+  isElementRoot?: boolean;
+  blockObservePrevIntersect?: boolean;
+  blockObserveNextIntersect?: boolean;
+}
+```
+
 #### 주요 장점
 
 - **Suspense 호환**: React Suspense와 완전히 호환됩니다
+- **rootMargin 지원**: Intersection Observer의 rootMargin을 설정할 수 있습니다 (기본값: "100px")
+- **로딩 요소**: `loadingElements`로 이전/다음 페이지 로딩 중 표시할 요소를 지정할 수 있습니다
+- **향상된 UX**: 스크롤 전 미리 데이터를 로드하여 더 부드러운 사용자 경험을 제공합니다
 - **기본 기능**: `CursorVerticalInfiniteScroll`과 동일한 기능을 제공합니다
 
 ### EmptyErrorBoundary
@@ -208,6 +228,8 @@ function BookmarkPlacesList() {
 
 ```typescript
 import { Suspense } from "react";
+import { range } from "lodash-es";
+import Skeleton from "react-loading-skeleton";
 import { InfiniteScroll } from "@/shared/ui/InfiniteScroll";
 
 function BookmarkPlacesPage() {
@@ -215,15 +237,19 @@ function BookmarkPlacesPage() {
     <Suspense fallback={<LoadingFallback />}>
       <InfiniteScroll.Suspense.Cursor.Vertical
         query={folderQueries.paginateBookmarkedPlaces}
-        elementType="div"
+        elementType="ul"
         className="places-list"
+        rootMargin="300px"
+        loadingElements={range(5).map((value) => (
+          <Skeleton key={value} height={200} />
+        ))}
       >
         {(queryInfo) => (
-          <div>
+          <>
             {queryInfo.data.data.map((place) => (
               <PlaceCard key={place.id} place={place} />
             ))}
-          </div>
+          </>
         )}
       </InfiniteScroll.Suspense.Cursor.Vertical>
     </Suspense>
