@@ -28,4 +28,13 @@ export const folderQueries = createQueryKeys("folder", {
         })
         .json<CursorPaginationResponseDTO<PlaceSummaryDTO>>(),
   },
+  paginateFolderPlaces: (folderId: number) => ({
+    queryKey: ["paginateFolderPlaces", folderId],
+    queryFn: ({ pageParam }) =>
+      authApiClient
+        .get(`api/folders/${folderId}`, {
+          searchParams: getSearchParams({ ...(pageParam as CursorPageParam), limit: DEFAULT_PAGINATE_LIMIT }),
+        })
+        .json<CursorPaginationResponseDTO<PlaceSummaryDTO>>(),
+  }),
 });
