@@ -26,3 +26,4 @@
 ### Developments
 
 - [Authorization System](./docs/authorization-system.md)
+- [Infinite Scroll](./docs/infinite-scroll.md)
