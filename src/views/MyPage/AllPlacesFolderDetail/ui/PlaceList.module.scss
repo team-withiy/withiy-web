@@ -1,6 +1,10 @@
 @use "@/shared/ui/styles/constants" as c;
 @use "@/shared/ui/styles/mixins" as m;
 
+.createDatePlanButton {
+  margin: 20px 0 24px;
+}
+
 .wrapper {
   @include m.flex(flex-start, center, column);
   gap: 8px;
