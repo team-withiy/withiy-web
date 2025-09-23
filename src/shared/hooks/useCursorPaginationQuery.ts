@@ -2,6 +2,7 @@ import { useCallback, useRef } from "react";
 
 import {
   type DefaultError,
+  InfiniteData,
   type QueryClient,
   type QueryFunction,
   type UndefinedInitialDataInfiniteOptions,
@@ -46,6 +47,30 @@ const useCursorPaginationQuery = <T, QueryKey extends readonly unknown[]>(
     [options],
   );
 
+  const select = useCallback((data: InfiniteData<CursorPaginationResponseDTO<T>, CursorPageParam>) => {
+    const prevPageParams = memoizedPageParams.current;
+    const currentPageParams = data.pageParams;
+
+    const hasFirstParamChanged =
+      prevPageParams?.[0]?.cursor !== currentPageParams?.[0]?.cursor ||
+      prevPageParams?.[0]?.prev !== currentPageParams?.[0]?.prev;
+
+    const latestAddedPage = hasFirstParamChanged ? data.pages[0] : data.pages[data.pages.length - 1];
+    memoizedMeta.current = {
+      total: latestAddedPage.total,
+      message: latestAddedPage.message,
+      status: latestAddedPage.status,
+    };
+
+    memoizedPageParams.current = currentPageParams;
+    const currentMeta = memoizedMeta.current;
+
+    return {
+      data: data.pages.flatMap((page) => page.data),
+      meta: currentMeta,
+    };
+  }, []);
+
   return useInfiniteQuery<
     CursorPaginationResponseDTO<T>,
     DefaultError,
@@ -56,33 +81,7 @@ const useCursorPaginationQuery = <T, QueryKey extends readonly unknown[]>(
     {
       ...options,
       queryFn,
-      select: (data) => {
-        const prevPageParams = memoizedPageParams.current;
-        const currentPageParams = data.pageParams;
-
-        const hasFirstParamChanged =
-          prevPageParams?.[0]?.cursor !== currentPageParams?.[0]?.cursor ||
-          prevPageParams?.[0]?.prev !== currentPageParams?.[0]?.prev;
-
-        const isNewPageAdded = currentPageParams.length > prevPageParams.length;
-
-        if (isNewPageAdded) {
-          const latestAddedPage = hasFirstParamChanged ? data.pages[0] : data.pages[data.pages.length - 1];
-          memoizedMeta.current = {
-            total: latestAddedPage.total,
-            message: latestAddedPage.message,
-            status: latestAddedPage.status,
-          };
-        }
-
-        memoizedPageParams.current = currentPageParams;
-        const currentMeta = memoizedMeta.current;
-
-        return {
-          data: data.pages.flatMap((page) => page.data),
-          meta: currentMeta,
-        };
-      },
+      select,
       initialPageParam: options?.initialPageParam ?? { cursor: null, prev: false },
       getNextPageParam: (lastPage) => (lastPage.hasNext ? { cursor: lastPage.nextCursor, prev: false } : undefined),
       getPreviousPageParam: (lastPage) => (lastPage.hasPrev ? { cursor: lastPage.prevCursor, prev: true } : undefined),

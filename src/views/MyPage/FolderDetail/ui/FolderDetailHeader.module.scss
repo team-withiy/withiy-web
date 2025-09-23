@@ -1,0 +1,26 @@
+@use "@/shared/ui/styles/constants" as c;
+@use "@/shared/ui/styles/mixins" as m;
+
+.wrapper {
+  @include m.flex(space-between);
+  @include m.fixed(0 auto auto 50%);
+  z-index: c.$Z_GNB;
+  width: 100%;
+  max-width: c.$S_MAX_WIDTH;
+  height: c.$S_HEADER_HEIGHT;
+  padding: 12px 20px;
+  background-color: var(--c-grayscale-white);
+  border-bottom: 1px solid var(--c-divider-main-sub);
+  transform: translateX(-50%);
+
+  .backButton {
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+  }
+
+  .menuButton {
+    width: 20px;
+    height: 20px;
+  }
+}

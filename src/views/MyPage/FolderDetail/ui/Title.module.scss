@@ -1,0 +1,23 @@
+@use "@/shared/ui/styles/constants" as c;
+@use "@/shared/ui/styles/mixins" as m;
+
+.wrapper {
+  @include m.flex(flex-start);
+  @include m.fontTitle3(semibold);
+  gap: 8px;
+  color: var(--c-text-main);
+
+  &::before {
+    display: inline-block;
+    width: 3px;
+    height: 28px;
+    content: "";
+    background-color: var(--folder-color);
+    border-radius: 2px;
+  }
+
+  .count {
+    @include m.fontTitle5(regular);
+    color: var(--c-text-sub);
+  }
+}

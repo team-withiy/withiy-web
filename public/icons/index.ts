@@ -70,3 +70,6 @@ export { default as IconCornerUpRight16 } from "./corner-up-right16.svg";
 
 // MEMO: PLUS
 export { default as IconPlus24 } from "./plus24.svg";
+
+// MEMO: ELLIPSIS-VERTICAL
+export { default as IconEllipsisVertical20 } from "./ellipsis-vertical20.svg";
