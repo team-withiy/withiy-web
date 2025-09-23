@@ -92,9 +92,10 @@ export type UseCursorPaginationQueryResult<T> = UseInfiniteQueryResult<InfiniteD
 
 #### 핵심 기능
 
-- **메타데이터 메모이제이션**: 페이지 변경 시 메타데이터를 메모이제이션하여 성능을 최적화합니다
+- **메타데이터 메모이제이션**: 페이지 변경 시 메타데이터를 자동으로 업데이트하여 최신 정보를 유지합니다
 - **양방향 페이지네이션**: 다음/이전 페이지 모두 지원합니다
 - **평면화된 데이터**: 모든 페이지의 데이터를 하나의 배열로 평면화하여 제공합니다
+- **스마트 메타 업데이트**: 새로운 페이지가 추가될 때마다 가장 최신 페이지의 메타데이터로 자동 업데이트됩니다
 
 ### useSuspenseCursorPaginationQuery
 
@@ -105,6 +106,7 @@ Suspense를 지원하는 커서 기반 페이지네이션 Hook입니다.
 - **Suspense 지원**: React Suspense와 완전히 호환됩니다
 - **Error Boundary 지원**: 에러 발생 시 Error Boundary에서 처리됩니다
 - **기본 기능**: `useCursorPaginationQuery`와 동일한 기능을 제공합니다
+- **자동 메타 동기화**: invalidateQueries나 실시간 데이터 변경 시에도 메타데이터가 올바르게 업데이트됩니다
 
 ## Components
 
