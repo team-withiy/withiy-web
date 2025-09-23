@@ -1,19 +1,25 @@
 "use client";
 
-import { type ElementType, useEffect, useRef } from "react";
+import { type ElementType, ReactNode, useEffect, useRef } from "react";
 
 import useIntersectionObserver from "@/shared/hooks/useIntersectionObserver";
-import useSuspenseCursorPaginationQuery, {
-  type UseSuspenseCursorPaginationQueryOptions,
-  type UseSuspenseCursorPaginationQueryResult,
-} from "@/shared/hooks/useSuspenseCursorPaginationQuery";
+import { UseSuspenseCursorPaginationQueryResult } from "@/shared/hooks/useSuspenseCursorPaginationQuery";
 
 import { EmptyError } from "./EmptyErrorBoundary";
 
-interface Props<T, QueryKey extends readonly unknown[]> {
-  query: UseSuspenseCursorPaginationQueryOptions<T, QueryKey>;
-  throwOnEmpty?: boolean;
-  children: (props: UseSuspenseCursorPaginationQueryResult<T>) => React.ReactNode;
+interface QueryInfo<T>
+  extends Pick<
+    UseSuspenseCursorPaginationQueryResult<T>,
+    | "data"
+    | "fetchNextPage"
+    | "fetchPreviousPage"
+    | "hasNextPage"
+    | "hasPreviousPage"
+    | "isFetchingNextPage"
+    | "isFetchingPreviousPage"
+  > {}
+
+interface Props<T> extends QueryInfo<T> {
   className?: string;
   elementType: ElementType;
   rootMargin?: string;
@@ -21,11 +27,18 @@ interface Props<T, QueryKey extends readonly unknown[]> {
   isElementRoot?: boolean;
   blockObservePrevIntersect?: boolean;
   blockObserveNextIntersect?: boolean;
+  throwOnEmpty?: boolean;
+  children: ReactNode;
 }
 
-const SuspenseCursorVerticalInfiniteScroll = <T, QueryKey extends readonly unknown[]>({
-  query,
-  children,
+const SuspenseCursorVerticalInfiniteScrollContainer = <T,>({
+  data,
+  hasPreviousPage,
+  isFetchingPreviousPage,
+  fetchPreviousPage,
+  hasNextPage,
+  isFetchingNextPage,
+  fetchNextPage,
   elementType: Element,
   throwOnEmpty = false,
   isElementRoot = false,
@@ -34,8 +47,8 @@ const SuspenseCursorVerticalInfiniteScroll = <T, QueryKey extends readonly unkno
   className,
   blockObserveNextIntersect,
   blockObservePrevIntersect,
-}: Props<T, QueryKey>) => {
-  const queryInfo = useSuspenseCursorPaginationQuery(query);
+  children,
+}: Props<T>) => {
   const containerRef = useRef<HTMLElement | null>(null);
 
   const { ref: topRef, isIntersecting: isTopIntersecting } = useIntersectionObserver<HTMLDivElement>({
@@ -54,29 +67,29 @@ const SuspenseCursorVerticalInfiniteScroll = <T, QueryKey extends readonly unkno
 
   useEffect(() => {
     if (blockObservePrevIntersect) return;
-    if (isTopIntersecting && queryInfo.hasPreviousPage && !queryInfo.isFetchingPreviousPage) {
-      queryInfo.fetchPreviousPage();
+    if (isTopIntersecting && hasPreviousPage && !isFetchingPreviousPage) {
+      fetchPreviousPage();
     }
-  }, [blockObservePrevIntersect, isTopIntersecting, queryInfo]);
+  }, [blockObservePrevIntersect, isTopIntersecting, hasPreviousPage, isFetchingPreviousPage, fetchPreviousPage]);
 
   useEffect(() => {
     if (blockObserveNextIntersect) return;
-    if (isBottomIntersecting && queryInfo.hasNextPage && !queryInfo.isFetchingNextPage) {
-      queryInfo.fetchNextPage();
+    if (isBottomIntersecting && hasNextPage && !isFetchingNextPage) {
+      fetchNextPage();
     }
-  }, [blockObserveNextIntersect, isBottomIntersecting, queryInfo]);
+  }, [blockObserveNextIntersect, isBottomIntersecting, hasNextPage, isFetchingNextPage, fetchNextPage]);
 
-  if (throwOnEmpty && queryInfo.data?.meta.total === 0) throw new EmptyError();
+  if (throwOnEmpty && data.meta.total === 0) throw new EmptyError();
 
   return (
     <Element className={className} ref={containerRef}>
       {!blockObservePrevIntersect && <div ref={topRef} />}
-      {queryInfo.isFetchingPreviousPage && loadingElements}
-      {children(queryInfo)}
-      {queryInfo.isFetchingNextPage && loadingElements}
+      {isFetchingPreviousPage && loadingElements}
+      {children}
+      {isFetchingNextPage && loadingElements}
       {!blockObserveNextIntersect && <div ref={bottomRef} />}
     </Element>
   );
 };
 
-export default SuspenseCursorVerticalInfiniteScroll;
+export default SuspenseCursorVerticalInfiniteScrollContainer;

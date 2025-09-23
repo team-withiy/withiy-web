@@ -7,6 +7,9 @@ export { default as IconCharacterLeave } from "./character-leave.svg";
 export { default as IconCharacterBear } from "./character-bear.svg";
 export { default as IconCharacterRabbit } from "./character-rabbit.svg";
 
+// MEMO: PIN
+export { default as IconLargePin } from "./large-pin.svg";
+
 // MEMO: LETTER
 export { default as IconLetter } from "./letter.svg";
 

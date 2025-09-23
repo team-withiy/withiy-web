@@ -2,5 +2,18 @@
 @use "@/shared/ui/styles/mixins" as m;
 
 .wrapper {
-  width: 100%;
+  @include m.flex(center, center, column);
+  position: fixed;
+  inset: 0;
+
+  .pin {
+    margin-bottom: 56px;
+  }
+
+  .text {
+    @include m.fontTitle5(medium);
+    margin-bottom: 16px;
+    color: var(--c-text-main);
+    text-align: center;
+  }
 }

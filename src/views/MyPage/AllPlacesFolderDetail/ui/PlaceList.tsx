@@ -8,39 +8,54 @@ import PlaceItem from "@/widgets/PlaceItem/ui";
 
 import { folderQueries } from "@/entities/folder/api/folder.queries";
 
+import Button from "@/shared/ui/Button/Button";
 import { InfiniteScroll } from "@/shared/ui/InfiniteScroll";
 import SSRSafeSuspense from "@/shared/ui/Suspense/SSRSafeSuspense";
 
 import styles from "./PlaceList.module.scss";
 
+// TODO: 데이트 일정 만들기 버튼 기능 구현 필요
 const PlaceList: React.FC = () => {
   return (
-    <InfiniteScroll.EmptyBoundary fallback={<EmptyBookmark type="folder" />}>
-      <InfiniteScroll.Suspense.Cursor.Vertical
-        elementType="ul"
-        query={folderQueries.paginateBookmarkedPlaces}
-        isElementRoot
-        rootMargin="300px"
-        throwOnEmpty
-        className={styles.wrapper}
-        loadingElements={range(10).map((value) => (
-          <Skeleton containerClassName={styles.loadingContainer} className={styles.loading} key={value} />
-        ))}
-      >
-        {({ data }) =>
-          data.data.map((place) => <PlaceItem className={styles.item} place={place} key={place.placeId} />)
-        }
-      </InfiniteScroll.Suspense.Cursor.Vertical>
-    </InfiniteScroll.EmptyBoundary>
+    <InfiniteScroll.Suspense.Cursor.Vertical.Boundary query={folderQueries.paginateBookmarkedPlaces}>
+      {({ data, ...queryInfo }) => (
+        <InfiniteScroll.EmptyBoundary fallback={<EmptyBookmark type="folder" />}>
+          <Button type="button" size={36} full variant="outline" className={styles.createDatePlanButton}>
+            데이트 일정 만들기
+          </Button>
+          <InfiniteScroll.Suspense.Cursor.Vertical.Container
+            data={data}
+            elementType="ul"
+            rootMargin="300px"
+            isElementRoot
+            className={styles.wrapper}
+            throwOnEmpty
+            loadingElements={range(10).map((value) => (
+              <Skeleton containerClassName={styles.loadingContainer} className={styles.loading} key={value} />
+            ))}
+            {...queryInfo}
+          >
+            {data.data.map((place) => (
+              <PlaceItem className={styles.item} place={place} key={place.placeId} />
+            ))}
+          </InfiniteScroll.Suspense.Cursor.Vertical.Container>
+        </InfiniteScroll.EmptyBoundary>
+      )}
+    </InfiniteScroll.Suspense.Cursor.Vertical.Boundary>
   );
 };
 
 export default SSRSafeSuspense.with(PlaceList, {
   fallback: (
-    <ul className={styles.wrapper}>
-      {range(10).map((value) => (
-        <Skeleton containerClassName={styles.loadingContainer} className={styles.loading} key={value} />
-      ))}
-    </ul>
+    <>
+      <Button type="button" size={36} full variant="outline" className={styles.createDatePlanButton} disabled>
+        데이트 일정 만들기
+      </Button>
+      <ul className={styles.wrapper}>
+        {range(10).map((value) => (
+          <Skeleton containerClassName={styles.loadingContainer} className={styles.loading} key={value} />
+        ))}
+      </ul>
+    </>
   ),
 });
