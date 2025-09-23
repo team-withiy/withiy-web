@@ -19,7 +19,7 @@ export const useUpdatePlaceBookmarkMutation = () => {
     onSuccess: async (_, { placeId }) => {
       await Promise.all([
         queryClient.invalidateQueries(placeQueries.getPlaceBookmark(placeId)),
-        queryClient.invalidateQueries(folderQueries.getPlaceFolders(placeId)),
+        queryClient.invalidateQueries({ queryKey: folderQueries._def }),
       ]);
     },
   });

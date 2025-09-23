@@ -9,7 +9,7 @@ import { IconCharacterBear } from "public/icons";
 
 import styles from "./Error.module.scss";
 
-const NotFoundError: FallbackRenderType = () => {
+const NotFoundError: FallbackRenderType = (props) => {
   return (
     <DvhHeightLayout heightType="height" dvh={100} className={styles.wrapper}>
       <main className={styles.main}>
@@ -28,7 +28,7 @@ const NotFoundError: FallbackRenderType = () => {
           </section>
         </section>
         <BottomFloatingButtonWrapper hasTwoButtons>
-          <Link href="/" className={styles.link}>
+          <Link href="/" className={styles.link} onNavigate={props?.resetErrorBoundary}>
             <Button size={52} full variant="default" type="button">
               위디 홈으로 바로가기
             </Button>
