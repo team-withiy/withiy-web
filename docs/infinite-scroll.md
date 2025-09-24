@@ -110,6 +110,14 @@ Suspense를 지원하는 커서 기반 페이지네이션 Hook입니다.
 
 ## Components
 
+### 아키텍처 개요
+
+무한 스크롤 시스템은 **관심사 분리 원칙**에 따라 다음과 같이 구성됩니다:
+
+- **Boundary 컴포넌트**: 데이터 fetching과 상태 관리를 담당 (`/src/shared/ui/Boundary/`)
+- **Container 컴포넌트**: UI 렌더링과 스크롤 감지를 담당 (`/src/shared/ui/InfiniteScroll/`)
+- **EmptyBoundary**: 빈 데이터 상태 처리 (`/src/shared/ui/InfiniteScroll/`)
+
 ### InfiniteScroll 구조
 
 무한 스크롤 컴포넌트는 Boundary와 Container로 분리된 구조를 가집니다:
@@ -120,14 +128,14 @@ export const InfiniteScroll = Object.freeze({
   Suspense: {
     Cursor: {
       Vertical: {
-        Boundary: SuspenseCursorVerticalInfiniteScrollBoundary,
+        Boundary: SuspenseCursorPaginationBoundary,
         Container: SuspenseCursorVerticalInfiniteScrollContainer,
       },
     },
   },
   Cursor: {
     Vertical: {
-      Boundary: CursorVerticalInfiniteScrollBoundary,
+      Boundary: CursorPaginationBoundary,
       Container: CursorVerticalInfiniteScrollContainer,
     },
   },
@@ -136,9 +144,11 @@ export const InfiniteScroll = Object.freeze({
 
 ### Boundary Components
 
-#### SuspenseCursorVerticalInfiniteScrollBoundary
+#### SuspenseCursorPaginationBoundary
 
 Suspense를 지원하는 무한 스크롤의 데이터 fetching을 담당하는 경계 컴포넌트입니다.
+
+**위치:** `/src/shared/ui/Boundary/SuspenseCursorPaginationBoundary.tsx`
 
 **Props:**
 
@@ -155,9 +165,11 @@ interface Props<T, QueryKey extends readonly unknown[]> {
 - 쿼리 결과를 children에 전달
 - Suspense와 Error Boundary 지원
 
-#### CursorVerticalInfiniteScrollBoundary
+#### CursorPaginationBoundary
 
 일반적인 무한 스크롤의 데이터 fetching을 담당하는 경계 컴포넌트입니다.
+
+**위치:** `/src/shared/ui/Boundary/CursorPaginationBoundary.tsx`
 
 **Props:**
 
@@ -168,11 +180,19 @@ interface Props<T, QueryKey extends readonly unknown[]> {
 }
 ```
 
+**역할:**
+
+- 커서 기반 페이지네이션 쿼리 실행
+- 쿼리 결과를 children에 전달
+- 로딩, 에러 상태 관리
+
 ### Container Components
 
 #### SuspenseCursorVerticalInfiniteScrollContainer
 
 무한 스크롤의 UI 렌더링과 스크롤 감지를 담당하는 컨테이너 컴포넌트입니다.
+
+**위치:** `/src/shared/ui/InfiniteScroll/SuspenseCursorVerticalInfiniteScrollContainer.tsx`
 
 **Props:**
 
@@ -205,9 +225,26 @@ interface Props<T> {
 - 로딩 상태 표시
 - 빈 데이터 처리
 
+#### CursorVerticalInfiniteScrollContainer
+
+일반적인 무한 스크롤의 UI 렌더링과 스크롤 감지를 담당하는 컨테이너 컴포넌트입니다.
+
+**위치:** `/src/shared/ui/InfiniteScroll/CursorVerticalInfiniteScrollContainer.tsx`
+
+**Props:** `SuspenseCursorVerticalInfiniteScrollContainer`와 동일
+
+**역할:**
+
+- 실제 DOM 요소 렌더링
+- Intersection Observer를 통한 스크롤 감지
+- 로딩 상태 표시
+- 빈 데이터 처리
+
 ### EmptyErrorBoundary
 
 빈 데이터 상태를 처리하기 위한 Error Boundary입니다.
+
+**위치:** `/src/shared/ui/InfiniteScroll/EmptyErrorBoundary.tsx`
 
 #### 사용 예시
 
