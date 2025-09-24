@@ -1,22 +1,22 @@
-import CursorVerticalInfiniteScrollBoundary from "./CursorVerticalInfiniteScrollBoundary";
 import CursorVerticalInfiniteScrollContainer from "./CursorVerticalInfiniteScrollContainer";
 import EmptyErrorBoundary from "./EmptyErrorBoundary";
-import SuspenseCursorVerticalInfiniteScrollBoundary from "./SuspenseCursorVerticalInfiniteScrollBoundary";
 import SuspenseCursorVerticalInfiniteScrollContainer from "./SuspenseCursorVerticalInfiniteScrollContainer";
+import CursorPaginationBoundary from "../Boundary/CursorPaginationBoundary";
+import SuspenseCursorPaginationBoundary from "../Boundary/SuspenseCursorPaginationBoundary";
 
 export const InfiniteScroll = Object.freeze({
   EmptyBoundary: EmptyErrorBoundary,
   Suspense: {
     Cursor: {
       Vertical: {
-        Boundary: SuspenseCursorVerticalInfiniteScrollBoundary,
+        Boundary: SuspenseCursorPaginationBoundary,
         Container: SuspenseCursorVerticalInfiniteScrollContainer,
       },
     },
   },
   Cursor: {
     Vertical: {
-      Boundary: CursorVerticalInfiniteScrollBoundary,
+      Boundary: CursorPaginationBoundary,
       Container: CursorVerticalInfiniteScrollContainer,
     },
   },

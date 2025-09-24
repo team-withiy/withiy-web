@@ -10,7 +10,7 @@ interface Props<T, QueryKey extends readonly unknown[]> {
   children: (props: UseSuspenseCursorPaginationQueryResult<T>) => React.ReactNode;
 }
 
-const SuspenseCursorVerticalInfiniteScrollBoundary = <T, QueryKey extends readonly unknown[]>({
+const SuspenseCursorPaginationBoundary = <T, QueryKey extends readonly unknown[]>({
   query,
   children,
 }: Props<T, QueryKey>) => {
@@ -18,4 +18,4 @@ const SuspenseCursorVerticalInfiniteScrollBoundary = <T, QueryKey extends readon
   return children(queryInfo);
 };
 
-export default SuspenseCursorVerticalInfiniteScrollBoundary;
+export default SuspenseCursorPaginationBoundary;
