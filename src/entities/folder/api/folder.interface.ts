@@ -24,3 +24,7 @@ export interface CreateFolderDTO {
   name: string;
   color: string;
 }
+
+export interface UpdateFolderDTO extends CreateFolderDTO {
+  folderId: number;
+}

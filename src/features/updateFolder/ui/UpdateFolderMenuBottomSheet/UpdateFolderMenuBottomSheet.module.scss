@@ -1,0 +1,18 @@
+@use "@/shared/ui/styles/constants" as c;
+@use "@/shared/ui/styles/mixins" as m;
+
+.wrapper.bottomSheet {
+  @include m.flex(flex-start, center, column);
+  z-index: calc(c.$Z_BOTTOM_SHEET - 1);
+  gap: 8px;
+  width: 100%;
+  padding: 24px 20px;
+
+  &.hide {
+    display: none;
+  }
+
+  .deleteButton {
+    color: var(--c-system-danger-darken);
+  }
+}
