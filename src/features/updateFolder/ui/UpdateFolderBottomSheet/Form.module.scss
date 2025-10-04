@@ -1,0 +1,53 @@
+@use "@/shared/ui/styles/constants" as c;
+@use "@/shared/ui/styles/mixins" as m;
+
+.wrapper {
+  width: 100%;
+  padding: 20px 20px 0;
+
+  .content {
+    @include m.flex(flex-start, flex-start, column);
+    gap: 40px;
+    padding-bottom: 20px;
+
+    .input {
+      width: 100%;
+    }
+
+    .colors {
+      .legend {
+        @include m.fontBody1(semibold);
+        color: var(--c-text-main);
+      }
+
+      .colorOptions {
+        @include m.flex(flex-start, flex-start);
+        flex-wrap: wrap;
+        gap: 12px;
+        padding: 20px 0;
+
+        .colorOption {
+          width: 28px;
+          height: 28px;
+          cursor: pointer;
+          border-radius: 100%;
+
+          &:has(input:checked) {
+            outline: 3px solid var(--c-grayscale-gray-950);
+            outline-offset: 3px;
+          }
+
+          .colorIndicator {
+            width: 100%;
+            height: 100%;
+            border-radius: inherit;
+          }
+        }
+      }
+    }
+  }
+
+  .buttonWrapper {
+    padding: 8px 0;
+  }
+}

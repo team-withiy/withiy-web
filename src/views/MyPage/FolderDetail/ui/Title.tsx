@@ -17,7 +17,10 @@ const Title: React.FC = () => {
   const { data: folders } = useSuspenseQuery(folderQueries.getFolders);
   const { data: placeData } = useSuspenseCursorPaginationQuery(folderQueries.paginateFolderPlaces(Number(folderId)));
 
-  const folder = folders.data.find((folder) => folder.id === Number(folderId))!;
+  const folder = folders.data.find((folder) => folder.id === Number(folderId));
+
+  if (!folder) return null;
+
   const style = { "--folder-color": folder.color } as React.CSSProperties;
 
   return (
