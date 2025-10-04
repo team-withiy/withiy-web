@@ -4,7 +4,7 @@ export const enum BookmarkTab {
 }
 
 export const isPlaceActive = (tab: unknown): tab is BookmarkTab.PLACES => {
-  return tab === BookmarkTab.PLACES;
+  return tab !== BookmarkTab.COURSES;
 };
 
 export const isCourseActive = (tab: unknown): tab is BookmarkTab.COURSES => {
