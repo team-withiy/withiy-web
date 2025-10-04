@@ -29,7 +29,7 @@ const PartitionedThumbnail: React.FC<Props> = ({ imageUrls, className }) => {
             fill
             alt={`Image ${index + 1}`}
             className={styles.image}
-            fallbackSrc="/images/fallback"
+            fallbackSrc="/images/fallback.png"
           />
         </div>
       ))}
