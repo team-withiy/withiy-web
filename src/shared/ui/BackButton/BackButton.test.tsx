@@ -33,6 +33,8 @@ beforeEach(() => {
 afterEach(() => {
   cleanup();
   vi.clearAllMocks();
+  mockPush.mockClear();
+  mockBack.mockClear();
 });
 
 test("className이 정상적으로 주입되어야 한다.", () => {
