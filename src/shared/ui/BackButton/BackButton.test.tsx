@@ -68,10 +68,11 @@ test("같은 도메인에서 온 경우 router.back()을 호출해야 한다.", 
   expect(mockPush).not.toHaveBeenCalled();
 });
 
-test("document에 접근할 수 없는 경우 fallbackUrl로 이동해야 한다.", async () => {
+test("isSameOrigin을 처리하던 도중 오류가 날 경우, isSameOrigin은 false로 처리된다.", async () => {
   Object.defineProperty(document, "referrer", {
-    value: undefined,
+    value: "invalid-url",
     writable: true,
+    configurable: true,
   });
 
   renderWithProviders(<BackButton>뒤로가기</BackButton>);
@@ -87,6 +88,7 @@ test("외부 도메인에서 온 경우 fallbackUrl로 이동해야 한다.", as
   Object.defineProperty(document, "referrer", {
     value: "https://external-site.com/some-page",
     writable: true,
+    configurable: true,
   });
 
   renderWithProviders(<BackButton>뒤로가기</BackButton>);
@@ -102,6 +104,7 @@ test("referrer가 없는 경우 fallbackUrl로 이동해야 한다.", async () =
   Object.defineProperty(document, "referrer", {
     value: "",
     writable: true,
+    configurable: true,
   });
 
   renderWithProviders(<BackButton>뒤로가기</BackButton>);
@@ -117,6 +120,7 @@ test("커스텀 fallbackUrl을 사용해야 한다.", async () => {
   Object.defineProperty(document, "referrer", {
     value: "",
     writable: true,
+    configurable: true,
   });
 
   renderWithProviders(<BackButton fallbackUrl="/main">뒤로가기</BackButton>);
