@@ -7,17 +7,26 @@ import { renderWithProviders } from "@/shared/lib/test";
 
 import BackButton from ".";
 
-// back 메서드를 모킹
 const mockBack = vi.fn();
+const mockPush = vi.fn();
+
+const mockLocation = {
+  origin: "http://localhost:3000",
+  href: "http://localhost:3000/current-page",
+};
+
+Object.defineProperty(window, "location", {
+  value: mockLocation,
+  writable: true,
+});
 
 beforeEach(() => {
-  // mockRouter에 back 메서드 추가
-  mockRouter.back = mockBack.mockImplementation(() => {
-    if (mockRouter.asPath === "/next-page") {
-      mockRouter.replace("/current-page");
-    } else if (mockRouter.asPath === "/current-page") {
-      mockRouter.replace("/prev-page");
-    }
+  mockRouter.back = mockBack;
+  mockRouter.push = mockPush;
+
+  Object.defineProperty(document, "referrer", {
+    value: "http://localhost:3000/prev-page",
+    writable: true,
   });
 });
 
@@ -32,14 +41,62 @@ test("className이 정상적으로 주입되어야 한다.", () => {
   expect(button).toHaveClass("test-class");
 });
 
-test("클릭 시 이전 페이지로 이동해야 한다.", async () => {
-  mockRouter.setCurrentUrl({ pathname: "/prev-page" });
-  await mockRouter.push("/current-page");
-  await mockRouter.push("/next-page");
+test("같은 도메인에서 온 경우 router.back()을 호출해야 한다.", async () => {
+  Object.defineProperty(document, "referrer", {
+    value: "http://localhost:3000/prev-page",
+    writable: true,
+  });
+
   renderWithProviders(<BackButton>뒤로가기</BackButton>);
 
   const button = screen.getByTestId("back-button");
   await userEvent.click(button);
 
-  expect(mockRouter.asPath).toBe("/current-page");
+  expect(mockBack).toHaveBeenCalledTimes(1);
+  expect(mockPush).not.toHaveBeenCalled();
+});
+
+test("외부 도메인에서 온 경우 fallbackUrl로 이동해야 한다.", async () => {
+  Object.defineProperty(document, "referrer", {
+    value: "https://external-site.com/some-page",
+    writable: true,
+  });
+
+  renderWithProviders(<BackButton>뒤로가기</BackButton>);
+
+  const button = screen.getByTestId("back-button");
+  await userEvent.click(button);
+
+  expect(mockBack).not.toHaveBeenCalled();
+  expect(mockPush).toHaveBeenCalledWith("/");
+});
+
+test("referrer가 없는 경우 fallbackUrl로 이동해야 한다.", async () => {
+  Object.defineProperty(document, "referrer", {
+    value: "",
+    writable: true,
+  });
+
+  renderWithProviders(<BackButton>뒤로가기</BackButton>);
+
+  const button = screen.getByTestId("back-button");
+  await userEvent.click(button);
+
+  expect(mockBack).not.toHaveBeenCalled();
+  expect(mockPush).toHaveBeenCalledWith("/");
+});
+
+test("커스텀 fallbackUrl을 사용해야 한다.", async () => {
+  Object.defineProperty(document, "referrer", {
+    value: "",
+    writable: true,
+  });
+
+  renderWithProviders(<BackButton fallbackUrl="/main">뒤로가기</BackButton>);
+
+  const button = screen.getByTestId("back-button");
+  await userEvent.click(button);
+
+  expect(mockBack).not.toHaveBeenCalled();
+  expect(mockPush).toHaveBeenCalledWith("/main");
 });
