@@ -13,7 +13,18 @@ const BackButton: React.FC<PropsWithChildren<Props>> = ({ children, className, f
   const router = useRouter();
 
   const handleBack = () => {
-    if (document.referrer && document.referrer.includes(window.location.origin)) {
+    let isSameOrigin = false;
+
+    if (document.referrer) {
+      try {
+        const referrerOrigin = new URL(document.referrer).origin;
+        isSameOrigin = referrerOrigin === window.location.origin;
+      } catch {
+        isSameOrigin = false;
+      }
+    }
+
+    if (isSameOrigin) {
       router.back();
     } else {
       router.push(fallbackUrl);
@@ -21,7 +32,14 @@ const BackButton: React.FC<PropsWithChildren<Props>> = ({ children, className, f
   };
 
   return (
-    <div role="button" className={className} onClick={handleBack} data-testid="back-button" aria-label="뒤로가기">
+    <div
+      role="button"
+      tabIndex={0}
+      className={className}
+      onClick={handleBack}
+      data-testid="back-button"
+      aria-label="뒤로가기"
+    >
       {children}
     </div>
   );
