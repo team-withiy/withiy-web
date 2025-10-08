@@ -29,10 +29,12 @@ const PlaceDetailPage: React.FC<Props> = async ({ params }) => {
         ))}
       </PlaceCarousel>
       <PlaceInfo place={convertPlaceDetailToSummary(data)} className={styles.section} />
-      <section className={cx(styles.section, styles.reviewSection)}>
-        <h2 className={styles.title}>리뷰</h2>
-        <PreviewReview reviews={data.reviews} moreHref={`/places/${placeId}/reviews`} />
-      </section>
+      {data.reviews.length > 0 && (
+        <section className={cx(styles.section, styles.reviewSection)}>
+          <h2 className={styles.title}>리뷰</h2>
+          <PreviewReview reviews={data.reviews} moreHref={`/places/${placeId}/reviews`} />
+        </section>
+      )}
     </main>
   );
 };
