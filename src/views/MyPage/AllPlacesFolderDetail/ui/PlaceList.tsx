@@ -3,9 +3,9 @@
 import { range } from "lodash-es";
 import Skeleton from "react-loading-skeleton";
 
-import EmptyBookmark from "@/widgets/EmptyBookmark/ui";
 import PlaceItem from "@/widgets/PlaceItem/ui";
 
+import EmptyBookmark from "@/entities/bookmark/ui/EmptyBookmark";
 import { folderQueries } from "@/entities/folder/api/folder.queries";
 
 import Button from "@/shared/ui/Button/Button";
