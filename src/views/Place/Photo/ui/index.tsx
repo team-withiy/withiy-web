@@ -1,15 +1,18 @@
 import { Suspense } from "react";
 
+import { dehydrate, HydrationBoundary, QueryClient } from "@tanstack/react-query";
 import cx from "clsx";
 import Skeleton from "react-loading-skeleton";
 
 import Header from "@/widgets/Layout/ui/Header";
 
+import { placeQueries } from "@/entities/place/api/place.queries";
 import { getPlaceDetailApi } from "@/entities/place/api/place.server";
 
 import BackButton from "@/shared/ui/BackButton";
 import FetchBoundary from "@/shared/ui/Boundary/FetchBoundary";
 
+import PhotoList from "./PhotoList";
 import { IconArrowLeft24 } from "public/icons";
 
 import styles from "./PlacePhotoPage.module.scss";
@@ -20,6 +23,9 @@ interface Props {
 
 const PlacePhotoPage: React.FC<Props> = async ({ params }) => {
   const { placeId } = await params;
+
+  const queryClient = new QueryClient();
+  await queryClient.prefetchQuery(placeQueries.paginatePhotos(placeId));
 
   return (
     <main className={styles.wrapper}>
@@ -33,6 +39,9 @@ const PlacePhotoPage: React.FC<Props> = async ({ params }) => {
           </FetchBoundary>
         </Suspense>
       </Header>
+      <HydrationBoundary state={dehydrate(queryClient)}>
+        <PhotoList />
+      </HydrationBoundary>
     </main>
   );
 };
