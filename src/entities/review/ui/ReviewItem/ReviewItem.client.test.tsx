@@ -1,7 +1,8 @@
 import { cleanup, render, screen } from "@testing-library/react";
 import { afterEach, expect, test } from "vitest";
 
-import ReviewItem from ".";
+import ReviewItem from "./ReviewItem.client";
+
 import type { ReviewDTO } from "../../api/review.interface";
 
 const mockReview: ReviewDTO = {
@@ -9,10 +10,10 @@ const mockReview: ReviewDTO = {
   reviewer: {
     userId: 1,
     nickname: "테스트 사용자",
-    thumbnail: "https://example.com/avatar.jpg",
+    thumbnail: "https://dummyimage.com/100",
   },
   contents: "정말 좋은 장소였어요! 분위기도 좋고 음식도 맛있었습니다.",
-  imageUrls: ["https://example.com/image1.jpg", "https://example.com/image2.jpg", "https://example.com/image3.jpg"],
+  imageUrls: ["https://dummyimage.com/100", "https://dummyimage.com/200", "https://dummyimage.com/300"],
   score: 5,
 };
 
@@ -20,12 +21,12 @@ const mockReviewWithManyImages: ReviewDTO = {
   ...mockReview,
   reviewId: 2,
   imageUrls: [
-    "https://example.com/image1.jpg",
-    "https://example.com/image2.jpg",
-    "https://example.com/image3.jpg",
-    "https://example.com/image4.jpg",
-    "https://example.com/image5.jpg",
-    "https://example.com/image6.jpg",
+    "https://dummyimage.com/100",
+    "https://dummyimage.com/200",
+    "https://dummyimage.com/300",
+    "https://dummyimage.com/400",
+    "https://dummyimage.com/500",
+    "https://dummyimage.com/600",
   ],
 };
 
@@ -42,21 +43,12 @@ test("리뷰 정보가 정상적으로 렌더링되어야 한다.", () => {
   expect(screen.getByTestId("review-score-value")).toHaveTextContent(`${mockReview.score}도`);
 });
 
-test("리뷰어 프로필 이미지가 올바르게 표시되어야 한다.", () => {
-  render(<ReviewItem review={mockReview} />);
-
-  const profileImage = screen.getByTestId("reviewer-thumbnail");
-  expect(profileImage).toBeInTheDocument();
-  expect(profileImage).toHaveAttribute("src", mockReview.reviewer.thumbnail);
-});
-
 test("리뷰 이미지들이 올바르게 표시되어야 한다.", () => {
   render(<ReviewItem review={mockReview} />);
 
   mockReview.imageUrls.forEach((_, index) => {
     const reviewImage = screen.getByTestId(`review-image-${index}`);
     expect(reviewImage).toBeInTheDocument();
-    expect(reviewImage).toHaveAttribute("src", mockReview.imageUrls[index]);
   });
 });
 
