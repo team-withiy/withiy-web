@@ -3,7 +3,7 @@ import Link from "next/link";
 import cx from "clsx";
 
 import type { ReviewDTO } from "@/entities/review/api/review.interface";
-import ReviewItem from "@/entities/review/ui/ReviewItem";
+import ReviewItem from "@/entities/review/ui/ReviewItem/ReviewItem.server";
 
 import Button from "@/shared/ui/Button/Button";
 

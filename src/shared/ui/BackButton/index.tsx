@@ -18,6 +18,7 @@ const BackButton: React.FC<PropsWithChildren<Props>> = ({ children, className, f
     if (document.referrer) {
       try {
         const referrerOrigin = new URL(document.referrer).origin;
+        console.log(referrerOrigin, window.location.origin);
         isSameOrigin = referrerOrigin === window.location.origin;
       } catch {
         isSameOrigin = false;

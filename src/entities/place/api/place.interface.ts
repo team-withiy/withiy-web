@@ -31,3 +31,10 @@ export interface UpdatePlaceBookmarkDTO {
   placeId: number;
   folderIds: number[];
 }
+
+export type PaginationReviewsSort = "latest" | "score";
+
+export interface PaginateReviewsParams {
+  placeId: number;
+  sortBy: PaginationReviewsSort;
+}
