@@ -3,4 +3,13 @@
 
 .wrapper {
   width: 100%;
+  padding: 16px c.$S_PAGE_HORIZONTAL_PADDING;
+
+  .list {
+    padding-top: 16px;
+
+    .reviewItem {
+      margin-bottom: 12px;
+    }
+  }
 }

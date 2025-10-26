@@ -1,6 +1,7 @@
 "use client";
 
 import cx from "clsx";
+import Skeleton from "react-loading-skeleton";
 
 import FallbackHandlerImage from "@/shared/ui/Image/FallbackHandlerImage";
 
@@ -60,4 +61,6 @@ const ReviewItem: React.FC<Props> = ({ review, className }) => {
   );
 };
 
-export default ReviewItem;
+export default Object.assign(ReviewItem, {
+  Loading: ({ className }: { className?: string }) => <Skeleton width="100%" height={280} className={className} />,
+});
