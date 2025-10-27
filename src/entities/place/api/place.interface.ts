@@ -37,8 +37,6 @@ export const enum PaginationReviewSortBy {
   SCORE = "score",
 }
 
-export type PaginationReviewSortByType = keyof typeof PaginationReviewSortBy;
-
 export interface PaginateReviewsParams {
   placeId: number;
   sortBy: PaginationReviewSortBy;
