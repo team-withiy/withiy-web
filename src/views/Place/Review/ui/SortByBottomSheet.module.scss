@@ -1,0 +1,10 @@
+@use "@/shared/ui/styles/constants" as c;
+@use "@/shared/ui/styles/mixins" as m;
+
+.wrapper.sortByBottomSheet {
+  padding-top: 32px;
+
+  > button + button {
+    margin-top: 8px;
+  }
+}
