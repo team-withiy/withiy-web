@@ -54,6 +54,7 @@ export { default as IconArrowLeft24 } from "./arrow-left24.svg";
 
 // MEMO: CHEVRON
 export { default as IconChevronDown20 } from "./chevron-down20.svg";
+export { default as IconChevronDown24 } from "./chevron-down24.svg";
 export { default as IconChevronLeft20 } from "./chevron-left20.svg";
 export { default as IconChevronLeft24 } from "./chevron-left24.svg";
 export { default as IconChevronRight20 } from "./chevron-right20.svg";

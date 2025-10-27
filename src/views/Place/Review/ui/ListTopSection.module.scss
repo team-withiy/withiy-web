@@ -5,4 +5,19 @@
   @include m.flex(space-between);
   width: 100%;
   padding-top: 8px;
+
+  .total {
+    @include m.fontBody2(regular);
+    color: var(--c-text-sub);
+  }
+
+  .button {
+    @include m.fontBody2(medium);
+    @include m.flex;
+    gap: 2px;
+    padding: 4px 16px;
+    color: var(--c-text-main-sub);
+    background-color: var(--c-grayscale-gray-100);
+    border-radius: 100px;
+  }
 }

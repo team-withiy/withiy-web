@@ -32,9 +32,14 @@ export interface UpdatePlaceBookmarkDTO {
   folderIds: number[];
 }
 
-export type PaginationReviewsSort = "latest" | "score";
+export const enum PaginationReviewSortBy {
+  LATEST = "latest",
+  SCORE = "score",
+}
+
+export type PaginationReviewSortByType = keyof typeof PaginationReviewSortBy;
 
 export interface PaginateReviewsParams {
   placeId: number;
-  sortBy: PaginationReviewsSort;
+  sortBy: PaginationReviewSortBy;
 }

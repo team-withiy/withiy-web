@@ -11,16 +11,18 @@ import { InfiniteScroll } from "@/shared/ui/InfiniteScroll";
 import Suspense from "@/shared/ui/Suspense";
 
 import ListTopSection from "./ListTopSection";
+import useSortBy from "../hooks/useSortBy";
 
 import styles from "./ReviewList.module.scss";
 
 const ReviewList: React.FC = () => {
   const { placeId } = useParams<{ placeId: string }>();
+  const { sortBy } = useSortBy();
 
   return (
     <>
       <InfiniteScroll.Suspense.Cursor.Vertical.Boundary
-        query={placeQueries.paginateReviews({ placeId: Number(placeId), sortBy: "latest" })}
+        query={placeQueries.paginateReviews({ placeId: Number(placeId), sortBy })}
       >
         {({ data, ...queryInfo }) => (
           <div className={styles.wrapper}>
