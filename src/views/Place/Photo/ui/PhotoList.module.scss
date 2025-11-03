@@ -3,4 +3,44 @@
 
 .wrapper {
   width: 100%;
+  padding: c.$S_PAGE_VERTICAL_PADDING c.$S_PAGE_HORIZONTAL_PADDING;
+
+  .list {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 24px 8px;
+    width: 100%;
+
+    .loadingItem {
+      width: 100%;
+      aspect-ratio: 3/4;
+
+      > span {
+        width: 100%;
+        height: 100%;
+      }
+    }
+
+    .item {
+      width: 100%;
+
+      .imageWrapper {
+        position: relative;
+        width: 100%;
+        aspect-ratio: 3/4;
+        margin-bottom: 8px;
+        border-radius: 8px;
+
+        .image {
+          border-radius: inherit;
+        }
+      }
+
+      .name {
+        @include m.fontBody2(semibold);
+        @include m.makeEllipsis;
+        color: var(--c-text-main);
+      }
+    }
+  }
 }
