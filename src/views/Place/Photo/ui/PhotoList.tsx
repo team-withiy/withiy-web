@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useParams } from "next/navigation";
 
 import { range } from "lodash-es";
@@ -33,7 +34,7 @@ const PhotoList: React.FC = () => {
               range(10).map((i) => <Skeleton key={i} containerClassName={styles.loadingItem} />)}
             {data.data.map((photo) => (
               <li className={styles.item} key={photo.photoId}>
-                <div className={styles.imageWrapper}>
+                <Link className={styles.link} href={`/places/${placeId}/photos/${photo.photoId}`}>
                   <FallbackHandlerImage
                     src={photo.imageUrl}
                     fill
@@ -41,7 +42,7 @@ const PhotoList: React.FC = () => {
                     className={styles.image}
                     fallbackSrc="/images/fallback.png"
                   />
-                </div>
+                </Link>
               </li>
             ))}
             {isFetchingNextPage && range(10).map((i) => <Skeleton key={i} containerClassName={styles.loadingItem} />)}

@@ -1,0 +1,31 @@
+@use "@/shared/ui/styles/constants" as c;
+@use "@/shared/ui/styles/mixins" as m;
+
+.wrapper {
+  width: 100%;
+  padding-top: c.$S_HEADER_HEIGHT;
+
+  .header.placePhotoDetailHeader {
+    @include m.flex(space-between);
+    padding: 0 20px;
+
+    .backButton {
+      @include m.flex;
+      width: 32px;
+      height: 32px;
+      cursor: pointer;
+    }
+
+    .title {
+      @include m.fontTitle4(semibold);
+      @include m.makeEllipsis;
+      color: var(--c-text-main);
+    }
+
+    .reportLink {
+      @include m.fontBody1(medium);
+      width: 32px;
+      color: var(--c-text-main);
+    }
+  }
+}

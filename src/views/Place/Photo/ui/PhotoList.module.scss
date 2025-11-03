@@ -24,11 +24,11 @@
     .item {
       width: 100%;
 
-      .imageWrapper {
+      .link {
         position: relative;
+        display: inline-block;
         width: 100%;
         aspect-ratio: 3/4;
-        margin-bottom: 8px;
         border-radius: 8px;
 
         .image {
