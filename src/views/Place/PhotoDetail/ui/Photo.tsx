@@ -1,19 +1,16 @@
 "use client";
 
-import dynamic from "next/dynamic";
-import { useParams } from "next/navigation";
+import { useLayoutEffect, useRef } from "react";
 
-import { useSuspenseQuery } from "@tanstack/react-query";
-import { type Settings } from "react-slick";
+import Skeleton from "react-loading-skeleton";
+import Slider, { type Settings } from "react-slick";
 
-import { placeQueries } from "@/entities/place/api/place.queries";
+import FallbackHandlerImage from "@/shared/ui/Image/FallbackHandlerImage";
+import Suspense from "@/shared/ui/Suspense";
 
-import useSuspenseCursorPaginationQuery from "@/shared/hooks/useSuspenseCursorPaginationQuery";
-import SSRSafeSuspense from "@/shared/ui/Suspense/SSRSafeSuspense";
+import usePhotoList from "../hooks/usePhotoList";
 
 import styles from "./Photo.module.scss";
-
-const Slider = dynamic(() => import("react-slick"));
 
 const settings: Settings = {
   accessibility: true,
@@ -25,16 +22,39 @@ const settings: Settings = {
 };
 
 const Photo: React.FC = () => {
-  const { photoId, placeId } = useParams<{ placeId: string; photoId: string }>();
-  const {} = useSuspenseQuery(placeQueries.getPhoto({ photoId: Number(photoId), placeId: Number(placeId) }));
-  const { data: photoList } = useSuspenseCursorPaginationQuery(placeQueries.paginatePhotos(Number(placeId)));
-  console.log({ photoList });
+  const slickRef = useRef<Slider>(null);
+  const { photos, currentPhotoIndex, onFocusPhoto } = usePhotoList();
+
+  const afterChange = (newIndex: number) => {
+    const newPhotoId = photos[newIndex].photoId;
+    onFocusPhoto(newPhotoId);
+  };
+
+  useLayoutEffect(() => {
+    if (slickRef.current) {
+      slickRef.current.slickGoTo(currentPhotoIndex, true);
+    }
+  }, [currentPhotoIndex]);
 
   return (
     <div className={styles.wrapper}>
-      <Slider {...settings}></Slider>
+      <Slider {...settings} className={styles.slider} afterChange={afterChange} ref={slickRef}>
+        {photos.map((photo) => (
+          <div key={photo.photoId} className={styles.photoWrapper}>
+            <FallbackHandlerImage
+              src={photo.imageUrl}
+              fill
+              alt="Photo"
+              className={styles.photo}
+              fallbackSrc="/images/fallback.png"
+            />
+          </div>
+        ))}
+      </Slider>
     </div>
   );
 };
 
-export default SSRSafeSuspense.with(Photo, { fallback: <div className={styles.wrapper}></div> });
+export default Suspense.with(Photo, {
+  fallback: <Skeleton containerClassName={styles.wrapper} className={styles.loading} />,
+});
