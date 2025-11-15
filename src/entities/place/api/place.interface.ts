@@ -41,3 +41,8 @@ export interface PaginateReviewsParams {
   placeId: number;
   sortBy: PaginationReviewSortBy;
 }
+
+export interface GetPhotoParams {
+  placeId: number;
+  photoId: number;
+}

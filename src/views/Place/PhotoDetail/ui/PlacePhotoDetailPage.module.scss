@@ -2,8 +2,10 @@
 @use "@/shared/ui/styles/mixins" as m;
 
 .wrapper {
+  @include m.flex(flex-start, center, column);
   width: 100%;
-  padding-top: c.$S_HEADER_HEIGHT;
+  height: 100%;
+  padding-top: calc(c.$S_HEADER_HEIGHT + 20px);
 
   .header.placePhotoDetailHeader {
     @include m.flex(space-between);

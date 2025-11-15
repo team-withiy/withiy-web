@@ -4,6 +4,7 @@
 .wrapper {
   display: flex;
   gap: 8px;
+  height: 200px;
   padding: 0 16px;
   overflow-x: scroll;
   scroll-snap-type: x mandatory;
