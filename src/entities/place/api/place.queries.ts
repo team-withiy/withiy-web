@@ -9,7 +9,7 @@ import type { ApiResponseDTO, CursorPageParam, CursorPaginationResponseDTO } fro
 import { DEFAULT_PAGINATE_LIMIT } from "@/shared/constants/api";
 import { getSearchParams } from "@/shared/lib/searchParams";
 
-import type { GetPhotoParams, PaginatePhotosWithPageParam, PaginateReviewsParams } from "./place.interface";
+import type { GetPhotoParams, PaginateReviewsParams } from "./place.interface";
 
 export const placeQueries = createQueryKeys("place", {
   getPlaceBookmark: (placeId: number) => ({
@@ -35,19 +35,6 @@ export const placeQueries = createQueryKeys("place", {
       apiClient
         .get(`api/places/${placeId}/photos`, {
           searchParams: getSearchParams({ ...(pageParam as CursorPageParam), limit: DEFAULT_PAGINATE_LIMIT }),
-        })
-        .json<CursorPaginationResponseDTO<PhotoDTO>>(),
-  }),
-  paginatePhotosWithPageParam: ({ cursor, placeId, prev }: PaginatePhotosWithPageParam) => ({
-    queryKey: ["paginatePhotosWithPageParam", placeId, cursor, prev],
-    queryFn: () =>
-      apiClient
-        .get(`api/places/${placeId}/photos`, {
-          searchParams: getSearchParams({
-            cursor,
-            prev,
-            limit: DEFAULT_PAGINATE_LIMIT,
-          }),
         })
         .json<CursorPaginationResponseDTO<PhotoDTO>>(),
   }),

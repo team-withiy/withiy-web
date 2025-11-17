@@ -7,7 +7,6 @@ const DatePickerContext = createContext<DatePickerContextType | undefined>(undef
 
 const DatePickerContextProvider: React.FC<PropsWithChildren<DatePickerContextProps>> = ({ children, ...props }) => {
   const value = useDatePicker(props);
-  if (!value) throw new Error("DatePickerContextProvider must be used within DatePickerContext");
 
   return <DatePickerContext value={value}>{children}</DatePickerContext>;
 };

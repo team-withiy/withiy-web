@@ -46,9 +46,3 @@ export interface GetPhotoParams {
   placeId: number;
   photoId: number;
 }
-
-export interface PaginatePhotosWithPageParam {
-  placeId: number;
-  cursor: number;
-  prev: boolean;
-}

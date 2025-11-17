@@ -67,17 +67,33 @@ const SuspenseCursorVerticalInfiniteScrollContainer = <T,>({
 
   useEffect(() => {
     if (blockObservePrevIntersect) return;
+    if (isFetchingNextPage || isFetchingPreviousPage) return;
     if (isTopIntersecting && hasPreviousPage && !isFetchingPreviousPage) {
       fetchPreviousPage();
     }
-  }, [blockObservePrevIntersect, isTopIntersecting, hasPreviousPage, isFetchingPreviousPage, fetchPreviousPage]);
+  }, [
+    blockObservePrevIntersect,
+    isTopIntersecting,
+    hasPreviousPage,
+    isFetchingPreviousPage,
+    isFetchingNextPage,
+    fetchPreviousPage,
+  ]);
 
   useEffect(() => {
     if (blockObserveNextIntersect) return;
+    if (isFetchingNextPage || isFetchingPreviousPage) return;
     if (isBottomIntersecting && hasNextPage && !isFetchingNextPage) {
       fetchNextPage();
     }
-  }, [blockObserveNextIntersect, isBottomIntersecting, hasNextPage, isFetchingNextPage, fetchNextPage]);
+  }, [
+    blockObserveNextIntersect,
+    isBottomIntersecting,
+    hasNextPage,
+    isFetchingNextPage,
+    isFetchingPreviousPage,
+    fetchNextPage,
+  ]);
 
   if (throwOnEmpty && data.meta.total === 0) throw new EmptyError();
 

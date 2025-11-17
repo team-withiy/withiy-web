@@ -3,25 +3,27 @@
 @use "@/shared/ui/styles/libraries" as l;
 
 .wrapper {
-  @include l.applyReactSlick;
-  flex: 1;
+  position: relative;
   width: 100%;
+  max-height: 500px;
+  aspect-ratio: 3 / 4;
 
-  .slider {
-    height: 100%;
+  .image {
+    object-fit: cover;
+  }
 
-    div {
-      height: 100%;
-    }
+  .uploader {
+    @include m.flex;
+    @include m.absolute(auto auto 16px 20px);
+    @include m.fontBody2(regular);
+    gap: 12px;
+    color: var(--c-grayscale-white);
 
-    .photoWrapper {
-      position: relative;
-      width: 100%;
-      height: 100%;
-
-      .photo {
-        object-fit: cover;
-      }
+    .uploaderThumbnail {
+      width: 20px;
+      height: 20px;
+      object-fit: cover;
+      border-radius: 50%;
     }
   }
 
