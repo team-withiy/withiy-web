@@ -1,0 +1,50 @@
+@use "@/shared/ui/styles/constants" as c;
+@use "@/shared/ui/styles/mixins" as m;
+
+.formWrapper {
+  @include m.flex(space-between, center, column);
+  gap: 40px;
+  padding: 20px;
+  padding-top: 76px;
+}
+
+.questionSection {
+  @include m.flex(flex-start, flex-start, column);
+  gap: 20px;
+  width: 100%;
+}
+
+.label {
+  @include m.fontBody1(semibold);
+  color: var(--c-text-main);
+}
+
+.optionsWrapper {
+  @include m.flex(flex-start);
+  gap: 12px;
+  width: 100%;
+}
+
+.optionButton {
+  @include m.fontButton3(regular);
+  padding: 8px 12px !important;
+  color: var(--c-text-main-sub) !important;
+  cursor: pointer;
+  border: 1px solid var(--c-grayscale-gray-300);
+  border-radius: c.$R_ROUNDED_3XL;
+  transition: background-color 0.2s ease-in-out;
+
+  &:hover {
+    background-color: var(--c-grayscale-gray-200);
+  }
+
+  &.selected {
+    color: var(--c-text-main) !important;
+    background-color: var(--c-grayscale-gray-200);
+  }
+}
+
+.textArea {
+  gap: 20px;
+  width: 100%;
+}

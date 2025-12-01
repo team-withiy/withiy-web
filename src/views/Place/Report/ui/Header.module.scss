@@ -1,0 +1,41 @@
+@use "@/shared/ui/styles/constants" as c;
+@use "@/shared/ui/styles/mixins" as m;
+
+@function get-background-color() {
+  @return color-mix(
+    in srgb,
+    rgba(0, 0, 0, 20%) calc(100% - var(--scroll-level)),
+    var(--c-grayscale-white) var(--scroll-level)
+  );
+}
+
+@function get-content-color($fromColor) {
+  @return color-mix(in srgb, $fromColor calc(100% - var(--scroll-level)), var(--c-text-main) var(--scroll-level));
+}
+
+.wrapper {
+  @include m.flex(space-between);
+  @include m.fixed(0 auto auto 50%);
+  z-index: c.$Z_GNB;
+  width: 100%;
+  max-width: c.$S_MAX_WIDTH;
+  height: c.$S_HEADER_HEIGHT;
+  padding: 12px 20px;
+  background-color: get-background-color();
+  border-bottom: 1px solid var(--c-divider-main-sub);
+  transform: translateX(-50%);
+
+  .backButton {
+    cursor: pointer;
+  }
+
+  .title {
+    @include m.fontTitle4(semibold);
+    padding: 0 12px;
+    color: get-content-color(var(--c-grayscale-black));
+  }
+
+  .empty {
+    width: 24px;
+  }
+}
