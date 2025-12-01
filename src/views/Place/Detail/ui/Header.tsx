@@ -2,6 +2,8 @@
 
 import { type CSSProperties, useRef } from "react";
 
+import Link from "next/link";
+
 import { PLACE_CAROUSEL_ID } from "@/widgets/PlaceCarousel/ui";
 
 import useScrollLevelByAnchor from "@/shared/hooks/useScrollLevelByAnchor";
@@ -13,9 +15,10 @@ import styles from "./Header.module.scss";
 
 interface Props {
   title: string;
+  placeId: number;
 }
 
-const Header: React.FC<Props> = ({ title }) => {
+const Header: React.FC<Props> = ({ title, placeId }) => {
   const headerRef = useRef<HTMLDivElement>(null);
   const scrollLevel = useScrollLevelByAnchor({ anchor: PLACE_CAROUSEL_ID, element: headerRef });
   const style = { "--scroll-level": `${scrollLevel}%` } as CSSProperties;
@@ -28,9 +31,11 @@ const Header: React.FC<Props> = ({ title }) => {
       <h2 className={styles.title} data-testid="header-title">
         {title}
       </h2>
-      <button type="button" className={styles.reportButton} data-testid="header-report-button">
-        신고
-      </button>
+      <Link href={`/places/${placeId}/report`}>
+        <button type="button" className={styles.reportButton} data-testid="header-report-button">
+          신고
+        </button>
+      </Link>
     </header>
   );
 };
