@@ -34,13 +34,10 @@
   border-radius: c.$R_ROUNDED_3XL;
   transition: background-color 0.2s ease-in-out;
 
-  &:hover {
-    background-color: var(--c-grayscale-gray-200);
-  }
-
   &.selected {
-    color: var(--c-text-main) !important;
-    background-color: var(--c-grayscale-gray-200);
+    color: var(--c-brand-primary) !important;
+    background-color: var(--c-brand-primary-background) !important;
+    border-color: var(--c-brand-primary);
   }
 }
 

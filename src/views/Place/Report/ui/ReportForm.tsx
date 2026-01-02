@@ -64,18 +64,18 @@ const ReportForm: React.FC<Props> = ({ placeId }) => {
                 <>
                   <Button
                     type="button"
-                    variant="text"
+                    variant="filledGray"
                     size={36}
-                    className={`${styles.optionButton} ${problemType === "PHOTO" ? styles.selected : ""}`}
+                    className={`${styles.optionButton} ${problemType === "PHOTO" && styles.selected}`}
                     onClick={() => field.onChange("PHOTO")}
                   >
                     현재 사진에 문제가 있어요
                   </Button>
                   <Button
                     type="button"
-                    variant="text"
+                    variant="filledGray"
                     size={36}
-                    className={`${styles.optionButton} ${problemType === "PLACE" ? styles.selected : ""}`}
+                    className={`${styles.optionButton} ${problemType === "PLACE" && styles.selected}`}
                     onClick={() => field.onChange("PLACE")}
                   >
                     장소 내용이 정확하지 않아요
